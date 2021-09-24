@@ -78,7 +78,7 @@
               <td>{{policy.end}}</td>
               <td>{{policy.number}}</td>
               <td>
-                  <router-link to="/" class="text-green-500">View</router-link>
+                  <router-link :to="{name: 'ViewPolicy', query: policy}" class="text-green-500">View</router-link>
               </td>
             </tr>
           </tbody>
@@ -172,7 +172,6 @@ export default {
         for (let index = 1; index <= numberOfPages; index++) {
             this.pages.push(index);
         }
-        console.log(numberOfPages)
 	},
     paginate (policies) {
         let page = this.page;
@@ -184,24 +183,24 @@ export default {
   },
   mounted(){
       this.policies = [
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Melosi", plan: "Paddy Max", type: "Home", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "4"},
-        {firstname: "Abiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Home", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "2"},
-        {firstname: "Obiwan", lastname: "Telosi", plan: "Paddy Max", type: "Health", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "10"},
-        {firstname: "Obiwan", lastname: "Delosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Home", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "25"},
-        {firstname: "Ebiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Relosi", plan: "Paddy Max", type: "Vehicle", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Home", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "15"},
-        {firstname: "Ubiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "18"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Vehicle", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Gadget", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "2"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "5"},
-        {firstname: "Ebiwan", lastname: "Telosi", plan: "Paddy Max", type: "Vehicle", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "4"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Abiwan", lastname: "Nelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "10"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Vehicle", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "3"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "20"},
+        {firstname: "Obiwan", lastname: "Melosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Home", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "4"},
+        {firstname: "Abiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Home", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "2"},
+        {firstname: "Obiwan", lastname: "Telosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "10"},
+        {firstname: "Obiwan", lastname: "Delosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Home", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "25"},
+        {firstname: "Ebiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
+        {firstname: "Obiwan", lastname: "Relosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Vehicle", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "20"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Home", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "15"},
+        {firstname: "Ubiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "18"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Vehicle", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "20"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Gadget", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "2"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "5"},
+        {firstname: "Ebiwan", lastname: "Telosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Vehicle", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "4"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "20"},
+        {firstname: "Abiwan", lastname: "Nelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "10"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Vehicle", status: "Active", start: "05-06-2021", end: "05-07-2021", number: "3"},
       ]
     // .then(res=>{
     //   for(let arr in res.data.data){

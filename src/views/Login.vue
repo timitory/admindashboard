@@ -34,10 +34,10 @@
           </div> -->
           <p class="text-red-500 mt-4">{{errorMsg}}</p>
           <button class="mt-6 rounded focus:outline-none bg-green-500 py-2 w-full lg:w-4/5 text-white">Proceed</button>
-          <div class="mt-4">
+          <!-- <div class="mt-4">
             <p class="text-sm">Don't have an account? <router-link to="/signup" class="greent font-bold">Register</router-link></p>
             <router-link to="/forgotpassword" class="greent mt-8 md:mt-0 text-sm">Forgot password?</router-link>
-          </div>
+          </div> -->
         </form>
       </div>
     </section>
@@ -66,21 +66,22 @@ export default {
   },
   methods:{
     validateForm(){
-      this.$store.commit('startLoading')
-      this.$store.dispatch('loginUser', this.user)
-      .then(res=>{
-        console.log(res)
-        this.$store.commit('endLoading')
-        this.$router.push('/app')
-      })
-      .catch(err=>{
-        this.errorMsg = err.data.message
-        if(err.data.message == 'Please verify account first'){
-          this.$router.push('/verifyotp')
-          this.$store.commit('setError', {status: true, msg: err.data.message})
-        }
+      this.$router.push('/app')
+      // this.$store.commit('startLoading')
+      // this.$store.dispatch('loginUser', this.user)
+      // .then(res=>{
+      //   console.log(res)
+      //   this.$store.commit('endLoading')
+      //   this.$router.push('/app')
+      // })
+      // .catch(err=>{
+      //   this.errorMsg = err.data.message
+      //   if(err.data.message == 'Please verify account first'){
+      //     this.$router.push('/verifyotp')
+      //     this.$store.commit('setError', {status: true, msg: err.data.message})
+      //   }
         // this.$store.commit('setError', {status: true, msg: err.response.data.message})
-      })
+      // })
     },
     showPassword(){
       this.$refs.password.type = 'text'

@@ -58,6 +58,15 @@ const routes = [
         component: () => import('@/views/Menu/TopCustomers')
       },  
       {
+        path: '/app/dashboard/viewpolicy',
+        name: 'ViewPolicy',
+        props: (route) => ({
+          user: {},
+          ...route.params
+        }),
+        component: () => import('@/views/Menu/ViewPolicy')
+      },  
+      {
         path:'/app/dashboard/settings',
         name: 'AccountSettings',
         component: () => import('../views/AccountSettings')
