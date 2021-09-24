@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="515.753" height="215.979" viewBox="0 0 515.753 215.979">
+  <g id="Group_180" data-name="Group 180" transform="translate(0 0)">
+    <ellipse id="Ellipse_25" data-name="Ellipse 25" cx="257.877" cy="7.212" rx="257.877" ry="7.212" transform="translate(0 173.267)" fill="#e6e6e6"/>
+    <path id="Path_135" data-name="Path 135" d="M400.575,308.623c0,.739.6,0,1.338,0s1.338.739,1.338,0a1.338,1.338,0,0,0-2.676,0Z" transform="translate(-258.385 -307.286)" fill="#e6e6e6"/>
+    <path id="Path_136" data-name="Path 136" d="M378.646,308.623c0,.739-.6,0-1.338,0s-1.338.739-1.338,0a1.338,1.338,0,0,1,2.676,0Z" transform="translate(-248.053 -307.286)" fill="#e6e6e6"/>
+    <path id="Path_137" data-name="Path 137" d="M450.265,257.292v-8.5H407.736v85.57h42.529v-8.5H416.242V257.292Z" transform="translate(-171.208 -154.944)" fill="#3f3d56"/>
+    <path id="Path_138" data-name="Path 138" d="M672.253,469.1v85.57h42.53V469.1Zm34.024,77.066H680.759V477.6h25.518Z" transform="translate(-372.462 -375.254)" fill="#00a859"/>
+    <path id="Path_139" data-name="Path 139" d="M307.187,326.239V249.7h-8.506v85.038H341.21v-8.5Z" transform="translate(-125.416 -155.329)" fill="#00a859"/>
+    <path id="Path_140" data-name="Path 140" d="M234.906,257.292v-8.5H192.376v85.57h42.529v-8.5H200.882V295.559h34.023v-8.5H200.882V257.292Z" transform="translate(-80.779 -154.944)" fill="#3f3d56"/>
+    <path id="Path_141" data-name="Path 141" d="M808.588,257.292v-8.5h-42.53v85.57h42.53v-8.5H774.564V295.559h34.023v-8.5H774.564V257.292Z" transform="translate(-321.667 -154.944)" fill="#00a859"/>
+    <path id="Path_142" data-name="Path 142" d="M103.831,249.513v70.282L81.4,297.374l-.051.052-.048-.048L58.378,320.3V249.247H49.872v85.038h8.506v-1.96l22.979-22.973,22.474,22.469v2.729h8.506V249.513Z" transform="translate(-20.941 -155.136)" fill="#3f3d56"/>
+    <path id="Path_143" data-name="Path 143" d="M678.43,249.513v1.959l-22.979,22.973-22.475-22.469v-2.729H624.47v85.038h8.506V264L655.4,286.424l.052-.052.047.047L678.43,263.5v71.053h8.505V249.513Z" transform="translate(-262.215 -155.136)" fill="#3f3d56"/>
+    <ellipse id="Ellipse_32" data-name="Ellipse 32" cx="5.221" cy="5.22" rx="5.221" ry="5.22" transform="translate(189.157 31.552)" fill="#00a859"/>
+    <ellipse id="Ellipse_33" data-name="Ellipse 33" cx="5.221" cy="5.22" rx="5.221" ry="5.22" transform="translate(60.374 89.548)" fill="#00a859"/>
+    <ellipse id="Ellipse_34" data-name="Ellipse 34" cx="5.221" cy="5.22" rx="5.221" ry="5.22" transform="translate(163.632 205.54)" fill="#00a859"/>
+    <ellipse id="Ellipse_35" data-name="Ellipse 35" cx="5.221" cy="5.22" rx="5.221" ry="5.22" transform="translate(294.735 47.211)" fill="#00a859"/>
+    <ellipse id="Ellipse_36" data-name="Ellipse 36" cx="5.221" cy="5.22" rx="5.221" ry="5.22" transform="translate(448.462 200.9)" fill="#00a859"/>
+    <ellipse id="Ellipse_37" data-name="Ellipse 37" cx="5.221" cy="5.22" rx="5.221" ry="5.22" transform="translate(453.682 64.03)" fill="#00a859"/>
+    <ellipse id="Ellipse_38" data-name="Ellipse 38" cx="5.221" cy="5.22" rx="5.221" ry="5.22" transform="translate(387.551 157.983)" fill="#00a859"/>
+  </g>
+</svg>
