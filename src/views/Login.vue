@@ -1,6 +1,5 @@
 <template>
   <div class="relative">
-    <NavBar class=""/>
     <section class="bg-white px-6 lg:pr-12 lg:pl-0">
       <div class="lg:flex lg:justify-between lg:pt-12 lg:items-start flexcont">
         <div class=" mt-20 lg:mt-0 w-full lg:block ">
@@ -46,14 +45,13 @@
   </div>
 </template>
 <script>
-import NavBar from "@/components/HomeNavBar"
 import Footer from "@/components/WaveFooter"
 // import baseURL from "@/main"
 // import axios from "axios"
 
 export default {
   components: {
-    NavBar, Footer
+    Footer
   },
   data(){
     return {
