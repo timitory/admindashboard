@@ -60,12 +60,39 @@ const routes = [
       {
         path: '/app/dashboard/viewpolicy',
         name: 'ViewPolicy',
-        props: (route) => ({
-          user: {},
-          ...route.params
-        }),
         component: () => import('@/views/Menu/ViewPolicy')
-      },  
+      },
+      {
+        path: '/app/dashboard/health',
+        redirect: '/app/dashboard/health/dashboard',
+        component: ()=>import('@/views/Health/Health'),
+        children : [
+          {
+            path: '/app/dashboard/health/dashboard',
+            component: ()=>import('@/views/Health/Dashboard')
+          },
+          {
+            path: '/app/dashboard/health/repayments',
+            component: ()=>import('@/views/Health/Repayments')
+          },
+          {
+            path: '/app/dashboard/health/failedtransactions',
+            component: ()=>import('@/views/Health/ManageFailedTransactions')
+          },
+          {
+            path: '/app/dashboard/health/policies',
+            component: ()=>import('@/views/Health/AllPolicies')
+          },
+          {
+            path: '/app/dashboard/health/customers',
+            component: ()=>import('@/views/Health/Customers')
+          },
+          {
+            path: '/app/dashboard/health/reports',
+            component: ()=>import('@/views/Health/Reports')
+          },
+        ]
+      }, 
       {
         path:'/app/dashboard/settings',
         name: 'AccountSettings',

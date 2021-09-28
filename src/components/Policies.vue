@@ -2,7 +2,7 @@
   <div class="mt-10">
       <p><span class="font-bold">Quicks links: </span>access relevant information associated with each policy type</p>
       <div class="mt-6 lg:flex lg:gap-4">
-        <router-link class="link flex rounded py-4 justify-center items-center" to="/app">
+        <router-link class="link flex rounded py-4 justify-center items-center" to="/app/dashboard/health">
           <img src="@/assets/images/dashboard/Image 9.png" alt="" class="">
           <p class="ml-4 font-bold">Health Cover</p>
         </router-link>
