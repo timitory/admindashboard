@@ -152,13 +152,13 @@ export default {
 		policies() {
 			this.setPages();
 		},
-        val(){
-            if(this.val !== ""){
-                this.filtered = true
-            }else{
-                this.filtered = false
-            }
-        }
+    val(){
+      if(this.val !== ""){
+          this.filtered = true
+      }else{
+          this.filtered = false
+      }
+    }
 	},
   methods: {
     filter(val){

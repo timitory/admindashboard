@@ -1,8 +1,8 @@
 <template>
   <div class="mt-8">
-    <div class="mt-8 px-6 pt-6 relative shadow-lg bg-white lg:relative">
+    <div class="mt-8 px-6 pt-6 relative shadow-lg bg-white lg:relative lg:pb-8">
         <div class="lg:flex lg:justify-between">
-            <p class="mt-2 mb-4 font-bold text-lg">Manage failed transactions for health cover</p>
+            <p class="mt-2 mb-4 font-bold text-lg">This is the Repayment activities associated with the home content Cover</p>
             <div class="lg:flex lg:gap-4"> 
                 <div class="relative">
                     <input type="text" v-model="searchKeyword" class="block mt-4 rounded bg-blue-100 px-4 lg:pl-10 py-2 w-full outline-none focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
@@ -21,23 +21,26 @@
                     <button @click="showFilter = !showFilter" class="py-2 px-2">Filter by
                         <font-awesome-icon icon="angle-down" class="ml-2"/>
                     </button>
-                    <!-- <div v-if="showFilter" class="filter shadow-lg absolute left-0 bg-white">
-                        <p class="mb-2 cursor-pointer text-sm" @click="filter('start')">Basic</p>
-                        <p class="mb-2 cursor-pointer text-sm" @click="filter('end')">Standard</p>
-                    </div> -->
+                    <div v-if="showFilter" class="filter shadow-lg absolute left-0 bg-white">
+                        <p class="mb-2 cursor-pointer text-sm" @click="filter('start')">Start Date</p>
+                        <p class="mb-2 cursor-pointer text-sm" @click="filter('end')">End Date</p>
+                        <p class="mb-2 cursor-pointer text-sm" @click="filter('repayment')">Repayment Date</p>
+                    </div>
                 </div>
             </div>
-        </div>
-      <div class="overflow-x-auto xl:overflow-x-hidden tablecont pb-8">
+        </div>      
+      <div class="overflow-x-auto xl:overflow-x-hidden tablecont">
         <table v-if="filteredPolicies.length > 0" class="w-full mt-8">
           <thead>
             <tr>
               <th class="font-bold">Firstname</th>
               <th class="font-bold">Lastname</th>
-              <th class="font-bold">Plan</th>
+              <th class="font-bold">Email</th>
+              <th class="font-bold">Phone Number</th>
               <th class="font-bold">Amount</th>
-              <th class="font-bold">Date</th>
-              <th class="font-bold">Reference</th>
+              <th class="font-bold">Start Date</th>
+              <th class="font-bold">End Date</th>
+              <th class="font-bold">Next Repayment</th>
               <th class="font-bold">Action</th>
             </tr>
           </thead>
@@ -45,12 +48,14 @@
             <tr v-for="(policy, index) in filteredPolicies" :key="index" class="border border-solid border-gray-300">
               <td>{{policy.firstname}}</td>
               <td>{{policy.lastname}}</td>
-              <td>{{policy.plan}}</td>
+              <td>{{policy.email}}</td>
+              <td>{{policy.phone}}</td>
               <td>{{policy.amount}}</td>
               <td>{{policy.start}}</td>
-              <td>Reliance_payback_16340678…</td>
+              <td>{{policy.end}}</td>
+              <td>{{policy.end}}</td>
               <td>
-                  <router-link :to="{name: 'ViewPolicy', query: policy}" class="text-green-500 underline">Retry Payment</router-link>
+                  <router-link :to="{name: 'ViewPolicy', query: policy}" class="text-green-500 underline">Transaction Details</router-link>
               </td>
             </tr>
           </tbody>
@@ -59,7 +64,8 @@
           <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
           <p class="mt-4 text-center font-bold text-green-500 font-lg">No records</p>
         </div>
-        <nav  class="mt-8" aria-label="Page navigation example">
+        <!-- v-if="filteredPolicies.length > 0" -->
+        <nav  class="mt-8"  aria-label="Page navigation example">
           <ul class="w-1/2 mx-auto  flex justify-between" style="max-width: 250px">
             <li class="page-item">
               <button type="button" class="inline text-green-500" v-if="page != 1" @click="page--"> Previous </button>
@@ -90,51 +96,61 @@ export default {
       payments :[
       ],
       val: '',
+      sorter: '',
+      endDate: '',
       filtered: false,
       searchKeyword: '',
       showFilter: false,
       page: 1,
       perPage: 20,
       pages: [],
-      policies: []
+      policies: [],
+      unsortedPolicies : []
     }
   },
   computed:{
-    filteredPayments(){
-      return this.paginate( 
-        this.payments.filter((obj)=>{
-          return obj.policy.includes(this.val)
-        })
+    paginatedPolicies(){
+      return this.paginate(
+        this.policies
       )
     },
-    paginatedPolicies(){
-        return this.paginate(
-            this.policies.filter((obj)=>{
-                return obj.type.includes(this.val)
-            })
-        )
-    },
     filteredPolicies(){
-       return  this.paginatedPolicies.filter((policies)=>{
-            return policies.firstname.toLowerCase().includes(this.searchKeyword.toLowerCase()) || policies.lastname.toLowerCase().includes(this.searchKeyword.toLowerCase())
-        })
-    }
+      return  this.paginatedPolicies.filter((policies)=>{
+        return policies.firstname.toLowerCase().includes(this.searchKeyword.toLowerCase()) || policies.lastname.toLowerCase().includes(this.searchKeyword.toLowerCase())
+      })
+    },
+    
   },
   watch: {
 		policies() {
 			this.setPages();
 		},
-        val(){
-            if(this.val !== ""){
-                this.filtered = true
-            }else{
-                this.filtered = false
-            }
-        }
+    sorter(){
+      if(this.sorter == "start"){
+        this.filtered = true
+        this.policies.sort((a, b)=>{
+        let dateA = new Date(a.start)
+        let dateB = new Date(b.start)
+        return (dateB - dateA)
+        })
+          
+      }else if(this.sorter == 'end'){
+        this.filtered = true
+        this.policies.sort((a, b)=>{
+          let dateA = new Date(a.end)
+          let dateB = new Date(b.end)
+          return (dateB - dateA)
+         })
+      }
+      else{
+        this.filtered = false
+        this.policies = this.unsortedPolicies
+      }
+    }
 	},
   methods: {
     filter(val){
-      this.val = val
+      this.sorter = val
       this.page = 1
       // console.log(this.val)
       this.showFilter = false
@@ -155,25 +171,26 @@ export default {
   },
   mounted(){
       this.policies = [
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", amount: '#50,000', status: "Active", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Melosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Home", status: "Active", amount: '#50,000', start: "05-06-2021", end: "05-07-2021", number: "4"},
-        {firstname: "Abiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Home", status: "Inactive",amount: '#50,000', start: "05-06-2021", end: "05-07-2021", number: "2"},
-        {firstname: "Obiwan", lastname: "Telosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Active",amount: '#50,000',  start: "05-06-2021", end: "05-07-2021", number: "10"},
-        {firstname: "Obiwan", lastname: "Delosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021",amount: '#50,000',  end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Home", status: "Active", amount: '#50,000', start: "05-06-2021", end: "05-07-2021", number: "25"},
-        {firstname: "Ebiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Relosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Vehicle", status: "Active",amount: '#50,000',  start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Home", status: "Active",amount: '#50,000',  start: "05-06-2021", end: "05-07-2021", number: "15"},
-        {firstname: "Ubiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "05-06-2021", end: "05-07-2021", number: "18"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Vehicle", status: "Active", amount: '#50,000', start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Gadget", status: "Active",  amount: '#50,000',start: "05-06-2021", end: "05-07-2021", number: "2"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "05-06-2021", end: "05-07-2021", number: "5"},
-        {firstname: "Ebiwan", lastname: "Telosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Vehicle", status: "Active",amount: '#50,000',  start: "05-06-2021", end: "05-07-2021", number: "4"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Active", amount: '#50,000', start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Abiwan", lastname: "Nelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "05-06-2021", end: "05-07-2021", number: "10"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", plan: "Paddy Max", type: "Vehicle", status: "Active", amount: '#50,000', start: "05-06-2021", end: "05-07-2021", number: "3"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", amount: '#50,000', status: "Active", start: "2021-05-06", end: "05-07-2021", number: "20"},
+        {firstname: "Obiwan", lastname: "Melosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", status: "Active", amount: '#50,000', start: "2021-03-02", end: "05-07-2021", number: "4"},
+        {firstname: "Abiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", status: "Inactive",amount: '#50,000', start: "2021-02-01", end: "05-07-2021", number: "2"},
+        {firstname: "Obiwan", lastname: "Telosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Active",amount: '#50,000',  start: "2021-03-04", end: "05-07-2021", number: "10"},
+        {firstname: "Obiwan", lastname: "Delosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-04-30", end: "05-07-2021", number: "20"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", start: "2021-05-06",amount: '#50,000',  end: "05-07-2021", number: "20"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", status: "Active", amount: '#50,000', start: "2021-03-05", end: "05-07-2021", number: "25"},
+        {firstname: "Ebiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-02-08", end: "05-07-2021", number: "20"},
+        {firstname: "Obiwan", lastname: "Relosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", status: "Active",amount: '#50,000',  start: "2021-02-04", end: "05-07-2021", number: "20"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", status: "Active",amount: '#50,000',  start: "2021-06-15", end: "05-07-2021", number: "15"},
+        {firstname: "Ubiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-02-23", end: "05-07-2021", number: "18"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", status: "Active", amount: '#50,000', start: "2021-05-16", end: "05-07-2021", number: "20"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Gadget", status: "Active",  amount: '#50,000',start: "2021-04-13", end: "05-07-2021", number: "2"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-10-24", end: "05-07-2021", number: "5"},
+        {firstname: "Ebiwan", lastname: "Telosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", status: "Active",amount: '#50,000',  start: "2021-04-20", end: "05-07-2021", number: "4"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Active", amount: '#50,000', start: "2021-04-04", end: "05-07-2021", number: "20"},
+        {firstname: "Abiwan", lastname: "Nelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-12-31", end: "05-07-2021", number: "10"},
+        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", status: "Active", amount: '#50,000', start: "2021-11-23", end: "05-07-2021", number: "3"},
       ]
+      this.unsortedPolicies = this.policies
     // .then(res=>{
     //   for(let arr in res.data.data){
     //     this.payments = this.payments.concat(res.data.data[arr])
@@ -240,38 +257,14 @@ th, td {
         height: 30px
     }
   table{
-    table-layout: fixed;
+    /* table-layout: fixed; */
+  }
+  th td{
+      min-width: 180px
   }
   thead th:nth-child(1){
     width: 13%;
     
-  }
-  thead th:nth-child(2){
-    width: 13%;
-    
-  }
-  thead th:nth-child(3){
-    width: 13%;
-    
-  }
-  thead th:nth-child(4){
-    width: 13%;
-    
-  }
-  thead th:nth-child(5){
-    width: 13%; 
-  }
-  thead th:nth-child(6){
-    width: 20%; 
-  }
-  thead th:nth-child(7){
-    width: 13%; 
-  }
-  th, td {
-  /* min-width: 80px */
-  }
-  div.tablecont{
-    max-width: 100%;
   }
   div.tablecont table{
     width: 100%

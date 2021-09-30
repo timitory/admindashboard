@@ -6,17 +6,17 @@
           <img src="@/assets/images/dashboard/Image 9.png" alt="" class="">
           <p class="ml-4 font-bold">Health Cover</p>
         </router-link>
-        <router-link class="link flex rounded py-4 justify-center items-center" to="/app">
+        <router-link class="link flex rounded py-4 justify-center items-center" to="/app/dashboard/vehicle">
           <img src="@/assets/images/dashboard/Group 65.png" alt="" class="">
           <p class="ml-4 font-bold">Vehicle Cover</p>
         </router-link>
-        <router-link class="link flex rounded py-4 justify-center items-center" to="/app">
+        <router-link class="link flex rounded py-4 justify-center items-center" to="/app/dashboard/homecontent">
           <img src="@/assets/images/dashboard/Image 10.png" alt="" class="">
           <p class="ml-4 font-bold">Home Cover</p>
         </router-link>
         <router-link class="link flex rounded py-4 justify-center items-center" to="/app">
           <img src="@/assets/images/dashboard/Image 11.png" alt="" class="">
-          <p class="ml-4 font-bold">Vehicle Cover</p>
+          <p class="ml-4 font-bold">Gadgtet Cover</p>
         </router-link>
       </div>
   </div>

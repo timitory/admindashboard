@@ -94,6 +94,76 @@ const routes = [
         ]
       }, 
       {
+        path: '/app/dashboard/vehicle',
+        redirect: '/app/dashboard/vehicle/dashboard',
+        component: ()=>import('@/views/Vehicle/Vehicle'),
+        children : [
+          {
+            path: '/app/dashboard/vehicle/dashboard',
+            component: ()=>import('@/views/Vehicle/Dashboard')
+          },
+          {
+            path: '/app/dashboard/vehicle/repayments',
+            component: ()=>import('@/views/Vehicle/Repayments')
+          },
+          {
+            path: '/app/dashboard/vehicle/failedtransactions',
+            component: ()=>import('@/views/Vehicle/ManageFailedTransactions')
+          },
+          {
+            path: '/app/dashboard/vehicle/policies',
+            component: ()=>import('@/views/Vehicle/AllPolicies')
+          },
+          {
+            path: '/app/dashboard/vehicle/customers',
+            component: ()=>import('@/views/Vehicle/Customers')
+          },
+          {
+            path: '/app/dashboard/vehicle/reports',
+            component: ()=>import('@/views/Vehicle/Reports')
+          },
+          {
+            path: '/app/dashboard/vehicle/claims',
+            component: ()=>import('@/views/Vehicle/Claims')
+          },
+        ]
+      }, 
+      {
+        path: '/app/dashboard/homecontent',
+        redirect: '/app/dashboard/homecontent/dashboard',
+        component: ()=>import('@/views/Home/Home'),
+        children : [
+          {
+            path: '/app/dashboard/homecontent/dashboard',
+            component: ()=>import('@/views/Home/Dashboard')
+          },
+          {
+            path: '/app/dashboard/homecontent/repayments',
+            component: ()=>import('@/views/Home/Repayments')
+          },
+          {
+            path: '/app/dashboard/homecontent/failedtransactions',
+            component: ()=>import('@/views/Home/ManageFailedTransactions')
+          },
+          {
+            path: '/app/dashboard/homecontent/policies',
+            component: ()=>import('@/views/Home/AllPolicies')
+          },
+          {
+            path: '/app/dashboard/homecontent/customers',
+            component: ()=>import('@/views/Home/Customers')
+          },
+          {
+            path: '/app/dashboard/homecontent/reports',
+            component: ()=>import('@/views/Home/Reports')
+          },
+          {
+            path: '/app/dashboard/homecontent/claims',
+            component: ()=>import('@/views/Home/Claims')
+          },
+        ]
+      }, 
+      {
         path:'/app/dashboard/settings',
         name: 'AccountSettings',
         component: () => import('../views/AccountSettings')

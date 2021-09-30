@@ -2,7 +2,7 @@
   <div class="mt-8">
     <div class="mt-8 px-6 pt-6 relative shadow-lg bg-white lg:relative">
         <div class="lg:flex lg:justify-between">
-            <p class="mt-2 mb-4 font-bold text-lg">Manage failed transactions for health cover</p>
+            <p class="mt-2 mb-4 font-bold text-lg">Manage failed transactions for homecontent cover</p>
             <div class="lg:flex lg:gap-4"> 
                 <div class="relative">
                     <input type="text" v-model="searchKeyword" class="block mt-4 rounded bg-blue-100 px-4 lg:pl-10 py-2 w-full outline-none focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">

@@ -110,14 +110,14 @@ export default {
   },
   computed:{
     paginatedPolicies(){
-        return this.paginate(
-            this.policies
-        )
+      return this.paginate(
+        this.policies
+      )
     },
     filteredPolicies(){
-       return  this.paginatedPolicies.filter((policies)=>{
-            return policies.firstname.toLowerCase().includes(this.searchKeyword.toLowerCase()) || policies.lastname.toLowerCase().includes(this.searchKeyword.toLowerCase())
-        })
+      return  this.paginatedPolicies.filter((policies)=>{
+        return policies.firstname.toLowerCase().includes(this.searchKeyword.toLowerCase()) || policies.lastname.toLowerCase().includes(this.searchKeyword.toLowerCase())
+      })
     },
     
   },
@@ -125,28 +125,28 @@ export default {
 		policies() {
 			this.setPages();
 		},
-        sorter(){
-            if(this.sorter == "start"){
-                this.filtered = true
-                this.policies.sort((a, b)=>{
-                let dateA = new Date(a.start)
-                let dateB = new Date(b.start)
-                return (dateB - dateA)
-                })
-                
-            }else if(this.sorter == 'end'){
-                this.filtered = true
-                this.policies.sort((a, b)=>{
-                let dateA = new Date(a.end)
-                let dateB = new Date(b.end)
-                return (dateB - dateA)
-                 })
-            }
-            else{
-                this.filtered = false
-                this.policies = this.unsortedPolicies
-            }
-        }
+    sorter(){
+      if(this.sorter == "start"){
+        this.filtered = true
+        this.policies.sort((a, b)=>{
+        let dateA = new Date(a.start)
+        let dateB = new Date(b.start)
+        return (dateB - dateA)
+        })
+          
+      }else if(this.sorter == 'end'){
+        this.filtered = true
+        this.policies.sort((a, b)=>{
+          let dateA = new Date(a.end)
+          let dateB = new Date(b.end)
+          return (dateB - dateA)
+         })
+      }
+      else{
+        this.filtered = false
+        this.policies = this.unsortedPolicies
+      }
+    }
 	},
   methods: {
     filter(val){
