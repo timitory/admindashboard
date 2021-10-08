@@ -66,22 +66,23 @@ export default {
   },
   methods:{
     validateForm(){
-      this.$router.push('/app')
-      // this.$store.commit('startLoading')
-      // this.$store.dispatch('loginUser', this.user)
-      // .then(res=>{
-      //   console.log(res)
-      //   this.$store.commit('endLoading')
-      //   this.$router.push('/app')
-      // })
-      // .catch(err=>{
-      //   this.errorMsg = err.data.message
-      //   if(err.data.message == 'Please verify account first'){
-      //     this.$router.push('/verifyotp')
-      //     this.$store.commit('setError', {status: true, msg: err.data.message})
-      //   }
-        // this.$store.commit('setError', {status: true, msg: err.response.data.message})
-      // })
+      // this.$router.push('/app')
+      this.$store.commit('startLoading')
+      this.$store.dispatch('loginUser', this.user)
+      .then(res=>{
+        console.log(res)
+        this.$store.commit('endLoading')
+        this.$router.push('/app')
+      })
+      .catch(err=>{
+        // this.errorMsg = err.data.message
+        // if(err.data.message == 'Please verify account first'){
+        //   this.$router.push('/verifyotp')
+        //   this.$store.commit('setError', {status: true, msg: err.data.message})
+        // }
+        this.$store.commit('endLoading')
+        this.$store.commit('setError', {status: true, msg: err.response.data.message})
+      })
     },
     showPassword(){
       this.$refs.password.type = 'text'
@@ -93,8 +94,10 @@ export default {
     }
   },
   created(){
+    this.$store.commit('endLoading')
     if(this.$store.state.homeCollapse == true){
       this.$store.commit('setHomeCollapse', false)
+      
     }
   }
 }

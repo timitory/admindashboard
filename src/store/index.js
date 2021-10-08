@@ -130,14 +130,26 @@ export default new Vuex.Store({
       return new Promise((resolve, reject)=> {
         axios({url: `${baseURL}/login`, data: user, method: 'POST'})
         .then((res)=>{
-          commit('loginUser')
-          commit('setUser', res.data.data)
-           //Store the token in localstorage
-          const token = res.data.data.token
-          localStorage.setItem('user-token', token) 
-           //Set the authorization header for future API calls
-          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-          resolve(res)
+          console.log(res.data.data.email)
+          const email = res.data.data.email
+          console.log(email)
+          if(email === "admin@pc.ng"){
+            commit('loginUser')
+            commit('setUser', res.data.data)
+            // Store the token in localstorage
+            const token = res.data.data.token
+            localStorage.setItem('user-token', token) 
+            // Set the authorization header for future API calls
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+            resolve(res)
+          }
+          else{
+            reject({response:{
+              data:{
+                message: "Invalid credentials"
+              }
+            }})
+          }
         })
         .catch((err)=>{
           commit('endLoading')
@@ -175,7 +187,7 @@ export default new Vuex.Store({
         commit('endLoading')
         dispatch('logoutUser')
         router.push('/login')
-      }else if(err.response.data.message == "Missing or malformed JWT"){
+      }else if(err.response.data.message == "Missing or malformed JWT" || err.response.data.message == "Admin role required"){
         commit('setError', {status: true, msg: 'Session expired'})
         commit('endLoading')
         dispatch('logoutUser')
