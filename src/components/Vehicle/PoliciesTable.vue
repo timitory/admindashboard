@@ -30,30 +30,28 @@
             </div>
         </div>      
       <div class="overflow-x-auto xl:overflow-x-hidden tablecont">
-        <table v-if="filteredPolicies.length > 0" class="w-full mt-8">
+        <table v-if="paginatedPolicies.length > 0" class="w-full mt-8">
           <thead>
             <tr>
-              <th class="font-bold">Firstname</th>
-              <th class="font-bold">Lastname</th>
+              <th class="font-bold">S/N</th>
+              <th class="font-bold">Customer</th>
               <th class="font-bold">Email</th>
               <th class="font-bold">Phone Number</th>
               <th class="font-bold">Plan</th>
-              <th class="font-bold">Expiry Date</th>
               <th class="font-bold">Next Repayment</th>
               <th class="font-bold">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(policy, index) in filteredPolicies" :key="index" class="border border-solid border-gray-300">
-              <td>{{policy.firstname}}</td>
-              <td>{{policy.lastname}}</td>
-              <td>{{policy.email}}</td>
-              <td>{{policy.phone}}</td>
-              <td>{{policy.plan}}</td>
-              <td>{{policy.end}}</td>
-              <td>{{policy.end}}</td>
+            <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
+              <td>{{index + 1}}</td>
+              <td>{{policy.policy.enrollee.name}}</td>
+              <td>{{policy.policy.enrollee.email}}</td>
+              <td>{{policy.policy.enrollee.phone}}</td>
+              <td>{{policy.policy.vehicle_category}}</td>
+              <td>{{policy.policy.end}}</td>
               <td>
-                  {{policy.status}}
+                  <button @click="view(policy)" class="p-2 bg-green-500 text-white rounded text-sm focus:outline-none">View More</button>
               </td>
             </tr>
           </tbody>
@@ -62,37 +60,42 @@
           <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
           <p class="mt-4 text-center font-bold text-green-500 font-lg">No records</p>
         </div>
-        <!-- v-if="filteredPolicies.length > 0" -->
-        <nav  class="mt-8"  aria-label="Page navigation example">
-          <ul class="w-1/2 mx-auto  flex justify-between" style="max-width: 250px">
-            <li class="page-item">
-              <button type="button" class="inline text-green-500" v-if="page != 1" @click="page--"> Previous </button>
-              <button v-else class="inline text-green-500 opacity-20">Previous</button>
-            </li>
-            <!-- <li class="page-item">
-              <button type="button" class="inline" v-for="pageNumber in pages.slice(page-1, page+5)" :key="pageNumber.id" @click="page = pageNumber"> {{pageNumber}} </button>
-            </li> -->
-            <li class="page-item">
-              <button type="button" @click="page++" v-if="page < pages.length" class="inline text-green-500"> Next </button>
-              <button v-else class="inline text-green-500 opacity-20">Next</button>
-            </li>
-          </ul>
-        </nav>	
-        
+        <div class="mt-8">
+          <t-pagination
+          :total-items="totalRows"
+          :per-page="perPage"
+          :limit="limit"
+          :disabled="disabled"
+          v-model="currentPage"
+          @change="changePage"
+        />
+        </div>
       </div>
     </div>
+    <SinglePolicy v-if="showPolicy" :policy="policy"  @close="showPolicy = false"  @focusout="handleFocusOut"
+        tabindex="0" />
   </div>
 </template>
 
 <script>
 // import {mapState} from "vuex"
-// import axios from "axios"
-// import baseURL from "@/main"
+import axios from "axios"
+import baseURL from "@/main"
+import SinglePolicy from "@/components/Vehicle/SinglePolicy"
+import TPagination from 'vue-tailwind/dist/t-pagination'
 export default {
+  components:{
+    TPagination, SinglePolicy
+  },
   data(){
     return {
-      payments :[
-      ],
+      perPage: 10,
+      totalRows: 0,
+      disabled: false,
+      limit: 5,
+      currentPage: 1,
+      showPolicy: false,
+      policy: {},
       val: '',
       sorter: '',
       endDate: '',
@@ -100,7 +103,6 @@ export default {
       searchKeyword: '',
       showFilter: false,
       page: 1,
-      perPage: 20,
       pages: [],
       policies: [],
       unsortedPolicies : []
@@ -108,17 +110,15 @@ export default {
   },
   computed:{
     paginatedPolicies(){
-        return this.paginate(
-            this.policies.filter((obj)=>{
-              return obj.status.includes(this.sorter)
-            })
-        )
+      return this.paginate(
+        this.policies
+      )
     },
-    filteredPolicies(){
-       return  this.paginatedPolicies.filter((policies)=>{
-            return policies.firstname.toLowerCase().includes(this.searchKeyword.toLowerCase()) || policies.lastname.toLowerCase().includes(this.searchKeyword.toLowerCase())
-        })
-    },
+    // filteredPolicies(){
+    //    return  this.paginatedPolicies.filter((policies)=>{
+    //         return policies.firstname.toLowerCase().includes(this.searchKeyword.toLowerCase()) || policies.lastname.toLowerCase().includes(this.searchKeyword.toLowerCase())
+    //     })
+    // },
     
   },
   watch: {
@@ -132,7 +132,7 @@ export default {
           this.filtered = false
           this.policies = this.unsortedPolicies
       }
-    }
+    },
 	},
   methods: {
     filter(val){
@@ -141,50 +141,55 @@ export default {
       // console.log(this.val)
       this.showFilter = false
     },
+    view(obj){
+      this.policy = obj
+      this.showPolicy = true
+    },
+    handleFocusOut(){
+      this.showPolicy = false
+    },
     setPages () {
-        let numberOfPages = Math.ceil(this.policies.length / this.perPage);
-        for (let index = 1; index <= numberOfPages; index++) {
-            this.pages.push(index);
-        }
-	},
+      let numberOfPages = Math.ceil(this.policies.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+         this.pages.push(index);
+      }
+    },
     paginate (policies) {
         let page = this.page;
         let perPage = this.perPage;
         let from = (page * perPage) - perPage;
         let to = (page * perPage);
         return  policies.slice(from, to);
-    }
+    },
+    changePage(num){
+      console.log(num)
+      this.$store.commit('startLoading')
+      axios.get(`${baseURL}/admin/vehicle/policy`, {params :{page : num}})
+      .then(res=>{
+        console.log(res.data.data)
+        this.totalRows = res.data.data.totalRecord
+        this.policies = res.data.data.records
+        this.perPage = res.data.data.record_per_page
+        this.$store.commit('endLoading')
+      })
+      .catch(err=>{
+        this.$store.dispatch('handleError', err)
+      })
+    },
   },
   mounted(){
-      this.policies = [
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", amount: '#50,000', status: "Active", start: "2021-05-06", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Melosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", status: "Active", amount: '#50,000', start: "2021-03-02", end: "05-07-2021", number: "4"},
-        {firstname: "Abiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", status: "Inactive",amount: '#50,000', start: "2021-02-01", end: "05-07-2021", number: "2"},
-        {firstname: "Obiwan", lastname: "Telosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Active",amount: '#50,000',  start: "2021-03-04", end: "05-07-2021", number: "10"},
-        {firstname: "Obiwan", lastname: "Delosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-04-30", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", start: "2021-05-06",amount: '#50,000',  end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", status: "Active", amount: '#50,000', start: "2021-03-05", end: "05-07-2021", number: "25"},
-        {firstname: "Ebiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-02-08", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Relosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", status: "Active",amount: '#50,000',  start: "2021-02-04", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", status: "Active",amount: '#50,000',  start: "2021-06-15", end: "05-07-2021", number: "15"},
-        {firstname: "Ubiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-02-23", end: "05-07-2021", number: "18"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", status: "Active", amount: '#50,000', start: "2021-05-16", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Gadget", status: "Active",  amount: '#50,000',start: "2021-04-13", end: "05-07-2021", number: "2"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-10-24", end: "05-07-2021", number: "5"},
-        {firstname: "Ebiwan", lastname: "Telosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", status: "Active",amount: '#50,000',  start: "2021-04-20", end: "05-07-2021", number: "4"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Active", amount: '#50,000', start: "2021-04-04", end: "05-07-2021", number: "20"},
-        {firstname: "Abiwan", lastname: "Nelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-12-31", end: "05-07-2021", number: "10"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", status: "Active", amount: '#50,000', start: "2021-11-23", end: "05-07-2021", number: "3"},
-      ]
-      this.unsortedPolicies = this.policies
-    // .then(res=>{
-    //   for(let arr in res.data.data){
-    //     this.payments = this.payments.concat(res.data.data[arr])
-    //   }
-    // })
-    // .catch(err=>{
-    //   this.$store.dispatch('handleError', err)
-    // })
+    this.$store.commit('startLoading')
+    axios.get(`${baseURL}/admin/vehicle/policy`)
+    .then(res =>{
+      console.log(res.data.data)
+      this.totalRows = res.data.data.totalRecord
+      this.policies = res.data.data.records
+      this.perPage = res.data.data.record_per_page
+      this.$store.commit('endLoading')
+    })
+    .catch(err=>{
+      this.$store.dispatch('handleError', err)
+    })
   }
 }
 </script>
@@ -250,7 +255,31 @@ th, td {
       min-width: 180px
   }
   thead th:nth-child(1){
-    width: 13%;
+    width: 5%;
+    
+  }
+  thead th:nth-child(2){
+    width: 20%;
+    
+  }
+  thead th:nth-child(3){
+    width: 20%;
+    
+  }
+  thead th:nth-child(4){
+    width: 13.8%;
+    
+  }
+  thead th:nth-child(5){
+    width: 13.8%;
+    
+  }
+  thead th:nth-child(6){
+    width: 13.8%;
+    
+  }
+  thead th:nth-child(7){
+    width: 13.8%;
     
   }
   div.tablecont table{

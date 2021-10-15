@@ -18,11 +18,20 @@
           </div>
           
       </div>
-      <div class="mt-10 px-2 py-3 rounded" style="background-color: rgba(141,216,181, 0.18)">
+      <div class="mt-10 px-2 py-3 rounded relative" style="background-color: rgba(141,216,181, 0.18)">
+          <div class="absolute right-10 top-4">
+              <select class="w-full" v-model="year">
+                  <option value="">2021</option>
+                  <option value="">2020</option>
+                  <option value="">2019</option>
+                  <option value="">2018</option>
+              </select>
+          </div>
           <div class="bg-white rounded">
               <LineChart />
           </div>
       </div>
+      <Table />
   </div>
 </template>
 
@@ -30,9 +39,20 @@
 import Stats from "@/components/Health/ReportStats"
 import DoughnutChart from "@/components/Health/DoughnutChart"
 import LineChart from "@/components/Health/LineChart"
+import Table from "@/components/Health/ReportTable"
 export default {
     components:{
-        Stats, DoughnutChart, LineChart
+        Stats, DoughnutChart, LineChart, Table
+    },
+    data(){
+        return {
+            year : ''
+        }
+    },
+    watch:{
+        year(){
+
+        }
     }
 }
 </script>

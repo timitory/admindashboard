@@ -38,10 +38,9 @@
               <th class="font-bold">Email</th>
               <th class="font-bold">Phone Number</th>
               <th class="font-bold">Amount</th>
-              <th class="font-bold">Start Date</th>
-              <th class="font-bold">End Date</th>
-              <th class="font-bold">Next Repayment</th>
+              <th class="font-bold">Due Date</th>
               <th class="font-bold">Action</th>
+              <th class="font-bold">View</th>
             </tr>
           </thead>
           <tbody>
@@ -51,11 +50,12 @@
               <td>{{policy.email}}</td>
               <td>{{policy.phone}}</td>
               <td>{{policy.amount}}</td>
-              <td>{{policy.start}}</td>
-              <td>{{policy.end}}</td>
               <td>{{policy.end}}</td>
               <td>
-                  <router-link :to="{name: 'ViewPolicy', query: policy}" class="text-green-500 underline">Transaction Details</router-link>
+                <router-link :to="{name: 'ViewPolicy', query: policy}" class="text-green-500 underline">Transaction Details</router-link>
+              </td>
+              <td>
+                <router-link :to="{name: '', query: policy}" class="text-green-500 underline">Charge History</router-link>
               </td>
             </tr>
           </tbody>
@@ -252,15 +252,15 @@ th, td {
     height: 25px
 }
 @media only screen and (min-width: 1024px) {
-    .svg{
-        width: 30px;
-        height: 30px
-    }
+  .svg{
+      width: 30px;
+      height: 30px
+  }
   table{
     /* table-layout: fixed; */
   }
   th td{
-      min-width: 180px
+    min-width: 180px
   }
   thead th:nth-child(1){
     width: 13%;

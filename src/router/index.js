@@ -15,11 +15,11 @@ const routes = [
     name: 'Dashboard',
     redirect: '/app/dashboard',
     component: () => import('../views/Dashboard.vue'),
-    // beforeEnter: (to, from, next)=>{
-    //   const token = localStorage.getItem('user-token')
-    //   if (to.name !== 'Login'  && !token) next({ name: 'Login' })
-    //   else next()
-    // },
+    beforeEnter: (to, from, next)=>{
+      const token = localStorage.getItem('user-token')
+      if (to.name !== 'Login'  && !token) next({ name: 'Login' })
+      else next()
+    },
     children: [
       {
         path: '/app/dashboard',
@@ -62,6 +62,7 @@ const routes = [
         name: 'ViewPolicy',
         component: () => import('@/views/Menu/ViewPolicy')
       },
+
       {
         path: '/app/dashboard/health',
         redirect: '/app/dashboard/health/dashboard',
@@ -125,6 +126,11 @@ const routes = [
           {
             path: '/app/dashboard/vehicle/claims',
             component: ()=>import('@/views/Vehicle/Claims')
+          },
+          {
+            path: '/app/dashboard/vehicle/repayment/chargehistory',
+            name: 'ChargeHistory',
+            component: () => import('@/views/Vehicle/ChargeHistory'),
           },
         ]
       }, 

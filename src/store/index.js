@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import createPersistedState from "vuex-persistedstate";
 import axios from 'axios'
 import baseURL from "@/main"
-import router from "vue-router"
+import router from "../router/index"
 
 Vue.use(Vuex)
 
@@ -12,20 +12,13 @@ export default new Vuex.Store({
     loading : false,
     showSuccess: false,
     showError: false,
-    addAddress : false,
     errorMsg: 'Error',
     successMsg: 'Success',
     userState: '',
     user: {},
-    health_plan_id: '',
-    vehicle_category_id: '',
-    home_plan_id: '',
     enrollee: {},
-    beneficiaries: [],
-    beneficiary: {},
-    beneficiaryCount: '',
-    dependants: [],
     view: '',
+    repayment: {},
     vehicleQuote: {},
     collapse: false,
     homeCollapse: false,
@@ -38,32 +31,7 @@ export default new Vuex.Store({
     endLoading(state){
       state.loading  = false
     },
-    setBeneficiaries(state, payload){
-      state.beneficiaries = payload
-    },
-    setBeneficiary(state, payload){
-      state.beneficiary = payload
-    },
-    setBeneficiaryCount(state, payload){
-      state.beneficiaryCount = payload 
-    },
-    setHealthPlanId(state, payload){
-      state.health_plan_id = payload
-    },
-    setHomePlanId(state, payload){
-      state.home_plan_id = payload
-    },
-    setVehicleCategoryId(state, payload){
-      state.vehicle_category_id = payload
-    },
-    setDependants(state, payload){
-      state.dependants = payload
-      // console.log(state.dependants)
-    },
-    setEnrollee(state, payload){
-      state.enrollee = payload
-      // console.log(state.enrollee)
-    },
+   
     changeview(state, val){
       state.view = val
     },
@@ -102,13 +70,8 @@ export default new Vuex.Store({
     logoutUser(state){
       state.userState = ''
     },
-    saveQuote(state, payload){
-      state.vehicleQuote = payload
-    },
-    // to keep track of where the user is coming from in order to redirect them back after adding address
-    addAddress(state, val){
-      state.addAddress = val
-      console.log(state.addAddress)
+    setRepayment(state, payload){
+      state.repayment = payload
     }
   },
   actions: {
@@ -182,12 +145,12 @@ export default new Vuex.Store({
     },
     handleError({commit, dispatch}, err){
       console.log(err.response.data.message)
-      if(err.response.data.message == "Invalid or expired JWT"){
+      if(err.response.data.message == "Invalid or expired JWT" || err.response.data.message == "Missing or malformed JWT"){
         commit('setError', {status: true, msg: 'Session expired'})
         commit('endLoading')
         dispatch('logoutUser')
         router.push('/login')
-      }else if(err.response.data.message == "Missing or malformed JWT" || err.response.data.message == "Admin role required"){
+      }else if(err.response.data.message == "Admin role required"){
         commit('setError', {status: true, msg: 'Session expired'})
         commit('endLoading')
         dispatch('logoutUser')
