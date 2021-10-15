@@ -6,12 +6,14 @@
         <p class="mt-2">See below overall information on policies purchased by users.</p>
     </div>
     <router-view></router-view>
+    <Policies />
   </div>
 </template>
 
 <script>
+import Policies from "@/components/Policies"
 export default {
-
+  components:{Policies}
 }
 </script>
 
