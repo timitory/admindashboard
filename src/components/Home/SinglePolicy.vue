@@ -6,37 +6,42 @@
               <div class="flex justify-between">
                 <div>
                   <p class="text-sm mt-4 cursor-pointer font-bold text-lg">
-                    Sponsor:  <span class="font-bold text-green-500">{{policy.user.firstname}} {{policy.user.lastname}}</span>
+                    About Home Policy
                   </p>
                 </div>
                 <font-awesome-icon icon="times-circle" class="cursor-pointer text-red-500 text-base lg:text-xl" @click="$emit('close')" />
               </div>
               <div class="mt-8">
                 <p class="font-bold">Policy Number</p>
-                <p class="mt-2 lg:mt-4 text-green-500 font-bold">{{policy.policy_number}}</p>
+                <p class="mt-2 lg:mt-4 text-green-500 font-bold">{{policy.policy.policy_number}}</p>
             </div>
             <ul class="mt-8">
                 <li>
-                    <p>Sponsor Email</p>
-                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.user.email}}</p>
+                    <p>Enrollee</p>
+                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.policy.name}}</p>
                 </li>
                 <li>
-                    <p>Sponsor Phone</p>
-                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.user.phone}}</p>
+                    <p>Meter Number</p>
+                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.policy.meterno}}</p>
                 </li>
                 <li>
-                    <p>Vehicle Plates</p>
-                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.plate_number}}</p>
+                    <p>Plan</p>
+                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.policy.plan}}</p>
                 </li>
                 <li>
-                    <p>Vehicle value</p>
-                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.vehicle_value}}</p>
-                </li>
-                <li>
-                    <p>Policy Type</p>
-                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.vehicle_category}}</p>
+                    <p>Payment Frequency</p>
+                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.policy.payment_frequency}}</p>
                 </li>
             </ul>
+            <p class="mt-4 font-bold">Home content items:</p>
+            <ul>
+                <li class="mt-2"></li>
+            </ul>
+            <div class="mt-4">
+                <p class="font-bold">Premium: <span class="text-green-500 text-lg">{{policy.policy.amount}}</span></p>
+            </div>
+            <hr class="mt-6"> 
+            <a :href="policy.policy.certificate_no" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Certificate</a>
             </div>
           </div>
       </div>

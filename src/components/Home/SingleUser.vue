@@ -25,12 +25,12 @@
                     <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.user.phone}}</p>
                 </li>
                 <li>
-                    <p>Vehicle Plates</p>
-                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.plate_number}}</p>
+                    <p>Meter No</p>
+                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.meter_no}}</p>
                 </li>
                 <li>
-                    <p>Vehicle value</p>
-                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.vehicle_value}}</p>
+                    <p>Insurance Premium</p>
+                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.premium}}</p>
                 </li>
                 <li>
                     <p>Policy Type</p>

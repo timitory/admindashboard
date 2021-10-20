@@ -1,7 +1,7 @@
 <template>
    <div class="l-modal">
       <div class="loading-modal w-full">
-          <div class="loader bg-white mx-auto py-6 pb-8 px-10 relative">
+          <div class="loader bg-white mx-auto py-6 pb-8 px-10 relative" v-on-clickaway="close">
             <font-awesome-icon icon="times-circle" class="absolute  cursor-pointer text-red-500 text-xl right-2 top-2" @click="$store.commit('setSuccess', {status: false, msg: 'Success'})"/>
             <svg class="block w-full" width="80" height="80" viewBox="0 0 98 98" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M70.2622 35.9049C68.6697 34.3103 66.0809 34.3103 64.4884 35.9049L46.9586 53.4326L39.6372 46.1132C38.0447 44.5187 35.4559 44.5187 33.8634 46.1132C32.2688 47.7078 32.2688 50.2925 33.8634 51.8871L44.0717 62.0954C44.868 62.8937 45.9133 63.2918 46.9586 63.2918C48.004 63.2918 49.0493 62.8937 49.8456 62.0954L70.2622 41.6787C71.8568 40.0842 71.8568 37.4994 70.2622 35.9049Z" fill="#52B95E"/>
@@ -14,11 +14,17 @@
 </template>
 
 <script>
-
+import { mixin as clickaway } from 'vue-clickaway';
 export default {
+  mixins: [ clickaway ],
   computed:{
     msg(){
       return this.$store.state.successMsg
+    }
+  },
+  methods:{
+    close(){
+     this.$store.commit('setSuccess', {status: false, msg: 'Success'}) 
     }
   }
 }

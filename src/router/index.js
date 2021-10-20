@@ -129,7 +129,7 @@ const routes = [
           },
           {
             path: '/app/dashboard/vehicle/repayment/chargehistory',
-            name: 'ChargeHistory',
+            name: 'VehicleChargeHistory',
             component: () => import('@/views/Vehicle/ChargeHistory'),
           },
         ]
@@ -166,6 +166,11 @@ const routes = [
           {
             path: '/app/dashboard/homecontent/claims',
             component: ()=>import('@/views/Home/Claims')
+          },
+          {
+            path: '/app/dashboard/homecontent/repayment/chargehistory',
+            name: 'HomeChargeHistory',
+            component: () => import('@/views/Home/ChargeHistory'),
           },
         ]
       }, 

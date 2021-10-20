@@ -16,7 +16,7 @@
         </router-link>
         <router-link class="link flex rounded py-4 justify-center items-center" to="/app">
           <img src="@/assets/images/dashboard/Image 11.png" alt="" class="">
-          <p class="ml-4 font-bold">Gadgtet Cover</p>
+          <p class="ml-4 font-bold">Gadget Cover</p>
         </router-link>
       </div>
   </div>

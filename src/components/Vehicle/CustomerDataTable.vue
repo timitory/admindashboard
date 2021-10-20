@@ -49,7 +49,7 @@
               <td>{{policy.enrollee.phone}}</td>
               <td>{{policy.enrollee.address}}</td>
               <td>
-               <button @click="viewUser(policy)" class="text-green-500 underline outline-none focus:outline-none">View User</button>
+               <button @click="viewUser(policy)" class="text-green-500 underline outline-none focus:outline-none">View sponsor</button>
               </td>
             </tr>
           </tbody>
@@ -144,7 +144,7 @@ export default {
     changePage(num){
       console.log(num)
       this.$store.commit('startLoading')
-      axios.get(`${baseURL}/admin/vehicle/repayments`, {params :{page : num}})
+      axios.get(`${baseURL}/admin/vehicle/users`, {params :{page : num}})
       .then(res=>{
         console.log(res.data.data)
         this.totalRows = res.data.data.totalRecord
