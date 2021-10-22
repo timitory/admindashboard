@@ -32,7 +32,7 @@
       <div class="navlist px-3 flex flex-col gap-12 mt-12" v-show="$store.state.collapse">
         <p class="text-white text-sm" style="margin-top: 20px">Admin</p>
         <router-link to="/app/dashboard/" class="block py-4 text-sm" :class="[$store.state.view == 'dashboard' ? 'text-green-700': 'text-white']">Dashboard</router-link>
-        <router-link to="/app/dashboard/settings" class="block py-4 text-sm" :class="[$store.state.view == 'settings' ? 'text-green-700': 'text-white']">Wallet</router-link>
+        <router-link to="/app/dashboard/" class="block py-4 text-sm" :class="[$store.state.view == 'settings' ? 'text-green-700': 'text-white']">Messages</router-link>
         <p @click="logout" class="cursor-pointer block py-4 text-sm text-white">Logout</p>
       </div>
     </transition>
