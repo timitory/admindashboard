@@ -34,7 +34,7 @@
                 </li>
                 <li>
                     <p>Policy Type</p>
-                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.vehicle_category}}</p>
+                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.plan}}</p>
                 </li>
             </ul>
             </div>

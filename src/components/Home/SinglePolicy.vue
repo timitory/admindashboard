@@ -15,7 +15,7 @@
                 <p class="font-bold">Policy Number</p>
                 <p class="mt-2 lg:mt-4 text-green-500 font-bold">{{policy.policy.policy_number}}</p>
             </div>
-            <ul class="mt-8">
+            <ul class="list mt-8">
                 <li>
                     <p>Enrollee</p>
                     <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.policy.name}}</p>
@@ -33,9 +33,12 @@
                     <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.policy.payment_frequency}}</p>
                 </li>
             </ul>
-            <p class="mt-4 font-bold">Home content items:</p>
-            <ul>
-                <li class="mt-2"></li>
+            <p class="my-4 font-bold">Insured Home items:</p>
+            <ul class="items">
+                <li v-for="(item, index) in policy.policy_item" :key="index">
+                    <p>{{item.name}}</p>
+                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{item.amount}}</p>
+                </li>
             </ul>
             <div class="mt-4">
                 <p class="font-bold">Premium: <span class="text-green-500 text-lg">{{policy.policy.amount}}</span></p>
@@ -65,6 +68,9 @@ export default {
     },
     directives: {
         onClickaway: onClickaway,
+    },
+    mounted(){
+        console.log(this.policy)
     }
 }
 </script>
@@ -82,7 +88,7 @@ li{
     margin-bottom: 20px
 }
 @media only screen and (min-width: 1024px){
-    ul{
+    .list{
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
@@ -91,6 +97,10 @@ li{
         flex: 0 0 25%
         /* width: 20%;
         margin: 0 2.5% */
+    }
+    .items{
+        display: flex;
+        flex-wrap: wrap;
     }
 }
 </style>

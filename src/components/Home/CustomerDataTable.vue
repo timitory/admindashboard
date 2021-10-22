@@ -44,10 +44,10 @@
           <tbody>
             <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
-              <td>{{policy.enrollee.firstname}} {{policy.enrollee.lastname}}</td>
-              <td>{{policy.enrollee.email}}</td>
-              <td>{{policy.enrollee.phone}}</td>
-              <td>{{policy.enrollee.address}}</td>
+              <td>{{policy.firstname}} {{policy.lastname}}</td>
+              <td>{{policy.email}}</td>
+              <td>{{policy.phone}}</td>
+              <td>{{policy.address}}</td>
               <td>
                <button @click="viewUser(policy)" class="text-green-500 underline outline-none focus:outline-none">View sponsor</button>
               </td>
