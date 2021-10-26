@@ -38,6 +38,7 @@
               <th class="font-bold">Email</th>
               <th class="font-bold">Phone Number</th>
               <th class="font-bold">Plan</th>
+              <th class="font-bold">Status</th>
               <th class="font-bold">Next Repayment</th>
               <th class="font-bold">Action</th>
             </tr>
@@ -49,6 +50,7 @@
               <td>{{policy.policy.enrollee.email}}</td>
               <td>{{policy.policy.enrollee.phone}}</td>
               <td>{{policy.policy.vehicle_category}}</td>
+              <td>{{policy.policy.approval_status}}</td>
               <td>{{policy.policy.end}}</td>
               <td>
                   <button @click="view(policy)" class="p-2 bg-green-500 text-white rounded text-sm focus:outline-none">View More</button>
@@ -267,19 +269,23 @@ th, td {
     
   }
   thead th:nth-child(4){
-    width: 13.8%;
+    width: 11%;
     
   }
   thead th:nth-child(5){
-    width: 13.8%;
+    width: 11%;
     
   }
   thead th:nth-child(6){
-    width: 13.8%;
+    width: 11%;
     
   }
   thead th:nth-child(7){
-    width: 13.8%;
+    width: 11%;
+    
+  }
+  thead th:nth-child(8){
+    width: 11%;
     
   }
   div.tablecont table{
