@@ -12,19 +12,15 @@
                     </svg>
                 </div>
                 <div class="items-center flex text-sm mt-4 relative border border-solid">
-                    <svg class="cursor-pointer" @click="sorter = ''" v-if="filtered" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="red" d="M8.41417 0.414185L6.99995 1.8284L8.17162 3.00006H4C3.447 3.00006 3 3.44706 3 4.00006V6.59006C3 7.11306 3.213 7.62706 3.583 7.99706L9 13.4141L9 21.0001C9 21.3471 9.18 21.6681 9.475 21.8511C9.635 21.9501 9.817 22.0001 10 22.0001C10.153 22.0001 10.306 21.9651 10.447 21.8951L14.447 19.8951C14.786 19.7251 15 19.3791 15 19.0001L15 13.4141L16.7928 11.6213L19.7279 14.5563L21.1421 13.1421L8.41417 0.414185ZM15.3788 10.2073L13.293 12.2931C13.105 12.4801 13 12.7341 13 13.0001L13 18.3821L11 19.3821V13.0001C11 12.7341 10.895 12.4801 10.707 12.2931L5 6.59006V5.00006L10.1716 5.00006L15.3788 10.2073Z" ></path>
-                        <path fill="red" d="M20 3.00006H13.8284L15.8284 5.00006H19.001L19.003 6.58306L18.2072 7.37885L19.6212 8.79285L20.417 7.99706C20.787 7.62706 21 7.11306 21 6.59006V4.00006C21 3.44706 20.553 3.00006 20 3.00006Z" ></path>
-                    </svg>
-                    <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path  d="M20 3H4C3.447 3 3 3.447 3 4V6.59C3 7.113 3.213 7.627 3.583 7.997L9 13.414V21C9 21.347 9.18 21.668 9.475 21.851C9.635 21.95 9.817 22 10 22C10.153 22 10.306 21.965 10.447 21.895L14.447 19.895C14.786 19.725 15 19.379 15 19V13.414L20.417 7.997C20.787 7.627 21 7.113 21 6.59V4C21 3.447 20.553 3 20 3ZM13.293 12.293C13.105 12.48 13 12.734 13 13V18.382L11 19.382V13C11 12.734 10.895 12.48 10.707 12.293L5 6.59V5H19.001L19.003 6.583L13.293 12.293Z" fill="#2E3A59"></path>
                     </svg>
                     <button @click="showFilter = !showFilter" class="py-2 px-2">Filter by
                         <font-awesome-icon icon="angle-down" class="ml-2"/>
                     </button>
                     <div v-if="showFilter" class="filter shadow-lg absolute left-0 bg-white">
-                        <p class="mb-2 cursor-pointer text-sm" @click="filter('Active')">Active</p>
-                        <p class="mb-2 cursor-pointer text-sm" @click="filter('Inactive')">Inactive</p>
+                        <p class="mb-2 cursor-pointer text-sm" @click="filter('plan')">By Plan</p>
+                        <p class="mb-2 cursor-pointer text-sm" @click="filter('status')">By Status</p>
                     </div>
                 </div>
             </div>
@@ -104,7 +100,6 @@ export default {
       page: 1,
       pages: [],
       policies: [],
-      unsortedPolicies : []
     }
   },
   computed:{
@@ -113,31 +108,15 @@ export default {
         this.policies
       )
     },
-    // filteredPolicies(){
-    //    return  this.paginatedPolicies.filter((policies)=>{
-    //         return policies.firstname.toLowerCase().includes(this.searchKeyword.toLowerCase()) || policies.lastname.toLowerCase().includes(this.searchKeyword.toLowerCase())
-    //     })
-    // },
-    
   },
   watch: {
 		policies() {
 			this.setPages();
 		},
-    sorter(){
-      if(this.sorter !== ""){
-          this.filtered = true
-      }else{
-          this.filtered = false
-          this.policies = this.unsortedPolicies
-      }
-    },
 	},
   methods: {
     filter(val){
-      this.sorter = val
-      this.page = 1
-      // console.log(this.val)
+      console.log(val)
       this.showFilter = false
     },
     view(obj){
