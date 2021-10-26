@@ -7,9 +7,9 @@ export default {
     this.renderChart(
       {
         labels: [
-          "Home 1",
-          "Home 2",
-          "Home 3",
+          "Gold",
+          "Silver",
+          "Bronze",
         ],
         datasets: [
           {

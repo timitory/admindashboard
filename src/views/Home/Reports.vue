@@ -23,6 +23,7 @@
               <LineChart />
           </div>
       </div>
+      <Table :perPage="perPage" :totalRows="totalRows" :policies="policies" />
   </div>
 </template>
 
@@ -30,9 +31,39 @@
 import Stats from "@/components/Home/ReportStats"
 import DoughnutChart from "@/components/Home/DoughnutChart"
 import LineChart from "@/components/Home/LineChart"
+import Table from "@/components/Home/ReportsTable"
+import axios from "axios"
+import baseURL from "@/main"
 export default {
     components:{
-        Stats, DoughnutChart, LineChart
+        Stats, DoughnutChart, LineChart, Table
+    },
+     data(){
+        return {
+            year: '',
+            perPage: 10,
+            totalRows: 0,
+            policies: []
+        }
+    },
+    watch:{
+        year(){
+
+        }
+    },
+    mounted(){
+        this.$store.commit('startLoading')
+        axios.get(`${baseURL}/admin/homecontent/policy`)
+        .then(res =>{
+        console.log(res.data.data)
+        this.totalRows = res.data.data.totalRecord
+        this.policies = res.data.data.records
+        this.perPage = res.data.data.record_per_page
+        this.$store.commit('endLoading')
+        })
+        .catch(err=>{
+        this.$store.dispatch('handleError', err)
+        })
     }
 }
 </script>

@@ -18,11 +18,20 @@
           </div>
           
       </div>
-      <div class="mt-10 px-2 py-3 rounded" style="background-color: rgba(141,216,181, 0.18)">
+      <div class="mt-10 px-2 py-3 relative rounded" style="background-color: rgba(141,216,181, 0.18)">
+           <div class="absolute right-10 top-4">
+              <select class="w-full" v-model="year">
+                  <option value="">2021</option>
+                  <option value="">2020</option>
+                  <option value="">2019</option>
+                  <option value="">2018</option>
+              </select>
+          </div>
           <div class="bg-white rounded">
               <LineChart />
           </div>
       </div>
+      <Table :perPage="perPage" :totalRows="totalRows" :policies="policies" />
   </div>
 </template>
 
@@ -30,9 +39,39 @@
 import Stats from "@/components/Vehicle/ReportStats"
 import DoughnutChart from "@/components/Vehicle/DoughnutChart"
 import LineChart from "@/components/Vehicle/LineChart"
+import Table from "@/components/Vehicle/ReportsTable"
+import axios from "axios"
+import baseURL from "@/main"
 export default {
     components:{
-        Stats, DoughnutChart, LineChart
+        Stats, DoughnutChart, LineChart, Table
+    },
+    data(){
+        return {
+            year: '',
+            perPage: 10,
+            totalRows: 0,
+            policies: []
+        }
+    },
+    watch:{
+        year(){
+
+        }
+    },
+    mounted(){
+        this.$store.commit('startLoading')
+        axios.get(`${baseURL}/admin/vehicle/policy`)
+        .then(res =>{
+        console.log(res.data.data)
+        this.totalRows = res.data.data.totalRecord
+        this.policies = res.data.data.records
+        this.perPage = res.data.data.record_per_page
+        this.$store.commit('endLoading')
+        })
+        .catch(err=>{
+        this.$store.dispatch('handleError', err)
+        })
     }
 }
 </script>
