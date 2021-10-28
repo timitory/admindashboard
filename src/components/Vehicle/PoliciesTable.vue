@@ -34,8 +34,8 @@
               <th class="font-bold">Email</th>
               <th class="font-bold">Phone Number</th>
               <th class="font-bold">Plan</th>
-              <th class="font-bold">Status</th>
-              <th class="font-bold">Next Repayment</th>
+              <th class="font-bold">Approval Status</th>
+              <th class="font-bold">View Repayments</th>
               <th class="font-bold">Action</th>
             </tr>
           </thead>
@@ -47,9 +47,11 @@
               <td>{{policy.policy.enrollee.phone}}</td>
               <td>{{policy.policy.vehicle_category}}</td>
               <td>{{policy.policy.approval_status}}</td>
-              <td>{{policy.policy.end}}</td>
               <td>
-                  <button @click="view(policy)" class="p-2 bg-green-500 text-white rounded text-sm focus:outline-none">View More</button>
+                <button @click="viewRepayment(policy)" class="text-green-500 underline outline-none focus:outline-none">View</button>
+              </td>
+              <td>
+                  <button @click="view(policy)" class="p-2 bg-green-500 text-white rounded text-sm focus:outline-none">Details</button>
               </td>
             </tr>
           </tbody>
@@ -58,7 +60,7 @@
           <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
           <p class="mt-4 text-center font-bold text-green-500 font-lg">No records</p>
         </div>
-        <div class="mt-8">
+        <div class="my-8">
           <t-pagination
           :total-items="totalRows"
           :per-page="perPage"
@@ -70,8 +72,8 @@
         </div>
       </div>
     </div>
-    <SinglePolicy v-if="showPolicy" :policy="policy"  @close="showPolicy = false"  @focusout="handleFocusOut"
-        tabindex="0" />
+    <SinglePolicy v-if="showPolicy" :policy="policy"  @close="showPolicy = false" />
+    <Repayments v-if="showRepayment" :policy="policy" @close="showRepayment = false"/>
   </div>
 </template>
 
@@ -80,10 +82,11 @@
 import axios from "axios"
 import baseURL from "@/main"
 import SinglePolicy from "@/components/Vehicle/SinglePolicy"
+import Repayments from "@/components/Vehicle/ViewRepayment"
 import TPagination from 'vue-tailwind/dist/t-pagination'
 export default {
   components:{
-    TPagination, SinglePolicy
+    TPagination, SinglePolicy, Repayments
   },
   data(){
     return {
@@ -93,6 +96,7 @@ export default {
       limit: 5,
       currentPage: 1,
       showPolicy: false,
+      showRepayment: false,
       policy: {},
       val: '',
       sorter: '',
@@ -126,9 +130,11 @@ export default {
       this.policy = obj
       this.showPolicy = true
     },
-    handleFocusOut(){
-      this.showPolicy = false
+    viewRepayment(obj){
+      this.policy = obj
+      this.showRepayment = true
     },
+
     setPages () {
       let numberOfPages = Math.ceil(this.policies.length / this.perPage);
       for (let index = 1; index <= numberOfPages; index++) {

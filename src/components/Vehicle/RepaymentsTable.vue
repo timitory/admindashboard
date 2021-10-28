@@ -52,9 +52,6 @@
               <td>{{policy.amount}}</td>
               <td>{{policy.end}}</td>
               <td :class="[policy.status == 'Paid' ? 'text-green-500' : 'text-yellow-500']">{{policy.status}}</td>
-              <!-- <td>
-                <router-link :to="{name: 'ViewPolicy', query: policy}" class="text-green-500 underline">Transaction Details</router-link>
-              </td> -->
               <td v-if="policy.charge_history">
                <button @click="viewHistory(policy)" class="text-green-500 underline outline-none focus:outline-none">Charge history</button>
               </td>
@@ -69,8 +66,7 @@
           <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
           <p class="mt-4 text-center font-bold text-green-500 font-lg">No records</p>
         </div>
-        <!-- v-if="filteredPolicies.length > 0" -->
-        <div class="mt-8">
+        <div class="my-8">
           <t-pagination
           :total-items="totalRows"
           :per-page="perPage"

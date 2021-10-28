@@ -19,6 +19,7 @@ export default new Vuex.Store({
     enrollee: {},
     view: '',
     repayment: {},
+    policy: {},
     vehicleQuote: {},
     collapse: false,
     homeCollapse: false,
@@ -72,7 +73,10 @@ export default new Vuex.Store({
     },
     setRepayment(state, payload){
       state.repayment = payload
-    }
+    },
+    setPolicy(state, payload){
+      state.policy = payload
+    },
   },
   actions: {
     registerUser({commit}, user){
