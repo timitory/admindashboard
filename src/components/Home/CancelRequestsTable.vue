@@ -2,7 +2,7 @@
   <div class="mt-8">
     <div class="mt-8 px-6 pt-6 relative shadow-lg bg-white lg:relative lg:pb-8">
         <div class="lg:flex lg:justify-between">
-            <p></p>
+            <p class="font-bold">Manage cancel requests for homecontent cover</p>
             <div class="lg:flex lg:gap-4"> 
                 <div class="relative">
                     <input type="text" v-model="searchKeyword" class="block mt-4 rounded bg-blue-100 px-4 lg:pl-10 py-2 w-full outline-none focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
@@ -33,24 +33,29 @@
               <th class="font-bold">Email</th>
               <th class="font-bold">Phone Number</th>
               <th class="font-bold">Plan</th>
-              <th class="font-bold">Approval Status</th>
-              <th class="font-bold">View Repayments</th>
+              <th class="font-bold">Status</th>
               <th class="font-bold">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
-              <td>{{policy.policy.enrollee.name}}</td>
-              <td>{{policy.policy.enrollee.email}}</td>
-              <td>{{policy.policy.enrollee.phone}}</td>
-              <td>{{policy.policy.vehicle_category}}</td>
-              <td>{{policy.policy.approval_status}}</td>
-              <td>
-                <button @click="viewRepayment(policy)" class="text-green-500 underline outline-none focus:outline-none">View</button>
+              <td>{{policy.name}}</td>
+              <td>{{policy.email}}</td>
+              <td>{{policy.phone}}</td>
+              <td>{{policy.plan}}</td>
+              <td> 
+                <p v-if="policy.status =='Approved'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">{{policy.status}}</p>
+                <p v-else-if="policy.status =='Initiated'"  class="text-sm bg-yellow-500 text-white p-1 rounded text-center">{{policy.status}}</p>
+                <p v-else-if="policy.status =='Processing'"  class="text-sm bg-blue-500 text-white p-1 rounded text-center">{{policy.status}}</p>
+                <p v-else  class="text-sm bg-red-500 text-white p-1 rounded text-center">{{policy.status}}</p>
               </td>
-              <td>
-                  <button @click="view(policy)" class="p-2 bg-green-500 text-white rounded text-sm focus:outline-none">Details</button>
+              <td v-if="policy.status == 'Initiated'">
+                  <select class="border border-solid rounded focus:outline-none" v-model="action">
+                    <option value="" selected disabled>Action</option>
+                    <option value="">Approve</option>
+                    <option value="">Decline</option>
+                  </select>
               </td>
             </tr>
           </tbody>
@@ -71,8 +76,6 @@
         </div>
       </div>
     </div>
-    <SinglePolicy v-if="showPolicy" :policy="policy"  @close="showPolicy = false" />
-    <Repayments v-if="showRepayment" :policy="policy" @close="showRepayment = false"/>
   </div>
 </template>
 
@@ -80,12 +83,10 @@
 // import {mapState} from "vuex"
 import axios from "axios"
 import baseURL from "@/main"
-import SinglePolicy from "@/components/Vehicle/SinglePolicy"
-import Repayments from "@/components/Vehicle/ViewRepayment"
 import TPagination from 'vue-tailwind/dist/t-pagination'
 export default {
   components:{
-    TPagination, SinglePolicy, Repayments
+    TPagination, 
   },
   data(){
     return {
@@ -94,14 +95,13 @@ export default {
       disabled: false,
       limit: 5,
       currentPage: 1,
-      showPolicy: false,
-      showRepayment: false,
       policy: {},
       val: '',
       sorter: '',
       endDate: '',
       searchKeyword: '',
       showFilter: false,
+      action: '',
       page: 1,
       pages: [],
       policies: [],
@@ -125,15 +125,6 @@ export default {
       console.log(val)
       this.showFilter = false
     },
-    view(obj){
-      this.policy = obj
-      this.showPolicy = true
-    },
-    viewRepayment(obj){
-      this.policy = obj
-      this.showRepayment = true
-    },
-
     setPages () {
       let numberOfPages = Math.ceil(this.policies.length / this.perPage);
       for (let index = 1; index <= numberOfPages; index++) {
@@ -164,18 +155,30 @@ export default {
     },
   },
   mounted(){
-    this.$store.commit('startLoading')
-    axios.get(`${baseURL}/admin/vehicle/policy`)
-    .then(res =>{
-      console.log(res.data.data)
-      this.totalRows = res.data.data.totalRecord
-      this.policies = res.data.data.records
-      this.perPage = res.data.data.record_per_page
-      this.$store.commit('endLoading')
-    })
-    .catch(err=>{
-      this.$store.dispatch('handleError', err)
-    })
+    this.policies = [
+      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Initiated'},
+      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Processing'},
+      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Approved'},
+      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Declined'},
+      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive' ,status: 'Rejected'},
+      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Declined'},
+      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Declined'},
+      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Approved'},
+      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Approved'},
+    ]
+    this.perPage = 10
+    // this.$store.commit('startLoading')
+    // axios.get(`${baseURL}/admin/vehicle/policy`)
+    // .then(res =>{
+    //   console.log(res.data.data)
+    //   this.totalRows = res.data.data.totalRecord
+    //   this.policies = res.data.data.records
+    //   this.perPage = res.data.data.record_per_page
+    //   this.$store.commit('endLoading')
+    // })
+    // .catch(err=>{
+    //   this.$store.dispatch('handleError', err)
+    // })
   }
 }
 </script>
@@ -253,23 +256,18 @@ th, td {
     
   }
   thead th:nth-child(4){
-    width: 11%;
+    width: 15%;
     
   }
   thead th:nth-child(5){
-    width: 11%;
+    width: 15%;
     
   }
   thead th:nth-child(6){
-    width: 11%;
-    
+    width: 11%; 
   }
   thead th:nth-child(7){
-    width: 11%;
-    
-  }
-  thead th:nth-child(8){
-    width: 11%;
+    width: 14%;
     
   }
   div.tablecont table{

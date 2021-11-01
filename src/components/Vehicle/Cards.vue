@@ -43,12 +43,12 @@
           </div>
       </div>
       <div class="px-4 py-8 card">
-          <h4 class="font-bold text-2xl opacity-30">Managed Failed Transactions</h4>
+          <h4 class="font-bold text-2xl">Cancel Requests</h4>
           <div class="mt-4 flex justify-between items-end">
-              <svg xmlns="http://www.w3.org/2000/svg" class="opacity-30" width="36.272" height="36.272" viewBox="0 0 36.272 36.272">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36.272" height="36.272" viewBox="0 0 36.272 36.272">
                 <path fill="#0c4a4d" class="a" d="M18.207,0A18.207,18.207,0,0,0,0,18.065,18.329,18.329,0,0,0,18.207,36.272,18.136,18.136,0,0,0,18.207,0Zm8.942,24a2.126,2.126,0,0,1-3.007,3.007L18.207,21.07l-6.078,5.938A2.126,2.126,0,0,1,9.123,24l5.937-5.937L9.123,12.128a2.126,2.126,0,0,1,3.007-3.007l6.078,5.938,5.935-5.938a2.126,2.126,0,1,1,3.007,3.007l-5.937,5.937Z"/>
               </svg>
-              <p class="block opacity-30 font-bold text-green-500 text-base">View Details</p>
+              <router-link to="/app/dashboard/vehicle/cancellations" class="block font-bold text-green-500 text-base">View Details</router-link>
           </div>
       </div>
       <div class="px-4 py-8 card">

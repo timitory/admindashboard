@@ -37,7 +37,7 @@
               <th class="font-bold">Amount</th>
               <th class="font-bold">Date</th>
               <th class="font-bold">Details for Claim</th>
-              <th class="font-bold">Actions</th>
+              <th class="font-bold">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -50,8 +50,8 @@
               <td>
                   Car accident <router-link to="/app/dashboard/vehicle/claims" class="text-green-500 underline">View</router-link>
               </td>
-              <td class="text-green-500 underline">
-                  Approve Claim
+              <td class="">
+                  Claim
               </td>
             </tr>
           </tbody>

@@ -108,8 +108,8 @@ const routes = [
             component: ()=>import('@/views/Vehicle/Repayments')
           },
           {
-            path: '/app/dashboard/vehicle/failedtransactions',
-            component: ()=>import('@/views/Vehicle/ManageFailedTransactions')
+            path: '/app/dashboard/vehicle/cancellations',
+            component: ()=>import('@/views/Vehicle/CancelRequests')
           },
           {
             path: '/app/dashboard/vehicle/policies',
@@ -148,8 +148,8 @@ const routes = [
             component: ()=>import('@/views/Home/Repayments')
           },
           {
-            path: '/app/dashboard/homecontent/failedtransactions',
-            component: ()=>import('@/views/Home/ManageFailedTransactions')
+            path: '/app/dashboard/homecontent/cancellations',
+            component: ()=>import('@/views/Home/CancelRequests')
           },
           {
             path: '/app/dashboard/homecontent/policies',
