@@ -24,11 +24,12 @@
                 </div>
             </div>
         </div>      
-      <div class="overflow-x-auto xl:overflow-x-hidden tablecont">
+      <div class="overflow-x-auto tablecont">
         <table v-if="paginatedPolicies.length > 0" class="w-full mt-8">
           <thead>
             <tr>
               <th class="font-bold">S/N</th>
+              <th class="font-bold">Purchase Date</th>
               <th class="font-bold">Customer</th>
               <th class="font-bold">Email</th>
               <th class="font-bold">Phone Number</th>
@@ -41,6 +42,7 @@
           <tbody>
             <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
+              <td>{{policy.policy.start}}</td>
               <td>{{policy.policy.enrollee.name}}</td>
               <td>{{policy.policy.enrollee.email}}</td>
               <td>{{policy.policy.enrollee.phone}}</td>
@@ -245,35 +247,44 @@ th, td {
     
   }
   thead th:nth-child(2){
-    width: 20%;
+    width: 15%;
     
   }
   thead th:nth-child(3){
-    width: 20%;
+    width: 15%;
     
   }
   thead th:nth-child(4){
-    width: 11%;
+    width: 15%;
     
   }
   thead th:nth-child(5){
-    width: 11%;
+    width: 10%;
     
   }
   thead th:nth-child(6){
-    width: 11%;
+    width: 10%;
     
   }
   thead th:nth-child(7){
-    width: 11%;
+    width: 10%;
     
   }
   thead th:nth-child(8){
-    width: 11%;
+    width: 10%;
+    
+  }
+  thead th:nth-child(9){
+    width: 10%;
     
   }
   div.tablecont table{
     width: 100%
+  }
+}
+@media only screen and (min-width: 1400px) {
+  .tablecont{
+    overflow-x: hidden;
   }
 }
 </style>
