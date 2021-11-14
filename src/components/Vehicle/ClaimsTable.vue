@@ -34,10 +34,11 @@
               <th class="font-bold">Firstname</th>
               <th class="font-bold">Lastname</th>
               <th class="font-bold">Plan</th>
-              <th class="font-bold">Amount</th>
+              <th class="font-bold">Underwriter</th>
               <th class="font-bold">Date</th>
               <th class="font-bold">Details for Claim</th>
               <th class="font-bold">Status</th>
+              <th class="font-bold">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -45,13 +46,21 @@
               <td>{{policy.firstname}}</td>
               <td>{{policy.lastname}}</td>
               <td>{{policy.plan}}</td>
-              <td>{{policy.amount}}</td>
+              <td>{{policy.und}}</td>
               <td>{{policy.start}}</td>
               <td>
                   Car accident <router-link to="/app/dashboard/vehicle/claims" class="text-green-500 underline">View</router-link>
               </td>
-              <td class="">
-                  Claim
+             <td> 
+                <p v-if="policy.status =='Approved'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">{{policy.status}}</p>
+                <p v-else  class="text-sm bg-red-500 text-white p-1 rounded text-center">{{policy.status}}</p>
+              </td>
+              <td>
+                <select class="border rounded focus:outline-none">
+                  <option value="">Action</option>
+                  <option value="">Approve</option>
+                  <option value="">Decline</option>
+                </select>
               </td>
             </tr>
           </tbody>
@@ -167,24 +176,24 @@ export default {
   },
   mounted(){
       this.policies = [
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", amount: '#50,000', status: "Active", start: "2021-05-06", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {firstname: "Obiwan", lastname: "Melosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", status: "Active", amount: '#50,000', start: "2021-03-02", end: "05-07-2021", number: "4", address: "2, Lekki, lagos"},
-        {firstname: "Abiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", status: "Inactive",amount: '#50,000', start: "2021-02-01", end: "05-07-2021", number: "2", address: "2, Lekki, lagos"},
-        {firstname: "Obiwan", lastname: "Telosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Active",amount: '#50,000',  start: "2021-03-04", end: "05-07-2021", number: "10", address: "2, Lekki, lagos"},
-        {firstname: "Obiwan", lastname: "Delosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-04-30", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", start: "2021-05-06",amount: '#50,000',  end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", status: "Active", amount: '#50,000', start: "2021-03-05", end: "05-07-2021", number: "25", address: "2, Lekki, lagos"},
-        {firstname: "Ebiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-02-08", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {firstname: "Obiwan", lastname: "Relosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", status: "Active",amount: '#50,000',  start: "2021-02-04", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", status: "Active",amount: '#50,000',  start: "2021-06-15", end: "05-07-2021", number: "15", address: "2, Lekki, lagos"},
-        {firstname: "Ubiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-02-23", end: "05-07-2021", number: "18", address: "2, Lekki, lagos"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", status: "Active", amount: '#50,000', start: "2021-05-16", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Gadget", status: "Active",  amount: '#50,000',start: "2021-04-13", end: "05-07-2021", number: "2", address: "2, Lekki, lagos"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-10-24", end: "05-07-2021", number: "5", address: "2, Lekki, lagos"},
-        {firstname: "Ebiwan", lastname: "Telosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", status: "Active",amount: '#50,000',  start: "2021-04-20", end: "05-07-2021", number: "4", address: "2, Lekki, lagos"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Active", amount: '#50,000', start: "2021-04-04", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {firstname: "Abiwan", lastname: "Nelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", status: "Inactive", amount: '#50,000', start: "2021-12-31", end: "05-07-2021", number: "10", address: "2, Lekki, lagos"},
-        {firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", status: "Active", amount: '#50,000', start: "2021-11-23", end: "05-07-2021", number: "3", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", amount: '#50,000', start: "2021-05-06", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Melosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home",  amount: '#50,000', start: "2021-03-02", end: "05-07-2021", number: "4", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO", firstname: "Abiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", amount: '#50,000', start: "2021-02-01", end: "05-07-2021", number: "2", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Telosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", amount: '#50,000',  start: "2021-03-04", end: "05-07-2021", number: "10", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO",firstname: "Obiwan", lastname: "Delosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", amount: '#50,000', start: "2021-04-30", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", start: "2021-05-06",amount: '#50,000',  end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO",firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", amount: '#50,000', start: "2021-03-05", end: "05-07-2021", number: "25", address: "2, Lekki, lagos"},
+        {status: 'Declined', und: "AIICO", firstname: "Ebiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health",  amount: '#50,000', start: "2021-02-08", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Relosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", amount: '#50,000',  start: "2021-02-04", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
+        {status: 'Approved',und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", amount: '#50,000',  start: "2021-06-15", end: "05-07-2021", number: "15", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO", firstname: "Ubiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health",  amount: '#50,000', start: "2021-02-23", end: "05-07-2021", number: "18", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle",  amount: '#50,000', start: "2021-05-16", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
+        {status: 'Declined', und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Gadget",  amount: '#50,000',start: "2021-04-13", end: "05-07-2021", number: "2", address: "2, Lekki, lagos"},
+        {status: 'Declined', und: "AIICO",firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", amount: '#50,000', start: "2021-10-24", end: "05-07-2021", number: "5", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO",firstname: "Ebiwan", lastname: "Telosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", amount: '#50,000',  start: "2021-04-20", end: "05-07-2021", number: "4", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health",  amount: '#50,000', start: "2021-04-04", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO",firstname: "Abiwan", lastname: "Nelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health",  amount: '#50,000', start: "2021-12-31", end: "05-07-2021", number: "10", address: "2, Lekki, lagos"},
+        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", amount: '#50,000', start: "2021-11-23", end: "05-07-2021", number: "3", address: "2, Lekki, lagos"},
       ]
       this.unsortedPolicies = this.policies
     // .then(res=>{
@@ -259,29 +268,29 @@ th, td {
   th td{
       min-width: 180px
   }
-  thead th:nth-child(1){
-    width: 12%;
+  thead th:nth-child(8){
+    width: 12.5%;
   }
   thead th:nth-child(1){
-    width: 12%;
+    width: 12.5%;
   }
   thead th:nth-child(2){
-    width: 12%;
+    width: 12.5%;
   }
   thead th:nth-child(3){
-    width: 12%;
+    width: 12.5%;
   }
   thead th:nth-child(4){
-    width: 12%;
+    width: 12.5%;
   }
   thead th:nth-child(5){
-    width: 12%;
+    width: 12.5%;
   }
   thead th:nth-child(6){
-    width: 28%;
+    width: 12.5%;
   }
   thead th:nth-child(7){
-    width: 12%;
+    width: 12.5%;
   }
   div.tablecont table{
     width: 100%
