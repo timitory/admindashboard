@@ -34,7 +34,8 @@
               <th class="font-bold">Email</th>
               <th class="font-bold">Phone Number</th>
               <th class="font-bold">Plan</th>
-              <th class="font-bold">Approval Status</th>
+              <th class="font-bold">Underwriter</th>
+              <th class="font-bold">Policy Status</th>
               <th class="font-bold">View Repayments</th>
               <th class="font-bold">Action</th>
             </tr>
@@ -43,11 +44,18 @@
             <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
               <td>{{policy.policy.start}}</td>
-              <td>{{policy.policy.enrollee.name}}</td>
+              <td>{{policy.policy.enrollee.firstname}} {{policy.policy.enrollee.lastname}}</td>
               <td>{{policy.policy.enrollee.email}}</td>
               <td>{{policy.policy.enrollee.phone}}</td>
               <td>{{policy.policy.vehicle_category}}</td>
-              <td>{{policy.policy.approval_status}}</td>
+              <td>{{policy.policy.underwriter.name}}</td>
+              <td>
+                <span v-if="policy.policy.status == 'Success'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
+                <span v-else-if="policy.policy.status == 'Active'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
+                <span v-else-if="policy.policy.status == 'Incomplete'" class="rounded text-white text-center p-1 bg-yellow-500">{{policy.policy.status}}</span>
+                <span v-else-if="policy.policy.status == 'Pending'" class="rounded text-white text-center p-1 bg-red-500">{{policy.policy.status}}</span>
+                <span v-else class="rounded text-white text-center p-1 bg-red-500">{{policy.policy.status}}</span>
+              </td>
               <td>
                 <button @click="viewRepayment(policy)" class="text-green-500 underline outline-none focus:outline-none">View</button>
               </td>
@@ -232,15 +240,15 @@ th, td {
     height: 25px
 }
 @media only screen and (min-width: 1024px) {
-    .svg{
-        width: 30px;
-        height: 30px
-    }
+  .svg{
+    width: 30px;
+    height: 30px
+  }
   table{
     /* table-layout: fixed; */
   }
-  th td{
-      min-width: 180px
+  th, td{
+    min-width: unset
   }
   thead th:nth-child(1){
     width: 5%;
@@ -275,7 +283,11 @@ th, td {
     
   }
   thead th:nth-child(9){
-    width: 10%;
+    width: 5%;
+    
+  }
+  thead th:nth-child(10){
+    width: 5%;
     
   }
   div.tablecont table{

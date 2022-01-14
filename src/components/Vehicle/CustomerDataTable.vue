@@ -53,7 +53,6 @@
               </td>
             </tr>
           </tbody>
-
         </table>
         <div v-else class="w-full text-center py-4">
           <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
