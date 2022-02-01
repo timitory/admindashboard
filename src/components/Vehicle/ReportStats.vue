@@ -1,49 +1,55 @@
 <template>
-  <div class="">
-      <div class="lg:flex  lg:gap-16">
+  <div class="box">
+      <div class="md:grid md:grid-cols-3 md:gap-4 lg:grid-cols-3">
           <div class="item">
-                <p class="font-bold text-2xl lg:text-3xl">3,495</p>
+                <p class="font-bold text-2xl lg:text-3xl">{{stats.active}}</p>
                 <p class="text-green-500 mt-2">Active Policies</p>
          </div>
-          <div class="item mt-4 lg:mt-0">
-                <p class="font-bold text-2xl lg:text-3xl">3,495</p>
-                <p class="text-green-500 mt-2">Inactive Policies</p>
+          <div class="item ">
+                <p class="font-bold text-2xl lg:text-3xl">{{stats.success}}</p>
+                <p class="text-green-500 mt-2">Successful Policies</p>
          </div>
-          <div class="item mt-4 lg:mt-0">
-                <p class="font-bold text-2xl lg:text-3xl">150</p>
+          <div class="item ">
+                <p class="font-bold text-2xl lg:text-3xl">{{stats.incomplete}}</p>
+                <p class="text-green-500 mt-2">Incomplete Policies</p>
+         </div>
+         <div class="item">
+                <p class="font-bold text-2xl lg:text-3xl">{{stats.pending}}</p>
+                <p class="text-green-500 mt-2">Pending Policies</p>
+         </div>
+          <div class="item ">
+                <p class="font-bold text-2xl lg:text-3xl">{{stats.total_claim}}</p>
                 <p class="text-green-500 mt-2">Total Claims</p>
          </div>
-      </div>
-      <div class="mt-4 lg:mt-8 lg:flex lg:gap-16">
-          <div class="item">
-                <p class="font-bold text-2xl lg:text-3xl">#20,000,000</p>
-                <p class="text-green-500 mt-2">Revenue Generated</p>
-         </div>
-          <div class="item mt-4 lg:mt-0">
-                <p class="font-bold text-2xl lg:text-3xl">30%</p>
-                <p class="text-green-500 mt-2">Retention Rate</p>
-         </div>
-          <div class="item mt-4 lg:mt-0">
-                <p class="font-bold text-2xl lg:text-3xl">20</p>
+          <div class="item ">
+                <p class="font-bold text-2xl lg:text-3xl">{{stats.settled_claim}}</p>
                 <p class="text-green-500 mt-2">Settled Claims</p>
          </div>
       </div>
-      
   </div>
 </template>
 
 <script>
 export default {
-
+  props: {
+    stats: {
+      type: Object,
+      required: true
+    }
+  }
 }
 </script>
 
 <style scoped>
-
-@media only screen and (min-width: 1024px){
+@media only screen and (min-width: 768px){
+  .box{
+    grid-template-columns: minmax(150px, 1fr);
+  }
+}
+/* @media only screen and (min-width: 1024px){
   .item{
     min-width: 180px;
     max-width: 180px
   }
-}
+} */
 </style>

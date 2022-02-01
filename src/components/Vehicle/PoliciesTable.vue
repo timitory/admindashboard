@@ -1,7 +1,7 @@
 <template>
   <div class="mt-8">
     <div class="mt-8 px-6 pt-6 relative shadow-lg bg-white lg:relative lg:pb-8">
-        <div class="lg:flex lg:justify-between">
+        <!-- <div class="lg:flex lg:justify-between">
             <p></p>
             <div class="lg:flex lg:gap-4"> 
                 <div class="relative">
@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-        </div>      
+        </div>       -->
       <div class="overflow-x-auto tablecont">
         <table v-if="paginatedPolicies.length > 0" class="w-full mt-8">
           <thead>
