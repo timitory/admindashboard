@@ -11,44 +11,46 @@
           </div>
       </div>
       <p class="mt-6 mb-4 font-bold text-lg">This report is associated with the Vehicle Cover Policy</p>
-      <form @submit.prevent="filter">
-            <p class="font-bold">Filter options</p>
-            <div class="flex items-center gap-4">
-                <input type="checkbox" v-model="filters" value="underwriter" >
-                <p>Underwriter : </p>
-                <select v-model="underwriterId" class="border">
-                    <option value="">Choose one</option>
-                    <option v-for="(underwriter, index) in underwriters" :key="index" :value="underwriter.id">{{underwriter.name}}</option>
-                </select>
-             </div>
-            <div class="mt-4 flex items-center gap-4">
-                <input type="checkbox" v-model="filters" value="status" >
-                <p>Status : </p>
-                <select v-model="statusId" class="border">
-                    <option value="">Choose one</option>
-                    <option v-for="(status, index) in statuses" :key="index" :value="status.id">{{status.name}}</option>
-                </select>
-            </div>
-            <div class="mt-4 flex items-center gap-4">
-                <input type="checkbox" v-model="filters" value="plan" >
-                <p>Plans : </p>
-                <select v-model="planId" class="border">
-                    <option value="">Choose one</option>
-                    <option v-for="(plan, index) in plans" :key="index" :value="plan.id">{{plan.name}}</option>
-                </select>
-            </div>
-            <div class="mt-4 flex items-center gap-4">
-                <input type="checkbox" v-model="filters" value="month" >
-                <p>Months : </p>
-                <select v-model="monthId" class="border">
-                    <option value="">Choose one</option>
-                    <option v-for="(month, index) in months" :key="index" :value="month.id">{{month.name}}</option>
-                </select>
-            </div>
-            <div class="mt-4 flex items-center gap-4">
-                <input type="checkbox" v-model="filters" value="year" >
-                <p>Year : </p>
-                <input type="text" v-model="filterYear" class="border px-2 ">
+      <p class="font-bold">Filter options :</p>
+      <form @submit.prevent="filter" >
+          <div class="grid lg:grid-cols-2 gap-4" style="max-width: 650px">
+                <div class="flex items-center gap-4">
+                    <input type="checkbox" v-model="filters" value="underwriter" >
+                    <p>Underwriter : </p>
+                    <select v-model="underwriterId" class="border">
+                        <option value="">Choose one</option>
+                        <option v-for="(underwriter, index) in underwriters" :key="index" :value="underwriter.id">{{underwriter.name}}</option>
+                    </select>
+                    </div>
+                <div class="flex items-center gap-4">
+                    <input type="checkbox" v-model="filters" value="status" >
+                    <p>Status : </p>
+                    <select v-model="statusId" class="border">
+                        <option value="">Choose one</option>
+                        <option v-for="(status, index) in statuses" :key="index" :value="status.id">{{status.name}}</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-4">
+                    <input type="checkbox" v-model="filters" value="plan" >
+                    <p>Plans : </p>
+                    <select v-model="planId" class="border">
+                        <option value="">Choose one</option>
+                        <option v-for="(plan, index) in plans" :key="index" :value="plan.id">{{plan.name}}</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-4">
+                    <input type="checkbox" v-model="filters" value="month" >
+                    <p>Months : </p>
+                    <select v-model="monthId" class="border">
+                        <option value="">Choose one</option>
+                        <option v-for="(month, index) in months" :key="index" :value="month.id">{{month.name}}</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-4">
+                    <input type="checkbox" v-model="filters" value="year"  >
+                    <p>Year : </p>
+                    <input type="text" v-model="filterYear" class="border px-2 focus:outline-none">
+                </div>
             </div>
             <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4">Filter</button>
       </form>
@@ -72,7 +74,7 @@
               <LineChart />
           </div>
       </div>
-      <Table v-if="showTable" :policies="policies" />
+      <Table v-if="showTable" :policies="policies" :totalRecords="totalRecords" v-on:changePage="changePage" />
   </div>
 </template>
 
@@ -85,8 +87,7 @@ import axios from "axios"
 import baseURL from "@/main"
 export default {
     components:{
-        Stats, DoughnutChart, LineChart, Table
-    },
+        Stats, DoughnutChart, LineChart, Table,   },
     data(){
         return {
             year: '',
@@ -113,7 +114,9 @@ export default {
             ],
             months: [
                 {id: 1, name: "Jan"},{id: 2, name: "Feb"}, {id: 3, name: "Mar"}, {id: 4, name: "Apr"}, {id: 5, name: "May"}, {id: 6, name: "Jun"}, {id: 7, name: "Jul"}, {id: 8, name: "Aug"}, {id: 9, name: "Sep"}, {id: 10, name: "Oct"}, {id: 11, name: "Nov"}, {id: 12, name: "Dec"},
-            ]
+            ],
+            totalRecords: 0,
+            url: ''
         }
     },
     watch:{
@@ -127,11 +130,13 @@ export default {
     methods: {
         getPolicies(){
             this.$store.commit('startLoading')
-            axios.get(`${baseURL}/report`)
+            axios.get(`${baseURL}/vehicle/report`)
             .then(res =>{
-            console.log(res.data.data.policy_type)
+            console.log(res.data.data)
             // this.totalRows = res.data.data.totalRecord
             this.policies = res.data.data.all_policies
+            this.totalRecords = res.data.data.total_records
+            console.log(this.policies)
             this.stats = {
                 active : res.data.data.active_policy_count,
                 incomplete: res.data.data.incomplete_policy_count,
@@ -171,7 +176,7 @@ export default {
         filter(){
             if(this.filters.length == 0)  return this.$store.commit('setError', {status: true, msg: 'check the boxes to apply any filter'})
             let url = '?'
-            this.filters.map((item)=>{
+            this.filters.map( (item) => {
                 if(item === 'underwriter'){
                     if(url.length == 1){
                         url = url.concat("", `underwriter_id=${this.underwriterId}`)
@@ -204,13 +209,14 @@ export default {
                     }
                 }
             })
+            this.url = url
             this.getFilteredResults(url)
         },
         getFilteredResults(str){
             this.$store.commit('startLoading')
             this.showChart = false
             this.showTable = false
-            axios.get(`${baseURL}/report${str}`)
+            axios.get(`${baseURL}/vehicle/report${str}`)
             .then((res)=>{
                 this.$store.commit('endLoading')
                 console.log(res.data.data)
@@ -219,6 +225,7 @@ export default {
                 }else{
                     this.policies = res.data.data.all_policies
                 }
+                this.totalRecords = res.data.data.total_records
                 this.stats = {
                     active : res.data.data.active_policy_count,
                     incomplete: res.data.data.incomplete_policy_count,
@@ -234,7 +241,36 @@ export default {
             .catch((err)=>{
                 this.$store.dispatch('handleError', err)
             })
-
+        },
+        changePage(num){
+            this.$store.commit('startLoading')
+            this.showChart = false
+            // this.showTable = false
+            axios.get(`${baseURL}/vehicle/report${this.url}?page=${num}`)
+            .then((res)=>{
+                this.$store.commit('endLoading')
+                console.log(res.data.data)
+                if(!res.data.data.all_policies){
+                    this.policies = []
+                }else{
+                    this.policies = res.data.data.all_policies
+                }
+                this.totalRecords = res.data.data.total_records
+                this.stats = {
+                    active : res.data.data.active_policy_count,
+                    incomplete: res.data.data.incomplete_policy_count,
+                    pending: res.data.data.pending_policy_count,
+                    success: res.data.data.success_policy_count,
+                    total_claim: res.data.data.claim_count,
+                    settled_claim: res.data.data.settled_claim_count
+                }
+                this.showChart = true
+                this.showTable = true
+                this.piechartData = res.data.data.policy_type
+            })
+            .catch((err)=>{
+                this.$store.dispatch('handleError', err)
+            })
         }
     },
     mounted(){

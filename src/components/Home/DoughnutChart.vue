@@ -3,6 +3,12 @@ import { Doughnut } from "vue-chartjs";
 
 export default {
   extends: Doughnut,
+  props: {
+    piechartData: {
+      type: Object,
+      required: true
+    }
+  },
   mounted() {
     this.renderChart(
       {
@@ -14,7 +20,7 @@ export default {
         datasets: [
           {
             label: "Plans",
-            data: [1350, 2500, 2000],
+            data: [this.piechartData.gold, this.piechartData.silver, this.piechartData.bronze],
             // backgroundColor: "transparent",
             backgroundColor: [
               'rgb(20,28,68)',

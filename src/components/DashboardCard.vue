@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-8 px-6 pt-6 lg:px-10 pb-20 relative bg-white lg:flex lg:items-center" style="box-shadow: 0px 20px 33px #00000029;">
+  <div class="mt-8 px-6 pt-6 lg:px-10 pb-20 relative bg-white grid gap-4 lg:grid-cols-4" style="box-shadow: 0px 20px 33px #00000029;">
       <router-link to="/" class="text-green-500 font-bold underline absolute absolute top-2 invoicelink">View all invoice</router-link>
       <div class="px-6 box mt-10 lg:mt-10 pb-4 border-b border-solid lg:border-b-0 lg:border-r">
           <svg class="mx-auto svg" xmlns="http://www.w3.org/2000/svg" width="54.392" height="53.986" viewBox="0 0 54.392 53.986">
@@ -8,7 +8,7 @@
           </svg>
           <p class="text-center mt-4 text-lg font-bold">Total Policy Volume</p>
           <div class="deepblue py-3 px-2 mt-4 text-xl font-bold border-2 border-green-500 border-dashed text-center">{{data.total_policy_count}}</div>
-          <router-link to="/app/dashboard/totalpolicies" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link>
+          <!-- <router-link to="/app/dashboard/totalpolicies" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link> -->
       </div>
       <div class="px-6 box pb-4 lg:mt-10 border-b border-solid lg:border-b-0 lg:border-r">
           <svg class="mx-auto svg" xmlns="http://www.w3.org/2000/svg" width="46.617" height="53.124" viewBox="0 0 46.617 53.124">
@@ -16,7 +16,7 @@
           </svg>
           <p class="text-center mt-4 text-lg font-bold">Total Active Policies</p>
           <div class="deepblue py-3 px-2 mt-4 text-xl font-bold border-2 border-green-500 border-dashed text-center">{{data.active_policy_count}}</div>
-          <router-link to="/app/dashboard/activepolicies" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link>
+          <!-- <router-link to="/app/dashboard/activepolicies" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link> -->
       </div>
       <div class="px-6 box pb-4 border-b border-solid lg:mt-10 lg:border-b-0 lg:border-r">
           <svg class="mx-auto svg" xmlns="http://www.w3.org/2000/svg" width="54.249" height="53.124" viewBox="0 0 54.249 53.124">
@@ -34,7 +34,7 @@
           </svg>
           <p class="text-center mt-4 text-lg font-bold">Total Inactive Policies</p>
           <div class="deepblue py-3 px-2 mt-4 text-xl font-bold border-2 border-green-500 border-dashed text-center">{{data.inactive_policy_count}}</div>
-          <router-link to="/app/dashboard/inactivepolicies" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link>
+          <!-- <router-link to="/app/dashboard/inactivepolicies" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link> -->
       </div>
       <div class="px-6 box pb-4 border-b border-solid lg:mt-10 lg:border-b-0 lg:border-r">
           <svg class="mx-auto svg" xmlns="http://www.w3.org/2000/svg" width="48.198" height="40.038" viewBox="0 0 48.198 40.038"><g transform="translate(0 -2.942)">
@@ -45,9 +45,9 @@
           </svg>
           <p class="text-center mt-4 text-lg font-bold">Total Registered Users</p>
           <div class="deepblue py-3 px-2 mt-4 text-xl font-bold border-2 border-green-500 border-dashed text-center">{{data.user_count}}</div>
-          <router-link to="/" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link>
+          <!-- <router-link to="/" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link> -->
       </div>
-      <div class="px-6 box pb-4 border-b border-solid lg:mt-10 lg:border-b-0">
+      <!-- <div class="px-6 box pb-4 border-b border-solid lg:mt-10 lg:border-b-0">
           <svg class="mx-auto svg" xmlns="http://www.w3.org/2000/svg" width="58.863" height="58.977" viewBox="0 0 58.863 58.977"><g transform="translate(-0.494)">
             <path fill="#00a859" class="a" d="M358.166,249.819l-.606,3.535a.862.862,0,0,0,1.251.909l3.175-1.669,3.175,1.669a.862.862,0,0,0,1.251-.909l-.606-3.535,2.568-2.5a.862.862,0,0,0-.478-1.471l-3.549-.516-1.587-3.216a.862.862,0,0,0-1.547,0l-1.588,3.216-3.549.516a.862.862,0,0,0-.478,1.471Zm2.155-2.849a.862.862,0,0,0,.649-.472l1.015-2.056L363,246.5a.862.862,0,0,0,.649.472l2.269.33-1.642,1.6a.862.862,0,0,0-.248.763l.388,2.26-2.029-1.067a.862.862,0,0,0-.8,0l-2.03,1.067.388-2.26a.862.862,0,0,0-.248-.763l-1.642-1.6Z" transform="translate(-314.048 -213.852)"/>
             <path fill="#00a859" class="a" d="M42.166,174.673l-.606,3.535a.862.862,0,0,0,1.251.909l3.175-1.669,3.175,1.669a.862.862,0,0,0,1.251-.909l-.606-3.535,2.568-2.5A.862.862,0,0,0,51.9,170.7l-3.549-.516-1.587-3.216a.862.862,0,0,0-1.547,0l-1.588,3.216-3.549.516a.862.862,0,0,0-.478,1.471Zm2.155-2.849a.862.862,0,0,0,.649-.472l1.015-2.056L47,171.353a.862.862,0,0,0,.649.472l2.269.33-1.642,1.6a.862.862,0,0,0-.248.763l.388,2.26-2.029-1.067a.863.863,0,0,0-.8,0l-2.03,1.067.388-2.26a.862.862,0,0,0-.248-.763l-1.642-1.6Z" transform="translate(-34.377 -147.346)"/>
@@ -57,7 +57,7 @@
           <p class="text-center mt-4 text-lg font-bold">Top Customers</p>
           <div class="deepblue py-3 px-2 mt-4 text-xl font-bold border-2 border-green-500 border-dashed text-center">80,000</div>
           <router-link to="/app/dashboard/topcustomers" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link>
-      </div>
+      </div> -->
   </div>
 </template>
 

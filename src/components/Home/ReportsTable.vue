@@ -7,7 +7,7 @@
                     <path fill="#00a859" class="a" d="M64.7,8.771,68.085,2.3A1.572,1.572,0,0,0,66.692,0H52.3a3.1,3.1,0,0,0-3.045,2.442L48.147,7.431A23.309,23.309,0,1,0,64.7,8.771ZM54.665,51.533A21.722,21.722,0,0,1,47.749,9.222L43.586,27.955a1.734,1.734,0,0,0,2.185,2.04l9.668-2.859-6.391,16.04a1.18,1.18,0,0,0,.482,1.46,1.2,1.2,0,0,0,.634.183,1.185,1.185,0,0,0,.887-.4l3.867-4.335a.8.8,0,0,0-1.187-1.059l-2.379,2.667,5.7-14.31A1.409,1.409,0,0,0,55.346,25.5L45.32,28.469a.144.144,0,0,1-.181-.169l5.67-25.513a1.519,1.519,0,0,1,1.492-1.2H66.662L57.8,18.511a1.623,1.623,0,0,0,1.641,2.364l11.8-1.486-.77.863a.784.784,0,0,0-.1.109L55.852,36.645A.8.8,0,1,0,57.039,37.7l13.8-15.469A17.858,17.858,0,1,1,44.78,14.943a.8.8,0,0,0-.882-1.324,19.444,19.444,0,1,0,28.081,7.334l.739-.828a1.428,1.428,0,0,0-1.244-2.368l-1.413.178a19.456,19.456,0,0,0-5.236-4.7.8.8,0,1,0-.832,1.355A17.859,17.859,0,0,1,68.2,18.169L59.246,19.3a.033.033,0,0,1-.033-.048l4.747-9.067a21.721,21.721,0,0,1-9.294,41.352Z" transform="translate(-31.357)"/>
                 </svg>
                 <p class="text-left lg:text-center mt-2 text-xs lg:text-sm font-bold">Total Policies</p>
-                <div class="deepblue py-1 px-2 mt-2 text-sm lg:text-base font-bold border-2 border-green-500 border-dashed text-center">{{totalRows}}</div>
+                <div class="deepblue py-1 px-2 mt-2 text-sm lg:text-base font-bold border-2 border-green-500 border-dashed text-center">{{totalRecords}}</div>
             </div>
             <div class="lg:flex lg:gap-4"> 
                 <div class="relative">
@@ -41,19 +41,34 @@
           <thead>
             <tr>
               <th class="font-bold">S/N</th>
+              <th class="font-bold">Purchase Date</th>
               <th class="font-bold">Customer</th>
               <th class="font-bold">Email</th>
-              <th class="font-bold">Phone Number</th>
+              <th class="font-bold">Status</th>
               <th class="font-bold">Plan</th>
+              <th class="font-bold">Repayments</th>
+              <th class="font-bold">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
+              <td>{{policy.policy.start}}</td>
               <td>{{policy.policy.name}}</td>
               <td>{{policy.policy.email}}</td>
-              <td>{{policy.policy.phone}}</td>
-              <td>{{policy.policy.plan}}</td> 
+              <td>
+                <span v-if="policy.policy.status == 'Success'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
+                <span v-else-if="policy.policy.status == 'Active'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
+                <span v-else-if="policy.policy.status == 'Pending'" class="rounded text-white text-center p-1 bg-red-500">{{policy.policy.status}}</span>
+                <span v-else class="rounded text-white text-center p-1 bg-red-500">{{policy.policy.status}}</span>  
+              </td>
+              <td>{{policy.policy.plan}}</td>
+              <td>
+                <button @click="viewRepayment(policy)" class="text-green-500 underline outline-none focus:outline-none">View</button>
+              </td>
+              <td>
+                  <button @click="view(policy)" class="p-2 bg-green-500 text-white rounded text-sm focus:outline-none">View More</button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -63,7 +78,7 @@
         </div>
         <div class="mt-8">
           <t-pagination
-          :total-items="totalRows"
+          :total-items="totalRecords"
           :per-page="perPage"
           :limit="limit"
           :disabled="disabled"
@@ -73,42 +88,45 @@
         </div>
       </div>
     </div>
+    <SinglePolicy v-if="showPolicy" :policy="policy"  @close="showPolicy = false" />
+    <Repayments v-if="showRepayment" :policy="policy" @close="showRepayment = false"/>
   </div>
 </template>
 
 <script>
 // import {mapState} from "vuex"
-import axios from "axios"
-import baseURL from "@/main"
+// import axios from "axios"
+// import baseURL from "@/main"
+import SinglePolicy from "@/components/Home/SinglePolicy"
+import Repayments from "@/components/Home/ViewRepayment"
 import TPagination from 'vue-tailwind/dist/t-pagination'
 export default {
   components:{
-    TPagination,
+    TPagination, SinglePolicy, Repayments
   },
   props:{
-    perPage: {
-        type: Number,
-        required: true
-    },
-    totalRows: {
-        type: Number,
-        required: true,
-    },
     policies: {
-        type: Array,
-        required: true
+      type: Array,
+      required: true
+    },
+    totalRecords: {
+      type: Number,
+      required: true
     }
   },
   data(){
     return {
       disabled: false,
       limit: 5,
+      perPage: 10,
       currentPage: 1,
       val: '',
       searchKeyword: '',
       showFilter: false,
       page: 1,
       pages: [],
+      showPolicy: false,
+      showRepayment: false,
     }
   },
     computed:{
@@ -144,19 +162,15 @@ export default {
         return  policies.slice(from, to);
     },
     changePage(num){
-      console.log(num)
-      this.$store.commit('startLoading')
-      axios.get(`${baseURL}/admin/homecontent/policy`, {params :{page : num}})
-      .then(res=>{
-        console.log(res.data.data)
-        this.totalRows = res.data.data.totalRecord
-        this.policies = res.data.data.records
-        this.perPage = res.data.data.record_per_page
-        this.$store.commit('endLoading')
-      })
-      .catch(err=>{
-        this.$store.dispatch('handleError', err)
-      })
+      this.$emit('changePage', num)
+    },
+    view(obj){
+      this.policy = obj
+      this.showPolicy = true
+    },
+    viewRepayment(obj){
+      this.policy = obj
+      this.showRepayment = true
     },
   },
   mounted(){
@@ -230,24 +244,40 @@ th, td {
     
   }
   thead th:nth-child(2){
-    width: 30%;
+    width: 15%;
     
   }
   thead th:nth-child(3){
-    width: 30%;
+    width: 15%;
     
   }
   thead th:nth-child(4){
-    width: 25%;
+    width: 15%;
     
   }
   thead th:nth-child(5){
-    width: 10%;
+    width: 12.5%;
     
   }
-
+  thead th:nth-child(6){
+    width: 12.5%;
+    
+  }
+  thead th:nth-child(7){
+    width: 12.5%;
+    
+  }
+  thead th:nth-child(8){
+    width: 12.5%;
+    
+  }
   div.tablecont table{
     width: 100%
+  }
+}
+@media only screen and (min-width: 1400px) {
+  .tablecont{
+    overflow-x: hidden;
   }
 }
 </style>

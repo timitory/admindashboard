@@ -2,7 +2,7 @@
   <div class="mt-8">
     <div class="mt-8 px-6 pt-6 relative shadow-lg bg-white lg:relative lg:pb-8">
         <div class="lg:flex lg:justify-between">
-            <p class="mt-2 mb-4 font-bold text-lg">This contains information of every user on home content policy</p>
+            <p class="mt-2 mb-4 font-bold text-lg">This contains information of every user on the vehicle cover policy</p>
             <div class="lg:flex lg:gap-4"> 
                 <div class="relative">
                     <input type="text" v-model="searchKeyword" class="block mt-4 rounded bg-blue-100 px-4 lg:pl-10 py-2 w-full outline-none focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
@@ -53,7 +53,6 @@
               </td>
             </tr>
           </tbody>
-
         </table>
         <div v-else class="w-full text-center py-4">
           <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
@@ -81,7 +80,7 @@
 import axios from "axios"
 import baseURL from "@/main"
 import TPagination from 'vue-tailwind/dist/t-pagination'
-import User from "@/components/Home/SingleUser"
+import User from "./SingleUser.vue"
 export default {
   components:{
     TPagination, User

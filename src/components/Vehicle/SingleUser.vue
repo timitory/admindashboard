@@ -33,8 +33,8 @@
                     <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.vehicle_value}}</p>
                 </li>
                 <li>
-                    <p>Policy Type</p>
-                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.vehicle_category}}</p>
+                    <p>User Category</p>
+                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.user['CustomerType']}}</p>
                 </li>
             </ul>
             </div>

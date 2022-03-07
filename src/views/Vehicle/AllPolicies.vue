@@ -14,17 +14,17 @@
           </div>
       </div>
       <p class="mt-2 mb-4 font-bold text-lg">This is the breakdown of policies under vehicle cover</p>
-      <PoliciesData />
         <PoliciesTable />
   </div>
 </template>
 
 <script>
 import PoliciesTable from '@/components/Vehicle/PoliciesTable'
-import PoliciesData from '@/components/Vehicle/PoliciesData'
+// import PoliciesData from '@/components/Vehicle/PoliciesData'
 export default {
     components:{
-        PoliciesTable, PoliciesData
+        PoliciesTable,
+        //  PoliciesData
     }
 }
 </script>
