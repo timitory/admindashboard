@@ -25,8 +25,8 @@
                     <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.user.phone}}</p>
                 </li>
                 <li>
-                    <p>Meter No</p>
-                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.meter_no}}</p>
+                    <p>User Category</p>
+                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.user['CustomerType']}}</p>
                 </li>
                 <li>
                     <p>Insurance Premium</p>
