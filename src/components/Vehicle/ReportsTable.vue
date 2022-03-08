@@ -145,7 +145,6 @@ export default {
         return  policies.slice(from, to);
     },
     changePage(num){
-      
       this.$emit('changePage', num)
       // this.$store.commit('startLoading')
       // axios.get(`${baseURL}/admin/vehicle/policy`, {params :{page : num}})

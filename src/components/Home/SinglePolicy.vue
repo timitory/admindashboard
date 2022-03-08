@@ -21,8 +21,8 @@
                     <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.policy.name}}</p>
                 </li>
                 <li>
-                    <p>Meter Number</p>
-                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.policy.meterno}}</p>
+                    <p>Phone Number</p>
+                    <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.policy.phone}}</p>
                 </li>
                 <li>
                     <p>Plan</p>
