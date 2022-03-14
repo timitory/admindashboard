@@ -11,7 +11,7 @@
                     </svg>
                 </div>
                 <div class="items-center flex text-sm mt-4 relative border border-solid">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path  d="M20 3H4C3.447 3 3 3.447 3 4V6.59C3 7.113 3.213 7.627 3.583 7.997L9 13.414V21C9 21.347 9.18 21.668 9.475 21.851C9.635 21.95 9.817 22 10 22C10.153 22 10.306 21.965 10.447 21.895L14.447 19.895C14.786 19.725 15 19.379 15 19V13.414L20.417 7.997C20.787 7.627 21 7.113 21 6.59V4C21 3.447 20.553 3 20 3ZM13.293 12.293C13.105 12.48 13 12.734 13 13V18.382L11 19.382V13C11 12.734 10.895 12.48 10.707 12.293L5 6.59V5H19.001L19.003 6.583L13.293 12.293Z" fill="#2E3A59"></path>
                     </svg>
                     <button @click="showFilter = !showFilter" class="py-2 px-2">Filter by
@@ -20,7 +20,7 @@
                     <div v-if="showFilter" class="filter shadow-lg absolute left-0 bg-white">
                         <p class="mb-2 cursor-pointer text-sm" @click="filter('plan')">By Plan</p>
                         <p class="mb-2 cursor-pointer text-sm" @click="filter('status')">By Status</p>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>      
@@ -31,8 +31,7 @@
               <th class="font-bold">S/N</th>
               <th class="font-bold">Customer</th>
               <th class="font-bold">Email</th>
-              <th class="font-bold">Phone Number</th>
-              <th class="font-bold">Plan</th>
+              <th class="font-bold">Start Date</th>
               <th class="font-bold">Status</th>
               <th class="font-bold">Action</th>
             </tr>
@@ -40,22 +39,26 @@
           <tbody>
             <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
-              <td>{{policy.name}}</td>
-              <td>{{policy.email}}</td>
-              <td>{{policy.phone}}</td>
-              <td>{{policy.plan}}</td>
+              <td>{{policy.enrollee.name}}</td>
+              <td>{{policy.enrollee.email}}</td>
+              <td>{{policy.policy.start_date}}</td>
               <td> 
-                <p v-if="policy.status =='Approved'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">{{policy.status}}</p>
-                <p v-else-if="policy.status =='Initiated'"  class="text-sm bg-yellow-500 text-white p-1 rounded text-center">{{policy.status}}</p>
-                <p v-else-if="policy.status =='Processing'"  class="text-sm bg-blue-500 text-white p-1 rounded text-center">{{policy.status}}</p>
-                <p v-else  class="text-sm bg-red-500 text-white p-1 rounded text-center">{{policy.status}}</p>
+                <span v-if="policy.status.name =='Accept'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">{{policy.status.name}}</span>
+                <span v-else-if="policy.status.name =='Initiated'"  class="text-sm bg-yellow-500 text-white p-1 rounded text-center">{{policy.status.name}}</span>
+                <span v-else-if="policy.status.name =='Processing'"  class="text-sm bg-blue-500 text-white p-1 rounded text-center">{{policy.status.name}}</span>
+                <span v-else  class="text-sm bg-red-500 text-white p-1 rounded text-center">{{policy.status.name}}</span>
               </td>
-              <td v-if="policy.status == 'Initiated'">
-                  <select class="border border-solid rounded focus:outline-none" v-model="action">
+              <td v-if="policy.status.name == 'Initiated'">
+                  <select class="border border-solid rounded focus:outline-none" v-model="action" @change="selectAction(policy)">
                     <option value="" selected disabled>Action</option>
-                    <option value="">Approve</option>
-                    <option value="">Decline</option>
+                    <option value="approve">Approve</option>
+                    <option value="decline">Decline</option>
                   </select>
+              </td>
+              <td v-else>
+                <select class="border border-solid rounded focus:outline-none">
+                  <option value="" selected disabled>Action</option>
+                </select>
               </td>
             </tr>
           </tbody>
@@ -76,6 +79,7 @@
         </div>
       </div>
     </div>
+    <DeclineModal v-if="showDecline" v-on:close="closeDecline" v-on:submit="declineRequest" />
   </div>
 </template>
 
@@ -84,9 +88,10 @@
 import axios from "axios"
 import baseURL from "@/main"
 import TPagination from 'vue-tailwind/dist/t-pagination'
+import DeclineModal from "@/components/Vehicle/DeclineModal"
 export default {
   components:{
-    TPagination, 
+    TPagination, DeclineModal
   },
   data(){
     return {
@@ -105,7 +110,8 @@ export default {
       page: 1,
       pages: [],
       policies: [],
-      unsortedPolicies : []
+      showDecline : false,
+      request : {}
     }
   },
   computed:{
@@ -121,10 +127,6 @@ export default {
 		},
 	},
   methods: {
-    filter(val){
-      console.log(val)
-      this.showFilter = false
-    },
     setPages () {
       let numberOfPages = Math.ceil(this.policies.length / this.perPage);
       for (let index = 1; index <= numberOfPages; index++) {
@@ -140,45 +142,73 @@ export default {
     },
     changePage(num){
       console.log(num)
+      this.page = num
+      // this.$store.commit('startLoading')
+      // axios.get(`${baseURL}/admin/vehicle/policy`, {params :{page : num}})
+      // .then(res=>{
+      //   console.log(res.data.data)
+      //   this.totalRows = res.data.data.totalRecord
+      //   this.policies = res.data.data.records
+      //   this.perPage = res.data.data.record_per_page
+      //   this.$store.commit('endLoading')
+      // })
+      // .catch(err=>{
+      //   this.$store.dispatch('handleError', err)
+      // })
+    },
+    getRequests(){
       this.$store.commit('startLoading')
-      axios.get(`${baseURL}/admin/vehicle/policy`, {params :{page : num}})
-      .then(res=>{
-        console.log(res.data.data)
-        this.totalRows = res.data.data.totalRecord
-        this.policies = res.data.data.records
-        this.perPage = res.data.data.record_per_page
+      axios.get(`${baseURL}/admin/cancellation?type=vehicle`)
+      .then((res)=> {
         this.$store.commit('endLoading')
+        this.policies = res.data.data
+        this.totalRows = this.policies.length
       })
-      .catch(err=>{
+      .catch((err)=> {
         this.$store.dispatch('handleError', err)
       })
     },
+    selectAction(obj){
+      this.request = obj
+      if(this.action == 'approve') return this.approveRequest(obj)
+      if(this.action == 'decline') return this.showDecline = true
+    },
+    closeDecline(){
+      this.showDecline = false
+      this.action = ""
+    },
+    approveRequest(obj){
+      this.$store.commit('startLoading')
+      axios({url: `${baseURL}/admin/cancellation/approve`, data: {cancel_id: obj.cancel_id}, method: 'PATCH'})
+      .then((res)=> {
+        this.$store.commit('endLoading')
+        this.$store.commit('setSuccess', {status: true, msg: res.data.message})
+        this.getRequests()
+      })
+      .catch((err)=> {
+        this.$store.dispatch('handleError', err)
+      })
+    },
+    declineRequest(note){
+      this.showDecline = false
+      let obj = {cancel_id: this.request.cancel_id, note: note}
+      this.$store.commit('startLoading')
+      axios({url: `${baseURL}/admin/cancellation/decline`, data: obj, method: 'PATCH'})
+      .then((res)=>{
+        this.$store.commit('endLoading')
+        this.$store.commit('setSuccess', {status: true, msg: res.data.message})
+        this.getRequests()
+        this.currentPage = 1
+        this.action = ''
+      })
+      .catch((err)=>{
+        this.$store.dispatch('handleError', err)
+      })
+    }
+
   },
   mounted(){
-    this.policies = [
-      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Initiated'},
-      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Processing'},
-      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Approved'},
-      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Declined'},
-      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive' ,status: 'Rejected'},
-      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Declined'},
-      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Declined'},
-      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Approved'},
-      {name: "Obiwan Pelosi", email: 'obip@gmail.com', phone: "08979090909", plan: 'Comprehensive', status: 'Approved'},
-    ]
-    this.perPage = 10
-    // this.$store.commit('startLoading')
-    // axios.get(`${baseURL}/admin/vehicle/policy`)
-    // .then(res =>{
-    //   console.log(res.data.data)
-    //   this.totalRows = res.data.data.totalRecord
-    //   this.policies = res.data.data.records
-    //   this.perPage = res.data.data.record_per_page
-    //   this.$store.commit('endLoading')
-    // })
-    // .catch(err=>{
-    //   this.$store.dispatch('handleError', err)
-    // })
+    this.getRequests()
   }
 }
 </script>
@@ -241,7 +271,7 @@ th, td {
     /* table-layout: fixed; */
   }
   th td{
-      min-width: 180px
+      min-width: unset
   }
   thead th:nth-child(1){
     width: 5%;
@@ -256,19 +286,15 @@ th, td {
     
   }
   thead th:nth-child(4){
-    width: 15%;
+    width: 20%;
     
   }
   thead th:nth-child(5){
-    width: 15%;
+    width: 20%;
     
   }
   thead th:nth-child(6){
-    width: 11%; 
-  }
-  thead th:nth-child(7){
-    width: 14%;
-    
+    width: 15%; 
   }
   div.tablecont table{
     width: 100%

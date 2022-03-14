@@ -4,62 +4,48 @@
         <div class="lg:flex lg:justify-between">
             <p class="mt-2 mb-4 font-bold text-lg">Manage vehicle cover claims</p>
             <div class="lg:flex lg:gap-4"> 
-                <div class="relative">
-                    <input type="text" v-model="searchKeyword" class="block mt-4 rounded bg-blue-100 px-4 lg:pl-10 py-2 w-full outline-none focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
-                    <svg class="absolute top-2 left-4 lg:top-6" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18.677 19.607L12.962 13.891C10.4196 15.6985 6.91642 15.2564 4.90285 12.8739C2.88929 10.4915 3.03714 6.96361 5.24298 4.75802C7.44824 2.55147 10.9765 2.40298 13.3594 4.41644C15.7422 6.42989 16.1846 9.93347 14.377 12.476L20.092 18.192L18.678 19.606L18.677 19.607ZM9.48498 5.00001C7.58868 4.99958 5.95267 6.3307 5.56745 8.18745C5.18224 10.0442 6.15369 11.9163 7.89366 12.6703C9.63362 13.4242 11.6639 12.8529 12.7552 11.3021C13.8466 9.75129 13.699 7.64734 12.402 6.26402L13.007 6.86402L12.325 6.18402L12.313 6.17202C11.5648 5.4192 10.5464 4.99715 9.48498 5.00001Z" fill="#2E3A59"></path>
-                    </svg>
-                </div>
-                <!-- <div class="items-center flex text-sm mt-4 relative border border-solid">
-                    <svg class="cursor-pointer" @click="sorter = ''" v-if="filtered" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="red" d="M8.41417 0.414185L6.99995 1.8284L8.17162 3.00006H4C3.447 3.00006 3 3.44706 3 4.00006V6.59006C3 7.11306 3.213 7.62706 3.583 7.99706L9 13.4141L9 21.0001C9 21.3471 9.18 21.6681 9.475 21.8511C9.635 21.9501 9.817 22.0001 10 22.0001C10.153 22.0001 10.306 21.9651 10.447 21.8951L14.447 19.8951C14.786 19.7251 15 19.3791 15 19.0001L15 13.4141L16.7928 11.6213L19.7279 14.5563L21.1421 13.1421L8.41417 0.414185ZM15.3788 10.2073L13.293 12.2931C13.105 12.4801 13 12.7341 13 13.0001L13 18.3821L11 19.3821V13.0001C11 12.7341 10.895 12.4801 10.707 12.2931L5 6.59006V5.00006L10.1716 5.00006L15.3788 10.2073Z" ></path>
-                        <path fill="red" d="M20 3.00006H13.8284L15.8284 5.00006H19.001L19.003 6.58306L18.2072 7.37885L19.6212 8.79285L20.417 7.99706C20.787 7.62706 21 7.11306 21 6.59006V4.00006C21 3.44706 20.553 3.00006 20 3.00006Z" ></path>
-                    </svg>
-                    <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path  d="M20 3H4C3.447 3 3 3.447 3 4V6.59C3 7.113 3.213 7.627 3.583 7.997L9 13.414V21C9 21.347 9.18 21.668 9.475 21.851C9.635 21.95 9.817 22 10 22C10.153 22 10.306 21.965 10.447 21.895L14.447 19.895C14.786 19.725 15 19.379 15 19V13.414L20.417 7.997C20.787 7.627 21 7.113 21 6.59V4C21 3.447 20.553 3 20 3ZM13.293 12.293C13.105 12.48 13 12.734 13 13V18.382L11 19.382V13C11 12.734 10.895 12.48 10.707 12.293L5 6.59V5H19.001L19.003 6.583L13.293 12.293Z" fill="#2E3A59"></path>
-                    </svg>
-                    <button @click="showFilter = !showFilter" class="py-2 px-2">Filter by
-                        <font-awesome-icon icon="angle-down" class="ml-2"/>
-                    </button>
-                    <div v-if="showFilter" class="filter shadow-lg absolute left-0 bg-white">
-                        <p class="mb-2 cursor-pointer text-sm" @click="filter('start')">Date</p>
-                    </div>
-                </div> -->
+              <div class="relative">
+                <input type="text" v-model="searchKeyword" class="block mt-4 rounded bg-blue-100 px-4 lg:pl-10 py-2 w-full outline-none focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                <svg class="absolute top-2 left-4 lg:top-6" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.677 19.607L12.962 13.891C10.4196 15.6985 6.91642 15.2564 4.90285 12.8739C2.88929 10.4915 3.03714 6.96361 5.24298 4.75802C7.44824 2.55147 10.9765 2.40298 13.3594 4.41644C15.7422 6.42989 16.1846 9.93347 14.377 12.476L20.092 18.192L18.678 19.606L18.677 19.607ZM9.48498 5.00001C7.58868 4.99958 5.95267 6.3307 5.56745 8.18745C5.18224 10.0442 6.15369 11.9163 7.89366 12.6703C9.63362 13.4242 11.6639 12.8529 12.7552 11.3021C13.8466 9.75129 13.699 7.64734 12.402 6.26402L13.007 6.86402L12.325 6.18402L12.313 6.17202C11.5648 5.4192 10.5464 4.99715 9.48498 5.00001Z" fill="#2E3A59"></path>
+                </svg>
+              </div>
             </div>
         </div>      
       <div class="overflow-x-auto xl:overflow-x-hidden tablecont">
-        <table v-if="filteredPolicies.length > 0" class="w-full mt-8">
+        <table v-if="filteredClaims.length > 0" class="w-full mt-8">
           <thead>
             <tr>
-              <th class="font-bold">Firstname</th>
-              <th class="font-bold">Lastname</th>
-              <th class="font-bold">Plan</th>
+              <th class="font-bold">Customer</th>
+              <th class="font-bold">Email</th>
               <th class="font-bold">Underwriter</th>
-              <th class="font-bold">Date</th>
+              <th class="font-bold">Start Date</th>
+              <th class="font-bold">Claim Date</th>
               <th class="font-bold">Details for Claim</th>
               <th class="font-bold">Status</th>
               <th class="font-bold">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(policy, index) in filteredPolicies" :key="index" class="border border-solid border-gray-300">
-              <td>{{policy.firstname}}</td>
-              <td>{{policy.lastname}}</td>
-              <td>{{policy.plan}}</td>
-              <td>{{policy.und}}</td>
-              <td>{{policy.start}}</td>
+            <tr v-for="(policy, index) in filteredClaims" :key="index" class="border border-solid border-gray-300">
+              <td>{{policy.user.firstname}} {{policy.user.lastname}}</td>
+              <td>{{policy.user.email}}</td>
+              <td>{{policy.underwriter.name}}</td>
+              <td>{{policy.metadata['start_date']}}</td>
+              <td>{{policy.timestamp}}</td>
               <td>
                   Car accident <router-link to="/app/dashboard/vehicle/claims" class="text-green-500 underline">View</router-link>
               </td>
              <td> 
-                <p v-if="policy.status =='Approved'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">{{policy.status}}</p>
+                <p v-if="policy.status =='Accept'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">{{policy.status}}</p>
+                <p v-else-if="policy.status == 'Pending'"  class="text-sm bg-yellow-500 text-white p-1 rounded text-center">{{policy.status}}</p>
                 <p v-else  class="text-sm bg-red-500 text-white p-1 rounded text-center">{{policy.status}}</p>
               </td>
               <td>
-                <select class="border rounded focus:outline-none">
-                  <option value="">Action</option>
-                  <option value="">Approve</option>
-                  <option value="">Decline</option>
+                <select class="border rounded focus:outline-none" v-model="action" @change="selectAction(policy)">
+                  <option disabled value="">Action</option>
+                  <option value="approve">Approve</option>
+                  <option value="decline">Decline</option>
                 </select>
               </td>
             </tr>
@@ -69,141 +55,151 @@
           <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
           <p class="mt-4 text-center font-bold text-green-500 font-lg">No records</p>
         </div>
-        <!-- v-if="filteredPolicies.length > 0" -->
-        <nav  class="mt-8"  aria-label="Page navigation example">
-          <ul class="w-1/2 mx-auto  flex justify-between" style="max-width: 250px">
-            <li class="page-item">
-              <button type="button" class="inline text-green-500" v-if="page != 1" @click="page--"> Previous </button>
-              <button v-else class="inline text-green-500 opacity-20">Previous</button>
-            </li>
-            <!-- <li class="page-item">
-              <button type="button" class="inline" v-for="pageNumber in pages.slice(page-1, page+5)" :key="pageNumber.id" @click="page = pageNumber"> {{pageNumber}} </button>
-            </li> -->
-            <li class="page-item">
-              <button type="button" @click="page++" v-if="page < pages.length" class="inline text-green-500"> Next </button>
-              <button v-else class="inline text-green-500 opacity-20">Next</button>
-            </li>
-          </ul>
-        </nav>	
-        
+        <div class="my-8">
+          <t-pagination
+          :total-items="totalRows"
+          :per-page="perPage"
+          :limit="limit"
+          :disabled="disabled"
+          v-model="currentPage"
+          @change="changePage"
+        />
+        </div>
       </div>
     </div>
+    <DeclineModal v-if="showDecline" v-on:close="closeDecline" v-on:submit="declineClaim" />
   </div>
 </template>
 
 <script>
 // import {mapState} from "vuex"
-// import axios from "axios"
-// import baseURL from "@/main"
+import axios from "axios"
+import baseURL from "@/main"
+import DeclineModal from "@/components/Vehicle/DeclineModal"
+import TPagination from 'vue-tailwind/dist/t-pagination'
 export default {
+  components: {DeclineModal, TPagination},
   data(){
     return {
-      payments :[
-      ],
-      val: '',
-      sorter: '',
-      endDate: '',
-      filtered: false,
+      perPage: 10,
+      totalRows: 0,
+      disabled: false,
+      limit: 5,
+      currentPage: 1,
       searchKeyword: '',
-      showFilter: false,
       page: 1,
-      perPage: 20,
       pages: [],
-      policies: [],
-      unsortedPolicies : []
+      claims: [],
+      showDecline: false,
+      claim: {},
+      action: '',
     }
   },
   computed:{
-    paginatedPolicies(){
+    paginatedClaims(){
         return this.paginate(
-            this.policies
+            this.claims
         )
     },
-    filteredPolicies(){
-       return  this.paginatedPolicies.filter((policies)=>{
-            return policies.firstname.toLowerCase().includes(this.searchKeyword.toLowerCase()) || policies.lastname.toLowerCase().includes(this.searchKeyword.toLowerCase())
+    filteredClaims(){
+       return  this.paginatedClaims.filter((claims)=>{
+            return claims.user.firstname.toLowerCase().includes(this.searchKeyword.toLowerCase()) || claims.user.lastname.toLowerCase().includes(this.searchKeyword.toLowerCase())
         })
     },
     
   },
   watch: {
-		policies() {
+		claims() {
 			this.setPages();
 		},
-        sorter(){
-            if(this.sorter == "start"){
-                this.filtered = true
-                this.policies.sort((a, b)=>{
-                let dateA = new Date(a.start)
-                let dateB = new Date(b.start)
-                return (dateB - dateA)
-                })
-                
-            }else if(this.sorter == 'end'){
-                this.filtered = true
-                this.policies.sort((a, b)=>{
-                let dateA = new Date(a.end)
-                let dateB = new Date(b.end)
-                return (dateB - dateA)
-                 })
-            }
-            else{
-                this.filtered = false
-                this.policies = this.unsortedPolicies
-            }
-        }
 	},
   methods: {
-    filter(val){
-      this.sorter = val
-      this.page = 1
-      // console.log(this.val)
-      this.showFilter = false
-    },
     setPages () {
-        let numberOfPages = Math.ceil(this.policies.length / this.perPage);
-        for (let index = 1; index <= numberOfPages; index++) {
-            this.pages.push(index);
-        }
-	},
-    paginate (policies) {
-        let page = this.page;
-        let perPage = this.perPage;
-        let from = (page * perPage) - perPage;
-        let to = (page * perPage);
-        return  policies.slice(from, to);
-    }
+      let numberOfPages = Math.ceil(this.claims.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
+    paginate (claims) {
+      let page = this.page;
+      let perPage = this.perPage;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  claims.slice(from, to);
+    },
+    getClaims(){
+      this.$store.commit('startLoading')
+      axios.get(`${baseURL}/admin/claims?type=vehicle`)
+      .then((res)=>{
+        this.$store.commit('endLoading')
+        this.claims = res.data.data.claims
+        this.totalRows = res.data.data.claims.length
+      })
+      .catch((err)=> {
+        this.$store.dispatch('handleError', err)
+      })
+    },
+    selectAction(obj){
+      this.claim = obj
+      if(this.action === 'decline'){
+        this.showDecline = true
+        this.action = ''
+      }else if(this.action === 'approve'){
+        this.approveClaim()
+        this.action = ''
+      }
+    },
+    closeDecline(){
+      this.showDecline = false
+      this.action = ""
+    },
+    approveClaim(){
+      this.$store.commit('startLoading')
+      let obj = {claim_id: this.claim.id, note: ''}
+      axios({url: `${baseURL}/admin/claim/approve`, data: obj, method: 'PATCH'})
+      .then((res)=>{
+        this.$store.commit('endLoading')
+        this.$store.commit('setSuccess', {status: true, msg: res.data.message})
+        this.getClaims()
+      })
+      .catch((err)=>{
+        this.$store.dispatch('handleError', err)
+      })
+    },
+    declineClaim(note){
+      this.showDecline = false
+      let obj = {claim_id: this.claim.id, note: note}
+      this.$store.commit('startLoading')
+      axios({url: `${baseURL}/admin/claim/decline`, data: obj, method: 'PATCH'})
+      .then((res)=>{
+        this.$store.commit('endLoading')
+        this.$store.commit('setSuccess', {status: true, msg: res.data.message})
+        this.getClaims()
+      })
+      .catch((err)=>{
+        this.$store.dispatch('handleError', err)
+      })
+
+    },
+    changePage(num){
+      console.log(num)
+      this.page = num
+      // this.$store.commit('startLoading')
+      // axios.get(`${baseURL}/admin/vehicle/policy`, {params :{page : num}})
+      // .then(res=>{
+      //   console.log(res.data.data)
+      //   this.totalRows = res.data.data.totalRecord
+      //   this.policies = res.data.data.records
+      //   this.perPage = res.data.data.record_per_page
+      //   this.$store.commit('endLoading')
+      // })
+      // .catch(err=>{
+      //   this.$store.dispatch('handleError', err)
+      // })
+    },
   },
   mounted(){
-      this.policies = [
-        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", amount: '#50,000', start: "2021-05-06", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Melosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home",  amount: '#50,000', start: "2021-03-02", end: "05-07-2021", number: "4", address: "2, Lekki, lagos"},
-        {status: 'Approved', und: "AIICO", firstname: "Abiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", amount: '#50,000', start: "2021-02-01", end: "05-07-2021", number: "2", address: "2, Lekki, lagos"},
-        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Telosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", amount: '#50,000',  start: "2021-03-04", end: "05-07-2021", number: "10", address: "2, Lekki, lagos"},
-        {status: 'Approved', und: "AIICO",firstname: "Obiwan", lastname: "Delosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", amount: '#50,000', start: "2021-04-30", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", start: "2021-05-06",amount: '#50,000',  end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {status: 'Approved', und: "AIICO",firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", amount: '#50,000', start: "2021-03-05", end: "05-07-2021", number: "25", address: "2, Lekki, lagos"},
-        {status: 'Declined', und: "AIICO", firstname: "Ebiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health",  amount: '#50,000', start: "2021-02-08", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Relosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", amount: '#50,000',  start: "2021-02-04", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {status: 'Approved',und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Home", amount: '#50,000',  start: "2021-06-15", end: "05-07-2021", number: "15", address: "2, Lekki, lagos"},
-        {status: 'Approved', und: "AIICO", firstname: "Ubiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health",  amount: '#50,000', start: "2021-02-23", end: "05-07-2021", number: "18", address: "2, Lekki, lagos"},
-        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle",  amount: '#50,000', start: "2021-05-16", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {status: 'Declined', und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Gadget",  amount: '#50,000',start: "2021-04-13", end: "05-07-2021", number: "2", address: "2, Lekki, lagos"},
-        {status: 'Declined', und: "AIICO",firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health", amount: '#50,000', start: "2021-10-24", end: "05-07-2021", number: "5", address: "2, Lekki, lagos"},
-        {status: 'Approved', und: "AIICO",firstname: "Ebiwan", lastname: "Telosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", amount: '#50,000',  start: "2021-04-20", end: "05-07-2021", number: "4", address: "2, Lekki, lagos"},
-        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health",  amount: '#50,000', start: "2021-04-04", end: "05-07-2021", number: "20", address: "2, Lekki, lagos"},
-        {status: 'Approved', und: "AIICO",firstname: "Abiwan", lastname: "Nelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Health",  amount: '#50,000', start: "2021-12-31", end: "05-07-2021", number: "10", address: "2, Lekki, lagos"},
-        {status: 'Approved', und: "AIICO", firstname: "Obiwan", lastname: "Pelosi", email: "obiwan@gmail.com", phone: '099090990909', plan: "Paddy Max", type: "Vehicle", amount: '#50,000', start: "2021-11-23", end: "05-07-2021", number: "3", address: "2, Lekki, lagos"},
-      ]
-      this.unsortedPolicies = this.policies
-    // .then(res=>{
-    //   for(let arr in res.data.data){
-    //     this.payments = this.payments.concat(res.data.data[arr])
-    //   }
-    // })
-    // .catch(err=>{
-    //   this.$store.dispatch('handleError', err)
-    // })
+      this.getClaims()
   }
 }
 </script>

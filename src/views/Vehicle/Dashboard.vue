@@ -1,16 +1,16 @@
 <template>
   <div>
       <Cards/>
-      <Recent />
+      <!-- <Recent /> -->
   </div>
 </template>
 
 <script>
 import Cards from "@/components/Vehicle/Cards"
-import Recent from "@/components/Vehicle/RecentTransactions"
+// import Recent from "@/components/Vehicle/RecentTransactions"
 export default {
     components:{
-        Cards, Recent
+        Cards, 
     }
 }
 </script>
