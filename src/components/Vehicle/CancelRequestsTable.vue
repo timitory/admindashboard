@@ -43,10 +43,9 @@
               <td>{{policy.enrollee.email}}</td>
               <td>{{policy.policy.start_date}}</td>
               <td> 
-                <span v-if="policy.status.name =='Accept'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">{{policy.status.name}}</span>
+                <span v-if="policy.status.name =='Accept'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">{{policy.status.name}}ed</span>
                 <span v-else-if="policy.status.name =='Initiated'"  class="text-sm bg-yellow-500 text-white p-1 rounded text-center">{{policy.status.name}}</span>
-                <span v-else-if="policy.status.name =='Processing'"  class="text-sm bg-blue-500 text-white p-1 rounded text-center">{{policy.status.name}}</span>
-                <span v-else  class="text-sm bg-red-500 text-white p-1 rounded text-center">{{policy.status.name}}</span>
+                <span v-else-if="policy.status.name == 'Decline'"  class="text-sm bg-red-500 text-white p-1 rounded text-center">{{policy.status.name}}d</span>
               </td>
               <td v-if="policy.status.name == 'Initiated'">
                   <select class="border border-solid rounded focus:outline-none" v-model="action" @change="selectAction(policy)">

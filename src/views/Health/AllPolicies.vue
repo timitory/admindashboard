@@ -14,17 +14,18 @@
           </div>
       </div>
       <p class="mt-2 mb-4 font-bold text-lg">This is the breakdown of policies under health cover</p>
-      <PoliciesData />
+      <!-- <PoliciesData /> -->
         <PoliciesTable />
   </div>
 </template>
 
 <script>
 import PoliciesTable from '@/components/Health/PoliciesTable'
-import PoliciesData from '@/components/Health/PoliciesData'
+// import PoliciesData from '@/components/Health/PoliciesData'
 export default {
     components:{
-        PoliciesTable, PoliciesData
+        PoliciesTable, 
+        // PoliciesData
     }
 }
 </script>

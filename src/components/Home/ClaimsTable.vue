@@ -34,7 +34,7 @@
               <td>{{policy.metadata['start_date']}}</td>
               <td>{{policy.timestamp}}</td>
               <td>
-                  Car accident <router-link to="/app/dashboard/vehicle/claims" class="text-green-500 underline">View</router-link>
+                  #400,000
               </td>
              <td> 
                 <p v-if="policy.status =='Approved'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">{{policy.status}}</p>
@@ -46,6 +46,7 @@
                   <option disabled value="">Action</option>
                   <option value="approve">Approve</option>
                   <option value="decline">Decline</option>
+                  <option value="settle">Mark as Settled</option>
                 </select>
               </td>
             </tr>
@@ -70,6 +71,7 @@
       </div>
     </div>
     <DeclineModal v-if="showDecline" v-on:close="closeDecline" v-on:submit="declineClaim" />
+    <SettleModal v-if="showSettle" v-on:close="closeSettle" v-on:submit="settleClaim" />
   </div>
 </template>
 
@@ -78,9 +80,10 @@
 import axios from "axios"
 import baseURL from "@/main"
 import DeclineModal from "@/components/Home/DeclineModal"
+import SettleModal from "@/components/Home/SettleModal"
 import TPagination from 'vue-tailwind/dist/t-pagination'
 export default {
-  components: {DeclineModal, TPagination},
+  components: {DeclineModal, SettleModal, TPagination},
   data(){
     return {
       perPage: 10,
@@ -93,6 +96,7 @@ export default {
       pages: [],
       claims: [],
       showDecline: false,
+      showSettle: false,
       claim: {},
       action: '',
     }
@@ -149,10 +153,17 @@ export default {
       }else if(this.action === 'approve'){
         this.approveClaim()
         this.action = ''
+      }else if(this.action == 'settle'){
+        this.showSettle = true
+        this.action = ""
       }
     },
     closeDecline(){
       this.showDecline = false
+      this.action = ""
+    },
+    closeSettle(){
+      this.showSettle = false
       this.action = ""
     },
     approveClaim(){
@@ -182,6 +193,11 @@ export default {
         this.$store.dispatch('handleError', err)
       })
 
+    },
+    settleClaim(amount){
+      this.showSettle = false
+      let obj = {claim_id: this.claim.id, amount: amount}
+      console.log(obj)
     },
     changePage(num){
       console.log(num)
