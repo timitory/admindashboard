@@ -35,12 +35,12 @@
               <th class="font-bold">S/N</th>
               <th class="font-bold">Customer</th>
               <th class="font-bold">Amount</th>
-              <th class="font-bold">Frequency</th>
               <th class="font-bold">Plan</th>
               <th class="font-bold">Start Date</th>
               <th class="font-bold">Status</th>
               <th class="font-bold">Underwriter</th>
               <th class="font-bold">Repayments</th>
+              <th class="font-bold">View</th>
             </tr>
           </thead>
           <tbody>
@@ -48,7 +48,6 @@
               <td>{{index + 1}}</td>
               <td>{{policy.policy.surname}} {{policy.policy.firstname}}</td>
               <td>{{policy.policy.amount}}</td>
-              <td>{{policy.policy.payment_frequency}}</td>
               <td>{{policy.policy.plan}}</td>
               <td>{{policy.policy.start}}</td>
               <td>
@@ -60,7 +59,10 @@
               </td>
               <td>{{policy.underwriter.name}}</td>
               <td>
-                  <button @click="viewRepayment(policy)" class="text-green-500 underline outline-none focus:outline-none">View</button>
+                  <button @click="viewRepayment(policy)" class="text-green-500 text-sm underline outline-none focus:outline-none">View</button>
+              </td>
+              <td>
+               <button @click="viewPolicy(policy.policy)" class="text-green-500 text-sm underline outline-none focus:outline-none">More</button>
               </td>
             </tr>
           </tbody>
@@ -82,6 +84,7 @@
       </div>
     </div>
     <Repayments v-if="showRepayment" :policy="policy" @close="showRepayment = false"/>
+    <SinglePolicy :showPolicy="showPolicy" :policy="policy" @close="showPolicy = false" />
   </div>
 </template>
 
@@ -91,8 +94,9 @@ import axios from "axios"
 import baseURL from "@/main"
 import TPagination from 'vue-tailwind/dist/t-pagination'
 import Repayments from "./ViewRepayment.vue"
+import SinglePolicy from "./SinglePolicy.vue"
 export default {
-  components: {TPagination, Repayments},
+  components: {TPagination, Repayments, SinglePolicy},
   data(){
     return {
       perPage: 10,
@@ -104,26 +108,15 @@ export default {
       pages: [],
       policies: [],
       showRepayment: false,
+      showPolicy: false
     }
   },
   computed:{
-    // paginatedPolicies(){
-    //     return this.paginate(
-    //         this.policies.filter((obj)=>{
-    //           return obj.status.includes(this.sorter)
-    //         })
-    //     )
-    // },
     paginatedPolicies(){
       return this.paginate(
         this.policies
       )
     },
-    // filteredPolicies(){
-    //    return  this.paginatedPolicies.filter((policies)=>{
-    //         return policies.firstname.toLowerCase().includes(this.searchKeyword.toLowerCase()) || policies.lastname.toLowerCase().includes(this.searchKeyword.toLowerCase())
-    //     })
-    // },
     
   },
   watch: {
@@ -136,6 +129,10 @@ export default {
     viewRepayment(obj){
       this.policy = obj
       this.showRepayment = true
+    },
+    viewPolicy(obj){
+      this.policy = obj
+      this.showPolicy = true
     },
     setPages () {
       let numberOfPages = Math.ceil(this.policies.length / this.perPage);
