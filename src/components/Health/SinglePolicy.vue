@@ -80,10 +80,7 @@
                             <p class="text-black text-sm">Spouse date of birth</p>
                             <p class="text-black text-sm font-semibold">{{policy.spouse_date_of_birth}}</p>
                         </div>
-                        <div class="flex justify-between items-center mb-6">
-                            <p class="text-black text-sm">Spouse health plan</p>
-                            <p class="text-black text-sm font-semibold">{{policy.spouse_health_plan}}</p>
-                        </div>
+                        
                     </div>
                     <ul class="mt-6" v-if="policy.health_category === 'family' && policy.children_count > 0">
                         <p class="my-4 text-black font-bold">Children Details</p> 
