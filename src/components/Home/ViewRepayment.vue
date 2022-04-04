@@ -10,7 +10,7 @@
                         <tr>
                         <th class="font-bold">S/N</th>
                         <th class="font-bold">Amount</th>
-                        <th class="font-bold">Due Date</th>
+                        <th class="font-bold">Payment Period</th>
                         <th class="font-bold">Status</th>
                         <th class="font-bold">Charge History</th>
                         </tr>
