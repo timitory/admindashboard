@@ -52,8 +52,10 @@
                     <input type="text" v-model="filterYear" class="border px-2 focus:outline-none">
                 </div>
             </div>
-            <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4">Filter</button>
+            <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4">Filter</button> <br>
+            
       </form>
+      <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4" @click="reset">Reset Filter</button>
       <div class="mt-8 lg:grid lg:gap-16 lg:items-center lg:grid-cols-2">
           <Stats :stats="stats" />
           <div class="mt-6" v-if="showChart">
@@ -128,6 +130,20 @@ export default {
         
     },
     methods: {
+        reset(){
+            window.location.reload();
+            // this.$store.commit('startLoading')
+            // this.year = ''
+            // this.filterYear = null
+            // this.monthId = null
+            // this.underwriterId = ''  
+            // this.statusId = ''
+            // this.planId = ''
+            // this.filters = []
+            // this.getPolicies()
+            // this.getUnderwriters()
+            // this.$store.commit('endLoading')
+        },
         getPolicies(){
             this.$store.commit('startLoading')
             axios.get(`${baseURL}/vehicle/report`)

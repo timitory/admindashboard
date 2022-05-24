@@ -54,6 +54,7 @@
             </div>
             <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4">Filter</button>
       </form>
+      <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4" @click="reset">Reset Filter</button>
       <div class="mt-8 lg:flex lg:gap-48 lg:items-center">
           <Stats :stats="stats" />
           <div class="mt-6" v-if="showChart">
@@ -118,6 +119,20 @@ export default {
         
     },
     methods: {
+        reset(){
+            window.location.reload();
+            // this.$store.commit('startLoading')
+            // this.year = ''
+            // this.filterYear = null
+            // this.monthId = null
+            // this.underwriterId = ''  
+            // this.statusId = ''
+            // this.planId = ''
+            // this.filters = []
+            // this.getPolicies()
+            // this.getUnderwriters()
+            // this.$store.commit('endLoading')
+        },
         getPolicies(){
             this.$store.commit('startLoading')
             axios.get(`${baseURL}/home/content/report`)
