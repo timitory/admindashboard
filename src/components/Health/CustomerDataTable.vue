@@ -44,7 +44,7 @@
               <td>{{policy.enrollee.email}}</td>
               <td>{{policy.enrollee.phone}}</td>
               <td>{{policy.enrollee.address}}</td>
-              <td>{{policy.User.CustomerType}}</td>
+              <td>{{policy.user.CustomerType}}</td>
               <td>
                <button @click="viewUser(policy)" class="text-green-500 underline outline-none focus:outline-none">View sponsor</button>
               </td>
