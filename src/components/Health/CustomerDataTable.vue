@@ -33,6 +33,7 @@
               <th class="font-bold">Email</th>
               <th class="font-bold">Phone Number</th>
               <th class="font-bold">Address</th>
+              <th class="font-bold">Customer Type</th>
               <th class="font-bold">Action</th>
             </tr>
           </thead>
@@ -43,6 +44,7 @@
               <td>{{policy.enrollee.email}}</td>
               <td>{{policy.enrollee.phone}}</td>
               <td>{{policy.enrollee.address}}</td>
+              <td>{{policy.User.CustomerType}}</td>
               <td>
                <button @click="viewUser(policy)" class="text-green-500 underline outline-none focus:outline-none">View sponsor</button>
               </td>
