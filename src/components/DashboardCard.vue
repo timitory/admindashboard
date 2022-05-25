@@ -36,6 +36,7 @@
           <div class="deepblue py-3 px-2 mt-4 text-xl font-bold border-2 border-green-500 border-dashed text-center">{{data.inactive_policy_count}}</div>
           <!-- <router-link to="/app/dashboard/inactivepolicies" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link> -->
       </div>
+      <a href="/app/dashboard/registeredusers">
       <div class="px-6 box pb-4 border-b border-solid lg:mt-10 lg:border-b-0 lg:border-r">
           <svg class="mx-auto svg" xmlns="http://www.w3.org/2000/svg" width="48.198" height="40.038" viewBox="0 0 48.198 40.038"><g transform="translate(0 -2.942)">
             <path fill="#00a859" class="a" d="M34.371,34.827V30.718A8.218,8.218,0,0,0,26.153,22.5H9.718A8.218,8.218,0,0,0,1.5,30.718v4.109" transform="translate(0 6.653)"/>
@@ -47,6 +48,7 @@
           <div class="deepblue py-3 px-2 mt-4 text-xl font-bold border-2 border-green-500 border-dashed text-center">{{data.user_count}}</div>
           <!-- <router-link to="/" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link> -->
       </div>
+      </a>
       <!-- <div class="px-6 box pb-4 border-b border-solid lg:mt-10 lg:border-b-0">
           <svg class="mx-auto svg" xmlns="http://www.w3.org/2000/svg" width="58.863" height="58.977" viewBox="0 0 58.863 58.977"><g transform="translate(-0.494)">
             <path fill="#00a859" class="a" d="M358.166,249.819l-.606,3.535a.862.862,0,0,0,1.251.909l3.175-1.669,3.175,1.669a.862.862,0,0,0,1.251-.909l-.606-3.535,2.568-2.5a.862.862,0,0,0-.478-1.471l-3.549-.516-1.587-3.216a.862.862,0,0,0-1.547,0l-1.588,3.216-3.549.516a.862.862,0,0,0-.478,1.471Zm2.155-2.849a.862.862,0,0,0,.649-.472l1.015-2.056L363,246.5a.862.862,0,0,0,.649.472l2.269.33-1.642,1.6a.862.862,0,0,0-.248.763l.388,2.26-2.029-1.067a.862.862,0,0,0-.8,0l-2.03,1.067.388-2.26a.862.862,0,0,0-.248-.763l-1.642-1.6Z" transform="translate(-314.048 -213.852)"/>

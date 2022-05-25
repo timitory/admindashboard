@@ -3,7 +3,7 @@
     <h1 class="text-2xl lg:text-2xl text-green-500 font-bold">Dashboard</h1>
     <div class="mt-6">
         <p class="font-bold text-lg lg:text-xl">Hello Admin,</p>
-        <p class="mt-2">See below overall information on policies purchased by users.</p>
+        <p class="mt-2">See below overall information on registered users.</p>
     </div>
     <div class="mt-8 px-6 pt-6 lg:px-20 pb-20 relative shadow-lg bg-white lg:relative" style="box-shadow: 0px 20px 33px #00000029; min-height: 1300px">
       <router-link to="/app/dashboard" class="absolute left-4 top-2">
@@ -40,8 +40,8 @@
             <svg class="lg:mx-auto svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46.617 53.124">
                 <path fill="#00a859" class="a" d="M64.7,8.771,68.085,2.3A1.572,1.572,0,0,0,66.692,0H52.3a3.1,3.1,0,0,0-3.045,2.442L48.147,7.431A23.309,23.309,0,1,0,64.7,8.771ZM54.665,51.533A21.722,21.722,0,0,1,47.749,9.222L43.586,27.955a1.734,1.734,0,0,0,2.185,2.04l9.668-2.859-6.391,16.04a1.18,1.18,0,0,0,.482,1.46,1.2,1.2,0,0,0,.634.183,1.185,1.185,0,0,0,.887-.4l3.867-4.335a.8.8,0,0,0-1.187-1.059l-2.379,2.667,5.7-14.31A1.409,1.409,0,0,0,55.346,25.5L45.32,28.469a.144.144,0,0,1-.181-.169l5.67-25.513a1.519,1.519,0,0,1,1.492-1.2H66.662L57.8,18.511a1.623,1.623,0,0,0,1.641,2.364l11.8-1.486-.77.863a.784.784,0,0,0-.1.109L55.852,36.645A.8.8,0,1,0,57.039,37.7l13.8-15.469A17.858,17.858,0,1,1,44.78,14.943a.8.8,0,0,0-.882-1.324,19.444,19.444,0,1,0,28.081,7.334l.739-.828a1.428,1.428,0,0,0-1.244-2.368l-1.413.178a19.456,19.456,0,0,0-5.236-4.7.8.8,0,1,0-.832,1.355A17.859,17.859,0,0,1,68.2,18.169L59.246,19.3a.033.033,0,0,1-.033-.048l4.747-9.067a21.721,21.721,0,0,1-9.294,41.352Z" transform="translate(-31.357)"/>
             </svg>
-            <p class="text-left lg:text-center mt-2 text-xs lg:text-sm font-bold">Total Inactive Policies</p>
-            <div class="deepblue py-1 px-2 mt-2 text-sm lg:text-base font-bold border-2 border-green-500 border-dashed text-center">23,000</div>
+            <p class="text-left lg:text-center mt-2 text-xs lg:text-sm font-bold">Total Registered User</p>
+            <div class="deepblue py-1 px-2 mt-2 text-sm lg:text-base font-bold border-2 border-green-500 border-dashed text-center">{{ policies.length }}</div>
         </div>
         <div class="ml-3 w-full lg:flex justify-between items-center">
           <div class=" lg:w-full">
@@ -52,33 +52,33 @@
         </div>
       </div>
       <div class="overflow-x-auto xl:overflow-x-hidden tablecont">
-        <table v-if="filteredPolicies.length > 0" class="w-full mt-8">
+        <table v-if="paginatedPolicies.length > 0" class="w-full mt-8">
           <thead>
             <tr>
-              <th class="font-bold">Firstname</th>
-              <th class="font-bold">Lastname</th>
-              <th class="font-bold">Plan</th>
-              <th class="font-bold">Type</th>
-              <th class="font-bold">Status</th>
-              <th class="font-bold">Start</th>
-              <th class="font-bold">End</th>
-              <th class="font-bold">Number of purchase</th>
-              <th class="font-bold">Action</th>
+              
+              <th class="font-bold">Customer Name</th>
+              <th class="font-bold">Email</th>
+              <th class="font-bold">Gender</th>
+              <th class="font-bold">Date of Birth</th>
+              <th class="font-bold">Phone Number</th>
+              <th class="font-bold">Category</th>
+              
+              <!-- <th class="font-bold">Action</th> -->
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(policy, index) in filteredPolicies" :key="index" class="border border-solid border-gray-300">
-              <td>{{policy.firstname}}</td>
-              <td>{{policy.lastname}}</td>
-              <td>{{policy.plan}}</td>
-              <td>{{policy.type}}</td>
-              <td>{{policy.status}}</td>
-              <td>{{policy.start}}</td>
-              <td>{{policy.end}}</td>
-              <td>{{policy.number}}</td>
-              <td>
+            <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
+             
+              <td>{{policy.firstname}} {{policy.lastname}}</td>
+              <td>{{policy.email}}</td>
+              <td>{{policy.gender}}</td>
+              <td>{{policy.date_of_birth}}</td>
+              <td>{{policy.phone}}</td>
+              <td>{{policy.customer_type}}</td>
+              
+              <!-- <td>
                   <router-link to="/" class="text-green-500">View</router-link>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
@@ -109,8 +109,9 @@
 
 <script>
 // import {mapState} from "vuex"
-// import axios from "axios"
-// import baseURL from "@/main"
+import axios from "axios"
+import baseURL from "@/main"
+
 export default {
   data(){
     return {
@@ -135,11 +136,16 @@ export default {
       )
     },
     paginatedPolicies(){
-        return this.paginate(
-            this.policies.filter((obj)=>{
-                return obj.type.includes(this.val)
-            })
-        )
+        // return this.paginate(
+        //     this.policies.filter((obj)=>{
+        //         return obj.type.includes(this.val)
+        //     })
+        // )
+      return this.paginate(
+        this.policies
+      )
+
+         
     },
     filteredPolicies(){
        return  this.paginatedPolicies.filter((policies)=>{
@@ -182,26 +188,37 @@ watch: {
     }
   },
   mounted(){
-      this.policies = [
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Melosi", plan: "Paddy Max", type: "Home", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "4"},
-        {firstname: "Abiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Home", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "2"},
-        {firstname: "Obiwan", lastname: "Telosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "10"},
-        {firstname: "Obiwan", lastname: "Delosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Home", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "25"},
-        {firstname: "Ebiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Relosi", plan: "Paddy Max", type: "Vehicle", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Home", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "15"},
-        {firstname: "Ubiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "18"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Vehicle", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Gadget", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "2"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "5"},
-        {firstname: "Ebiwan", lastname: "Telosi", plan: "Paddy Max", type: "Vehicle", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "4"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
-        {firstname: "Abiwan", lastname: "Nelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "10"},
-        {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Vehicle", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "3"},
-      ]
+     this.$store.commit('startLoading')
+    axios.get(`${baseURL}/admin/users`)
+    .then(res=>{
+      console.log(res.data.data.records)
+      this.policies = res.data.data.records
+      this.$store.commit('endLoading')
+    })
+    .catch(err=>{
+      this.$store.commit('endLoading')
+      this.$store.dispatch('handleError', err)
+    })
+      // this.policies = [
+      //   {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
+      //   {firstname: "Obiwan", lastname: "Melosi", plan: "Paddy Max", type: "Home", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "4"},
+      //   {firstname: "Abiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Home", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "2"},
+      //   {firstname: "Obiwan", lastname: "Telosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "10"},
+      //   {firstname: "Obiwan", lastname: "Delosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
+      //   {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
+      //   {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Home", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "25"},
+      //   {firstname: "Ebiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
+      //   {firstname: "Obiwan", lastname: "Relosi", plan: "Paddy Max", type: "Vehicle", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
+      //   {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Home", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "15"},
+      //   {firstname: "Ubiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "18"},
+      //   {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Vehicle", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
+      //   {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Gadget", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "2"},
+      //   {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "5"},
+      //   {firstname: "Ebiwan", lastname: "Telosi", plan: "Paddy Max", type: "Vehicle", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "4"},
+      //   {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "20"},
+      //   {firstname: "Abiwan", lastname: "Nelosi", plan: "Paddy Max", type: "Health", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "10"},
+      //   {firstname: "Obiwan", lastname: "Pelosi", plan: "Paddy Max", type: "Vehicle", status: "Inactive", start: "05-06-2021", end: "05-07-2021", number: "3"},
+      // ]
     // .then(res=>{
     //   for(let arr in res.data.data){
     //     this.payments = this.payments.concat(res.data.data[arr])
@@ -275,7 +292,7 @@ th, td {
     
   }
   thead th:nth-child(2){
-    width: 10%;
+    width: 20%;
     
   }
   thead th:nth-child(3){
@@ -295,12 +312,7 @@ th, td {
   thead th:nth-child(7){
     width: 10%; 
   }
-  thead th:nth-child(8){
-    width: 20%; 
-  }
-  thead th:nth-child(9){
-    width: 10%; 
-  }
+  
   th, td {
   /* min-width: 80px */
   }
