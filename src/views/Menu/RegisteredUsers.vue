@@ -41,7 +41,7 @@
                 <path fill="#00a859" class="a" d="M64.7,8.771,68.085,2.3A1.572,1.572,0,0,0,66.692,0H52.3a3.1,3.1,0,0,0-3.045,2.442L48.147,7.431A23.309,23.309,0,1,0,64.7,8.771ZM54.665,51.533A21.722,21.722,0,0,1,47.749,9.222L43.586,27.955a1.734,1.734,0,0,0,2.185,2.04l9.668-2.859-6.391,16.04a1.18,1.18,0,0,0,.482,1.46,1.2,1.2,0,0,0,.634.183,1.185,1.185,0,0,0,.887-.4l3.867-4.335a.8.8,0,0,0-1.187-1.059l-2.379,2.667,5.7-14.31A1.409,1.409,0,0,0,55.346,25.5L45.32,28.469a.144.144,0,0,1-.181-.169l5.67-25.513a1.519,1.519,0,0,1,1.492-1.2H66.662L57.8,18.511a1.623,1.623,0,0,0,1.641,2.364l11.8-1.486-.77.863a.784.784,0,0,0-.1.109L55.852,36.645A.8.8,0,1,0,57.039,37.7l13.8-15.469A17.858,17.858,0,1,1,44.78,14.943a.8.8,0,0,0-.882-1.324,19.444,19.444,0,1,0,28.081,7.334l.739-.828a1.428,1.428,0,0,0-1.244-2.368l-1.413.178a19.456,19.456,0,0,0-5.236-4.7.8.8,0,1,0-.832,1.355A17.859,17.859,0,0,1,68.2,18.169L59.246,19.3a.033.033,0,0,1-.033-.048l4.747-9.067a21.721,21.721,0,0,1-9.294,41.352Z" transform="translate(-31.357)"/>
             </svg>
             <p class="text-left lg:text-center mt-2 text-xs lg:text-sm font-bold">Total Registered User</p>
-            <div class="deepblue py-1 px-2 mt-2 text-sm lg:text-base font-bold border-2 border-green-500 border-dashed text-center">{{ policies.length }}</div>
+            <div class="deepblue py-1 px-2 mt-2 text-sm lg:text-base font-bold border-2 border-green-500 border-dashed text-center">{{ this.totalRows }}</div>
         </div>
         <div class="ml-3 w-full lg:flex justify-between items-center">
           <div class=" lg:w-full">
@@ -86,21 +86,32 @@
           <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
           <p class="mt-4 text-center font-bold text-green-500 font-lg">No records</p>
         </div>
-        <nav  class="mt-8" v-if="filteredPolicies.length > 0" aria-label="Page navigation example">
+
+         <div class="mt-8">
+          <t-pagination
+          :total-items="totalRows"
+          :per-page="perPage"
+          :limit="limit"
+          :disabled="disabled"
+          v-model="currentPage"
+          @change="changePage"
+        />
+        </div>
+        <!-- <nav  class="mt-8" v-if="filteredPolicies.length > 0" aria-label="Page navigation example">
           <ul class="w-1/2 mx-auto  flex justify-between" style="max-width: 250px">
             <li class="page-item">
               <button type="button" class="inline text-green-500" v-if="page != 1" @click="page--"> Previous </button>
               <button v-else class="inline text-green-500 opacity-20">Previous</button>
-            </li>
+            </li> -->
             <!-- <li class="page-item">
                 <button type="button" class="inline text-green-500" v-for="(pageNumber, index) in pages.slice(page-1, page+5)" @click="page = pageNumber" :key="index"> {{pageNumber}} </button>
             </li> -->
-            <li class="page-item">
+            <!-- <li class="page-item">
               <button type="button" @click="page++" v-if="page < pages.length" class="inline text-green-500"> Next </button>
               <button v-else class="inline text-green-500 opacity-20">Next</button>
             </li>
           </ul>
-        </nav>	
+        </nav>	 -->
         
       </div>
     </div>
@@ -109,18 +120,27 @@
 
 <script>
 // import {mapState} from "vuex"
+
 import axios from "axios"
 import baseURL from "@/main"
+import TPagination from 'vue-tailwind/dist/t-pagination'
 
 export default {
+  components:{
+    TPagination
+  },
   data(){
     return {
       payments :[
       ],
       val: '',
       filtered: false,
+      limit: 5,
+      disabled: false, 
+      currentPage: 1,
       searchKeyword: '',
       showFilter: false,
+      totalRows: 0,
       page: 1,
       perPage: 20,
       pages: [],
@@ -185,13 +205,30 @@ watch: {
         let from = (page * perPage) - perPage;
         let to = (page * perPage);
         return  policies.slice(from, to);
-    }
+    },
+    changePage(num){
+      console.log(num)
+      this.$store.commit('startLoading')
+      axios.get(`${baseURL}/admin/users`, {params :{page : num}})
+      .then(res=>{
+        console.log(res.data.data)
+        this.totalRows = res.data.data.totalRecord
+        this.policies = res.data.data.records
+        this.perPage = res.data.data.record_per_page
+        this.$store.commit('endLoading')
+      })
+      .catch(err=>{
+        this.$store.dispatch('handleError', err)
+      })
+    },
   },
   mounted(){
      this.$store.commit('startLoading')
     axios.get(`${baseURL}/admin/users`)
     .then(res=>{
       console.log(res.data.data.records)
+      this.totalRows = res.data.data.totalRecord
+      this.perPage = res.data.data.record_per_page
       this.policies = res.data.data.records
       this.$store.commit('endLoading')
     })
