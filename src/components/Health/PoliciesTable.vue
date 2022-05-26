@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>       -->
-      <div class="overflow-x-auto xl:overflow-x-hidden tablecont">
+      <div class="overflow-x-auto tablecont">
         <table v-if="paginatedPolicies.length > 0" class="w-full mt-8">
           <thead>
             <tr>
@@ -237,10 +237,10 @@ th, td {
         height: 30px
     }
   table{
-    table-layout: fixed;
+    /* table-layout: fixed; */
   }
   th td{
-      min-width: 180px
+      min-width: unset
   }
   thead th:nth-child(1){
     width: 5%; 
