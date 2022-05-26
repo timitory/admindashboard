@@ -37,6 +37,7 @@
               <th class="font-bold">Amount</th>
               <th class="font-bold">Plan</th>
               <th class="font-bold">Start Date</th>
+              <th class="font-bold">Purchase Date</th>
               <th class="font-bold">Status</th>
               <th class="font-bold">Underwriter</th>
               <th class="font-bold">Repayments</th>
@@ -50,6 +51,7 @@
               <td>{{policy.policy.amount}}</td>
               <td>{{policy.policy.plan}}</td>
               <td>{{policy.policy.start}}</td>
+              <td>{{policy.policy.created_at}}</td>
               <td>
                 <span v-if="policy.policy.status == 'Success'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
                 <span v-else-if="policy.policy.status == 'Active'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
@@ -235,7 +237,7 @@ th, td {
         height: 30px
     }
   table{
-    /* table-layout: fixed; */
+    table-layout: fixed;
   }
   th td{
       min-width: 180px
@@ -247,24 +249,27 @@ th, td {
     width: 15%;
   }
   thead th:nth-child(3){
-    width: 10%;
+    width: 13%;
   }
   thead th:nth-child(4){
-    width: 10%;
+    width: 15%;
   }
   thead th:nth-child(5){
     width: 15%;
   }
   thead th:nth-child(6){
-    width: 15%;
+    width: 10%;
   }
   thead th:nth-child(7){
     width: 10%;
   }
   thead th:nth-child(8){
-    width: 10%;
+    width: 14%;
   }
   thead th:nth-child(9){
+    width: 13%;
+  }
+  thead th:nth-child(10){
     width: 10%;
   }
   div.tablecont table{

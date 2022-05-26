@@ -43,7 +43,7 @@
           <tbody>
             <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
-              <td>{{policy.policy.start}}</td>
+              <td>{{policy.policy.created_at}}</td>
               <td>{{policy.policy.enrollee.firstname}} {{policy.policy.enrollee.lastname}}</td>
               <td>{{policy.policy.enrollee.email}}</td>
               <td>{{policy.policy.enrollee.phone}}</td>
