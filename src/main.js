@@ -51,7 +51,13 @@ library.add(faAlignLeft, faAngleLeft, faEye, faCheck, faEyeSlash, faTimes, faBar
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 //set baseURL
-const baseURL = "https://stage.paddycover.com/v1"
+var baseURL;
+if (process.env.NODE_ENV === "production"){
+   baseURL = "https://api.paddycover.com/v1"
+}
+else if(process.env.NODE_ENV === "development"){
+   baseURL = "https://stage.paddycover.com/v1"
+}
 
 //After login, on page refresh, set authorization header
 const token = localStorage.getItem('user-token')
