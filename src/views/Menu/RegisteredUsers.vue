@@ -51,11 +51,11 @@
           </div>
         </div>
       </div>
-      <div class="overflow-x-auto xl:overflow-x-hidden tablecont">
+      <div class="overflow-x-auto tablecont">
         <table v-if="paginatedPolicies.length > 0" class="w-full mt-8">
           <thead>
             <tr>
-              
+              <th class="font-bold">S/N</th>
               <th class="font-bold">Customer Name</th>
               <th class="font-bold">Email</th>
               <th class="font-bold">Gender</th>
@@ -68,7 +68,7 @@
           </thead>
           <tbody>
             <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
-             
+             <td>{{ index + 1}}</td>
               <td>{{policy.firstname}} {{policy.lastname}}</td>
               <td>{{policy.email}}</td>
               <td>{{policy.gender}}</td>
@@ -322,10 +322,13 @@ th, td {
         height: 30px
     }
   table{
-    table-layout: fixed;
+    /* table-layout: fixed; */
+  }
+  th, td {
+    min-width: unset
   }
   thead th:nth-child(1){
-    width: 10%;
+    width: 5%;
     
   }
   thead th:nth-child(2){
@@ -350,9 +353,7 @@ th, td {
     width: 10%; 
   }
   
-  th, td {
-  /* min-width: 80px */
-  }
+ 
   div.tablecont{
     max-width: 100%;
   }
