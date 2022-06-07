@@ -11,6 +11,51 @@
           </div>
       </div>
       <p class="mt-6 mb-4 font-bold text-lg">This report is associated with the Health Cover Policy</p>
+       <p class="font-bold">Filter options :</p>
+      <form @submit.prevent="filter" >
+          <div class="grid lg:grid-cols-2 gap-4" style="max-width: 650px">
+                <div class="flex items-center gap-4">
+                    <input type="checkbox" v-model="filters" value="underwriter" >
+                    <p>Underwriter : </p>
+                    <select v-model="underwriterId" class="border">
+                        <option value="">Choose one</option>
+                        <option v-for="(underwriter, index) in underwriters" :key="index" :value="underwriter.id">{{underwriter.name}}</option>
+                    </select>
+                    </div>
+                <div class="flex items-center gap-4">
+                    <input type="checkbox" v-model="filters" value="status" >
+                    <p>Status : </p>
+                    <select v-model="statusId" class="border">
+                        <option value="">Choose one</option>
+                        <option v-for="(status, index) in statuses" :key="index" :value="status.id">{{status.name}}</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-4">
+                    <input type="checkbox" v-model="filters" value="plan" >
+                    <p>Plans : </p>
+                    <select v-model="planId" class="border">
+                        <option value="">Choose one</option>
+                        <option v-for="(plan, index) in plans" :key="index" :value="plan.id">{{plan.name}}</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-4">
+                    <input type="checkbox" v-model="filters" value="month" >
+                    <p>Months : </p>
+                    <select v-model="monthId" class="border">
+                        <option value="">Choose one</option>
+                        <option v-for="(month, index) in months" :key="index" :value="month.id">{{month.name}}</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-4">
+                    <input type="checkbox" v-model="filters" value="year"  >
+                    <p>Year : </p>
+                    <input type="text" v-model="filterYear" class="border px-2 focus:outline-none">
+                </div>
+            </div>
+            <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4">Filter</button> <br>
+            
+      </form>
+      <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4" @click="reset">Reset Filter</button>
       <div class="mt-8 lg:flex lg:gap-24 lg:items-center">
           <Stats />
           <div class="mt-6">
