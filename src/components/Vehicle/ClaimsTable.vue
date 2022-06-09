@@ -44,9 +44,9 @@
               <td>
                 <select class="border rounded focus:outline-none" v-model="action" @change="selectAction(policy)">
                   <option disabled value="">Action</option>
-                  <option value="approve">Accept</option>
-                  <option value="decline">Decline</option>
-                  <option value="settle">Mark as Settled</option>
+                  <option v-if="policy.status != 'Accept' && policy.status != 'Decline'" value="approve">Accept</option>
+                  <option v-if="policy.status == 'Pending'" value="decline">Decline</option>
+                  <option v-if="policy.status != 'Decline'" value="settle">Mark as Settled</option>
                 </select>
               </td>
             </tr>
