@@ -34,10 +34,11 @@
               <td>{{policy.metadata['start_date']}}</td>
               <td>{{policy.timestamp}}</td>
               <td>
-                  #400,000
+                 
               </td>
              <td> 
-                <p v-if="policy.status =='Accept'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">Accepted</p>
+               <p v-if="policy.underwriter_status =='Accept'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">Approved</p>
+                <p v-else-if="policy.status =='Accept'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">Accepted</p>
                 <p v-else-if="policy.status == 'Pending'"  class="text-sm bg-yellow-500 text-white p-1 rounded text-center">{{policy.status}}</p>
                 <p v-else  class="text-sm bg-red-500 text-white p-1 rounded text-center">{{policy.status}}</p>
               </td>
@@ -46,7 +47,7 @@
                   <option disabled value="">Action</option>
                   <option v-if="policy.status != 'Accept' && policy.status != 'Decline'" value="approve">Accept</option>
                   <option v-if="policy.status == 'Pending'" value="decline">Decline</option>
-                  <option v-if="policy.status != 'Decline'" value="settle">Mark as Settled</option>
+                  <option v-if="policy.status != 'Decline' && policy.underwriter_status == 'Accept'" value="settle">Mark as Settled</option>
                 </select>
               </td>
             </tr>
