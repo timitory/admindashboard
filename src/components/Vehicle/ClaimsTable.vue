@@ -37,14 +37,14 @@
                   #400,000
               </td>
              <td> 
-                <p v-if="policy.status =='Accept'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">{{policy.status}}</p>
+                <p v-if="policy.status =='Accept'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">Accepted</p>
                 <p v-else-if="policy.status == 'Pending'"  class="text-sm bg-yellow-500 text-white p-1 rounded text-center">{{policy.status}}</p>
                 <p v-else  class="text-sm bg-red-500 text-white p-1 rounded text-center">{{policy.status}}</p>
               </td>
               <td>
                 <select class="border rounded focus:outline-none" v-model="action" @change="selectAction(policy)">
                   <option disabled value="">Action</option>
-                  <option value="approve">Approve</option>
+                  <option value="approve">Accept</option>
                   <option value="decline">Decline</option>
                   <option value="settle">Mark as Settled</option>
                 </select>
@@ -278,11 +278,11 @@ th, td {
   table{
     /* table-layout: fixed; */
   }
-  th td{
-      min-width: 180px
+  th, td{
+      min-width: unset
   }
   thead th:nth-child(8){
-    width: 12.5%;
+    width: 18%;
   }
   thead th:nth-child(1){
     width: 12.5%;
@@ -305,7 +305,10 @@ th, td {
   thead th:nth-child(7){
     width: 12.5%;
   }
-  div.tablecont table{
+div.tablecont{
+    max-width: 100%;
+  }
+div.tablecont table{
     width: 100%
   }
 }
