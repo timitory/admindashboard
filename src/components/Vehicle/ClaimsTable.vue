@@ -37,17 +37,20 @@
                  
               </td>
              <td> 
-               <p v-if="policy.underwriter_status =='Accept'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">Approved</p>
+               <p v-if="policy.status =='Settled'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">Settled</p>
+               <p v-else-if="policy.underwriter_status =='Accept'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">Approved</p>
+               <p v-else-if="policy.underwriter_status =='Decline'"  class="text-sm bg-red-500 text-white p-1 rounded text-center">Declined</p>
                 <p v-else-if="policy.status =='Accept'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">Accepted</p>
+                
                 <p v-else-if="policy.status == 'Pending'"  class="text-sm bg-yellow-500 text-white p-1 rounded text-center">{{policy.status}}</p>
                 <p v-else  class="text-sm bg-red-500 text-white p-1 rounded text-center">{{policy.status}}</p>
               </td>
               <td>
                 <select class="border rounded focus:outline-none" v-model="action" @change="selectAction(policy)">
                   <option disabled value="">Action</option>
-                  <option v-if="policy.status != 'Accept' && policy.status != 'Decline'" value="approve">Accept</option>
+                  <option v-if="policy.status != 'Accept' && policy.status != 'Decline' && policy.status != 'Settled'" value="approve">Accept</option>
                   <option v-if="policy.status == 'Pending'" value="decline">Decline</option>
-                  <option v-if="policy.status != 'Decline' && policy.underwriter_status == 'Accept'" value="settle">Mark as Settled</option>
+                  <option v-if="policy.status != 'Decline' && policy.status != 'Settled' && policy.underwriter_status == 'Accept'" value="settle">Mark as Settled</option>
                 </select>
               </td>
             </tr>
@@ -70,7 +73,7 @@
       </div>
     </div>
     <DeclineModal v-if="showDecline" v-on:close="closeDecline" v-on:submit="declineClaim" />
-    <SettleModal v-if="showSettle" v-on:close="closeSettle" v-on:submit="settleClaim" />
+    <SettleModal :claim="claim" v-if="showSettle" v-on:close="closeSettle" v-on:submit="settleClaim" />
   </div>
 </template>
 
