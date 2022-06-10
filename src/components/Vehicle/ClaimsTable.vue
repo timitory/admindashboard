@@ -34,7 +34,7 @@
               <td>{{policy.metadata['start_date']}}</td>
               <td>{{policy.timestamp}}</td>
               <td>
-                 
+                 {{policy.settled_amount}}
               </td>
              <td> 
                <p v-if="policy.status =='Settled'"  class="text-sm bg-green-500 text-white p-1 rounded text-center">Settled</p>
