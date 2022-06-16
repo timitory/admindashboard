@@ -51,6 +51,7 @@
                   <option v-if="policy.status != 'Accept' && policy.status != 'Decline' && policy.status != 'Settled'" value="approve">Accept</option>
                   <option v-if="policy.status == 'Pending'" value="decline">Decline</option>
                   <option v-if="policy.status != 'Decline' && policy.status != 'Settled' && policy.underwriter_status == 'Accept'" value="settle">Mark as Settled</option>
+                  <option v-if="policy.status != 'Decline' && policy.status == 'Settled'" value="settle">Edit Settled Amount</option>
                 </select>
               </td>
             </tr>

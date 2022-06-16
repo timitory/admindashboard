@@ -49,7 +49,7 @@ export default {
             //this.$emit('submit', this.amount)
             this.$store.commit('startLoading')
             axios({url: `${baseURL}/admin/claim/mark`, data: {
-                amount : this.amount,
+                amount : this.amount * 100,
                 claim_id: this.claim.id
             }, method: 'PATCH'})
             .then(()=>{
