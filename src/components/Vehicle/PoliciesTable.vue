@@ -29,7 +29,7 @@
           <thead>
             <tr>
               <th class="font-bold">S/N</th>
-              <th class="font-bold">Purchase Date</th>
+              <th class="font-bold">Start Date</th>
               <th class="font-bold">Customer</th>
               <th class="font-bold">Email</th>
               <th class="font-bold">Phone Number</th>
