@@ -52,8 +52,8 @@
               <td>
                 <span v-if="policy.policy.status == 'Success'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
                 <span v-else-if="policy.policy.status == 'Active'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
-                <span v-else-if="policy.policy.status == 'Incomplete'" class="rounded text-white text-center p-1 bg-yellow-500">{{policy.policy.status}}</span>
-                <span v-else-if="policy.policy.status == 'Pending'" class="rounded text-white text-center p-1 bg-red-500">{{policy.policy.status}}</span>
+                <span v-else-if="policy.policy.status == 'Incomplete'" class="rounded text-white text-center p-1 bg-red-500">{{policy.policy.status}}</span>
+                <span v-else-if="policy.policy.status == 'Pending'" class="rounded text-white text-center p-1 bg-yellow-500">{{policy.policy.status}}</span>
                 <span v-else class="rounded text-white text-center p-1 bg-red-500">{{policy.policy.status}}</span>
               </td>
               <td>
