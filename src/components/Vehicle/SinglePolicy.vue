@@ -86,7 +86,7 @@
                 </div>
                 <hr class="mt-6"> 
                 <a :href="policy.policy.certificate" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Certificate</a>
-                <a :href="policy.policy.enrollee.means_of_id" v-if="policy.policy.enrollee.means_of_id" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View User's ID</a>
+                <a :href="policy.policy.valid_id" v-if="policy.policy.valid_id != 'https://stage.paddycover.com'" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View User's ID</a>
                 <p v-else class="mt-6">Means of Id link not available</p>
             </div>
           </div>

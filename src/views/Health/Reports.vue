@@ -30,14 +30,14 @@
                         <option v-for="(status, index) in statuses" :key="index" :value="status.id">{{status.name}}</option>
                     </select>
                 </div>
-                <div class="flex items-center gap-4">
+                <!-- <div class="flex items-center gap-4">
                     <input type="checkbox" v-model="filters" value="plan" >
                     <p>Plans : </p>
                     <select v-model="planId" class="border">
                         <option value="">Choose one</option>
                         <option v-for="(plan, index) in plans" :key="index" :value="plan.id">{{plan.name}}</option>
                     </select>
-                </div>
+                </div> -->
                 <div class="flex items-center gap-4">
                     <input type="checkbox" v-model="filters" value="month" >
                     <p>Months : </p>
@@ -57,9 +57,9 @@
       </form>
       <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4" @click="reset">Reset Filter</button>
       <div class="mt-8 lg:flex lg:gap-24 lg:items-center">
-          <Stats />
+          <Stats :stats="stats" />
           <div class="mt-6">
-              <DoughnutChart />
+              <DoughnutChart :piechartData="piechartData" />
           </div>
           
       </div>
@@ -85,19 +85,210 @@ import Stats from "@/components/Health/ReportStats"
 import DoughnutChart from "@/components/Health/DoughnutChart"
 import LineChart from "@/components/Health/LineChart"
 import Table from "@/components/Health/ReportTable"
+import axios from "axios"
+import baseURL from "@/main"
 export default {
     components:{
         Stats, DoughnutChart, LineChart, Table
     },
     data(){
         return {
-            year : ''
+            year : '',
+            policies: [],
+            stats: {},
+            piechartData: {},
+            showChart: false,
+            showTable: false,
+            underwriters: [],
+            underwriterId: '',
+            statusId: '',
+            plans : [],
+            planId: '',
+            monthId: null,
+            filterYear: null,
+            filters: [],
+            statuses: [
+                {id: 1, name: 'Active'},
+                {id: 5, name: 'Success'},
+                {id: 12, name: 'Pending'},
+                {id: 19, name: 'Incomplete'},
+            ],
+            months: [
+                {id: 1, name: "Jan"},{id: 2, name: "Feb"}, {id: 3, name: "Mar"}, {id: 4, name: "Apr"}, {id: 5, name: "May"}, {id: 6, name: "Jun"}, {id: 7, name: "Jul"}, {id: 8, name: "Aug"}, {id: 9, name: "Sep"}, {id: 10, name: "Oct"}, {id: 11, name: "Nov"}, {id: 12, name: "Dec"},
+            ],
+            totalRecords: 0,
+            url: ''
         }
     },
     watch:{
         year(){
 
         }
+    },
+    methods: {
+        reset(){
+            window.location.reload();
+            // this.$store.commit('startLoading')
+            // this.year = ''
+            // this.filterYear = null
+            // this.monthId = null
+            // this.underwriterId = ''  
+            // this.statusId = ''
+            // this.planId = ''
+            // this.filters = []
+            // this.getPolicies()
+            // this.getUnderwriters()
+            // this.$store.commit('endLoading')
+        },
+        getPolicies(){
+            this.$store.commit('startLoading')
+            axios.get(`${baseURL}/health/report`)
+            .then(res =>{
+            console.log(res.data.data)
+            // this.totalRows = res.data.data.totalRecord
+            this.policies = res.data.data.all_policies
+            this.totalRecords = res.data.data.total_records
+            console.log(this.policies)
+            this.stats = {
+                active : res.data.data.active_policy_count,
+                // incomplete: res.data.data.incomplete_policy_count,
+                // pending: res.data.data.pending_policy_count,
+                success: res.data.data.success_policy_count,
+                // total_claim: res.data.data.claim_count,
+                // settled_claim: res.data.data.settled_claim_count
+            }
+            this.showChart = true
+            this.showTable = true
+            this.piechartData = res.data.data.policy_type
+            this.$store.commit('endLoading')
+            })
+            .catch(err=>{
+            this.$store.dispatch('handleError', err)
+            })
+        },
+        getUnderwriters(){
+            axios.get(`${baseURL}/underwriter`)
+            .then((res)=>{
+                // console.log(res.data.data)
+                this.underwriters = res.data.data
+            })
+            .catch(err=>{
+                this.$store.dispatch('handleError', err)
+            })
+        },
+        // getPlans(){
+        //     axios.get(`${baseURL}/vehicle/categories?uid=${this.underwriterId}`)
+        //     .then((res)=>{
+        //         this.plans = res.data.data.categories
+        //     })
+        //     .catch(err=>{
+        //     this.$store.dispatch('handleError', err)
+        //     })
+        // },
+        filter(){
+            if(this.filters.length == 0)  return this.$store.commit('setError', {status: true, msg: 'check the boxes to apply any filter'})
+            let url = '?'
+            this.filters.map( (item) => {
+                if(item === 'underwriter'){
+                    if(url.length == 1){
+                        url = url.concat("", `underwriter_id=${this.underwriterId}`)
+                    }else{
+                        url = url.concat("&", `underwriter_id=${this.underwriterId}`)
+                    }
+                }else if(item == 'status'){
+                    if(url.length == 1){
+                        url = url.concat("", `status_id=${this.statusId}`)
+                    }else{
+                        url = url.concat("", `&status_id=${this.statusId}`)
+                    }
+                // }else if(item == 'plan'){
+                //     if(url.length == 1){
+                //         url = url.concat("", `vehicle_category_id=${this.planId}`)
+                //     }else{
+                //         url = url.concat("", `&vehicle_category_id=${this.planId}`)
+                //     }
+                }
+                else if(item == 'month'){
+                    if(url.length == 1){
+                        url = url.concat("", `month=${this.monthId}`)
+                    }else{
+                        url = url.concat("", `&month=${this.monthId}`)
+                    }
+                }else if(item == 'year'){
+                    if(url.length == 1){
+                        url = url.concat("", `year=${this.filterYear}`)
+                    }else{
+                        url = url.concat("", `&year=${this.filterYear}`)
+                    }
+                }
+            })
+            this.url = url
+            this.getFilteredResults(url)
+        },
+        getFilteredResults(str){
+            this.$store.commit('startLoading')
+            this.showChart = false
+            this.showTable = false
+            axios.get(`${baseURL}/health/report${str}`)
+            .then((res)=>{
+                this.$store.commit('endLoading')
+                console.log(res.data.data)
+                if(!res.data.data.all_policies){
+                    this.policies = []
+                }else{
+                    this.policies = res.data.data.all_policies
+                }
+                this.totalRecords = res.data.data.total_records
+                this.stats = {
+                    active : res.data.data.active_policy_count,
+                    // incomplete: res.data.data.incomplete_policy_count,
+                    // pending: res.data.data.pending_policy_count,
+                    success: res.data.data.success_policy_count,
+                    // total_claim: res.data.data.claim_count,
+                    // settled_claim: res.data.data.settled_claim_count
+                }
+                this.showChart = true
+                this.showTable = true
+                this.piechartData = res.data.data.policy_type
+            })
+            .catch((err)=>{
+                this.$store.dispatch('handleError', err)
+            })
+        },
+        changePage(num){
+            this.$store.commit('startLoading')
+            this.showChart = false
+            // this.showTable = false
+            axios.get(`${baseURL}/health/report${this.url}?page=${num}`)
+            .then((res)=>{
+                this.$store.commit('endLoading')
+                console.log(res.data.data)
+                if(!res.data.data.all_policies){
+                    this.policies = []
+                }else{
+                    this.policies = res.data.data.all_policies
+                }
+                this.totalRecords = res.data.data.total_records
+                this.stats = {
+                    active : res.data.data.active_policy_count,
+                    incomplete: res.data.data.incomplete_policy_count,
+                    pending: res.data.data.pending_policy_count,
+                    success: res.data.data.success_policy_count,
+                    total_claim: res.data.data.claim_count,
+                    settled_claim: res.data.data.settled_claim_count
+                }
+                this.showChart = true
+                this.showTable = true
+                this.piechartData = res.data.data.policy_type
+            })
+            .catch((err)=>{
+                this.$store.dispatch('handleError', err)
+            })
+        }
+    },
+    mounted(){
+       this.getPolicies()
+       this.getUnderwriters()
     }
 }
 </script>
