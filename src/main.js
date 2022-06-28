@@ -52,12 +52,17 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 //set baseURL
 var baseURL;
+//var imageURL = "https://stage.paddycover.com/";
 
 if(process.env.NODE_ENV === "development"){
    baseURL = "https://stage.paddycover.com/v1"
+   //imageURL = "https://stage.paddycover.com/"
 }else {
   baseURL = "https://api.paddycover.com/v1"
+  //imageURL = "https://api.paddycover.com/"
 }
+
+
 
 //After login, on page refresh, set authorization header
 const token = localStorage.getItem('user-token')

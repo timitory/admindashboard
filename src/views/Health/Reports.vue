@@ -76,7 +76,7 @@
               <LineChart />
           </div>
       </div>
-      <Table />
+      <Table v-if="showTable" :policies="policies" :totalRecords="totalRecords" v-on:changePage="changePage"/>
   </div>
 </template>
 
@@ -144,11 +144,11 @@ export default {
             this.$store.commit('startLoading')
             axios.get(`${baseURL}/health/report`)
             .then(res =>{
-            console.log(res.data.data)
+            
             // this.totalRows = res.data.data.totalRecord
             this.policies = res.data.data.all_policies
             this.totalRecords = res.data.data.total_records
-            console.log(this.policies)
+            
             this.stats = {
                 active : res.data.data.active_policy_count,
                 // incomplete: res.data.data.incomplete_policy_count,
