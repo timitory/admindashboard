@@ -88,6 +88,8 @@
                 <a :href="policy.policy.certificate" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Certificate</a>
                 <a :href="policy.policy.valid_id" v-if="policy.policy.valid_id" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View User's ID</a>
                 <p v-else class="mt-6">Means of Id link not available</p>
+                <a :href="policy.policy.plate_number_image" v-if="policy.policy.plate_number_image" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Vehicle's Image with Plate Number</a>
+                <p v-else class="mt-6">Vehicle's Image link not available</p>
             </div>
           </div>
       </div>
