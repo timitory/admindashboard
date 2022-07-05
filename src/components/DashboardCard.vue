@@ -42,7 +42,7 @@
             <path fill="#00a859" class="a" d="M283.715.527a1.783,1.783,0,0,0-1.464.392,1.817,1.817,0,0,0-.654,1.4V6.945a1.808,1.808,0,0,0,1.431,1.767,19.152,19.152,0,0,1,14.886,18.577,18.912,18.912,0,0,1-2.937,10.135,1.809,1.809,0,0,0,.242,2.257l3.285,3.286a1.819,1.819,0,0,0,1.288.534c.055,0,.111,0,.167-.007a1.784,1.784,0,0,0,1.311-.763A27.2,27.2,0,0,0,283.715.527Zm16.072,41.158L296.5,38.4l.009-.007a20.721,20.721,0,0,0,3.218-11.1A20.97,20.97,0,0,0,283.411,6.945L283.4,2.312a25.386,25.386,0,0,1,16.391,39.373Zm0,0" transform="translate(-251.682 -0.499)"/>
           </svg>
           <p class="text-center mt-4 text-lg font-bold">Total Cancelled Policy</p>
-          <div class="deepblue py-3 px-2 mt-4 text-xl font-bold border-2 border-green-500 border-dashed text-center">0</div>
+          <div class="deepblue py-3 px-2 mt-4 text-xl font-bold border-2 border-green-500 border-dashed text-center">{{data.cancelled_policy_count}}</div>
           <!-- <router-link to="/app/dashboard/totalpolicies" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link> -->
       </div>
       <a href="/app/dashboard/registeredusers">
