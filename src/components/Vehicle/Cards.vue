@@ -1,11 +1,12 @@
 <template>
   <div class="mt-8 py-4 cardbox">
       <div class="px-4 py-8 card">
-          <h4 class="font-bold text-2xl opacity-30">Wallet</h4>
+          <h4 class="font-bold text-2xl ">Revenue and Commission</h4>
+          <!-- Wallet -->
           <div class="mt-4 flex justify-between items-end">
-              <svg fill="#0c4a4d" class="opacity-30" xmlns="http://www.w3.org/2000/svg" width="42.79" height="39.5" viewBox="0 0 42.79 39.5"><g transform="translate(-3.375 -4.499)"><path class="a" d="M39.994,11.25H9.547a6.177,6.177,0,0,0-6.172,6.172V34.7a6.177,6.177,0,0,0,6.172,6.172H39.994A6.177,6.177,0,0,0,46.165,34.7V17.422A6.177,6.177,0,0,0,39.994,11.25Z" transform="translate(0 3.125)"/><path class="a" d="M33.188,4.6,9.026,9.325C7.174,9.736,4.5,11.6,4.5,13.861a6.481,6.481,0,0,1,5.04-1.954H39.061V9.8a5.907,5.907,0,0,0-1.43-3.868h0A4.865,4.865,0,0,0,33.188,4.6Z" transform="translate(0.521)"/></g>
+              <svg fill="#0c4a4d" class="" xmlns="http://www.w3.org/2000/svg" width="42.79" height="39.5" viewBox="0 0 42.79 39.5"><g transform="translate(-3.375 -4.499)"><path class="a" d="M39.994,11.25H9.547a6.177,6.177,0,0,0-6.172,6.172V34.7a6.177,6.177,0,0,0,6.172,6.172H39.994A6.177,6.177,0,0,0,46.165,34.7V17.422A6.177,6.177,0,0,0,39.994,11.25Z" transform="translate(0 3.125)"/><path class="a" d="M33.188,4.6,9.026,9.325C7.174,9.736,4.5,11.6,4.5,13.861a6.481,6.481,0,0,1,5.04-1.954H39.061V9.8a5.907,5.907,0,0,0-1.43-3.868h0A4.865,4.865,0,0,0,33.188,4.6Z" transform="translate(0.521)"/></g>
               </svg>
-              <p class="block opacity-30 font-bold text-green-500 text-base">View Details</p>
+              <p class="block font-bold text-green-500 text-base">View Details</p>
           </div>
       </div>
       <div class="px-4 py-8 card">
