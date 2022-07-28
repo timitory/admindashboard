@@ -29,7 +29,16 @@ export default {
             borderColor: "#2dce89",
             pointBackgroundColor: "#2dce89",
             tension: 0.3
-          }
+          },
+          // {
+          //   label: "Policy type",
+          //   data: [4, 20, 25, 9, 2, 6, 10, 1, 3, 15, 4, 9],
+          //   // backgroundColor: "transparent",
+          //   backgroundColor: 'rgb(45,206,137, 0.1)',
+          //   borderColor: "#191970",
+          //   pointBackgroundColor: "#2dce89",
+          //   tension: 0.3
+          // }
         ]
       },
       {
