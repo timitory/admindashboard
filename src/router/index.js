@@ -124,6 +124,10 @@ const routes = [
             component: ()=>import('@/views/Vehicle/Reports')
           },
           {
+            path: '/app/dashboard/vehicle/revenue',
+            component: ()=>import('@/views/Vehicle/Revenue')
+          },
+          {
             path: '/app/dashboard/vehicle/claims',
             component: ()=>import('@/views/Vehicle/Claims')
           },
