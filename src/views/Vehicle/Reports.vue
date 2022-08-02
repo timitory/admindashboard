@@ -13,7 +13,8 @@
       <p class="mt-6 mb-4 font-bold text-lg">This report is associated with the Vehicle Cover Policy</p>
       <p class="font-bold">Filter options :</p>
       <form @submit.prevent="filter" >
-          <div class="grid lg:grid-cols-2 gap-4" style="max-width: 650px">
+      <!-- lg:grid-cols-5 -->
+          <div class="grid gap-4" style="max-width: 650px">
                 <div class="flex items-center gap-4">
                     <input type="checkbox" v-model="filters" value="underwriter" >
                     <p>Underwriter : </p>
@@ -21,7 +22,7 @@
                         <option value="">Choose one</option>
                         <option v-for="(underwriter, index) in underwriters" :key="index" :value="underwriter.id">{{underwriter.name}}</option>
                     </select>
-                    </div>
+                </div>
                 <div class="flex items-center gap-4">
                     <input type="checkbox" v-model="filters" value="status" >
                     <p>Status : </p>
@@ -52,10 +53,13 @@
                     <input type="text" v-model="filterYear" class="border px-2 focus:outline-none">
                 </div>
             </div>
-            <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4">Filter</button> <br>
+            <div class="flex">
+                <button class="bg-green-500 py-2 px-6 mr-5 rounded text-white text-sm mt-4">Filter</button> <br>
+                <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4" @click="reset">Reset Filter</button>
+            </div>
             
       </form>
-      <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4" @click="reset">Reset Filter</button>
+      
       <div class="mt-8 lg:grid lg:gap-16 lg:items-center lg:grid-cols-2">
           <Stats :stats="stats" />
           <div class="mt-6" v-if="showChart">
