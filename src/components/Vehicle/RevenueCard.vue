@@ -4,7 +4,7 @@
             <div class="py-7 px-6 rounded-lg bg-white">
               <div class="flex items-center gap-6">
                   <div class="imgdiv border border-solid border-gray-500">
-                    <img src="@/assets/images/dashboard/Image 10.png" alt="" class="w-full h-full">
+                    <img src="@/assets/images/dashboard/rev.png" alt="" class="w-full h-full">
                   </div>
                   <div class="">
                     <p class="">Total Revenue</p>
@@ -19,7 +19,7 @@
             <div class="py-7 px-6  rounded-lg bg-white">
               <div class="flex items-center gap-6">
                   <div class="imgdiv border border-solid border-gray-500">
-                    <img src="@/assets/images/dashboard/Image 10.png" alt="" class="w-full h-full">
+                    <img src="@/assets/images/dashboard/rev.png" alt="" class="w-full h-full">
                   </div>
                   
                   <div class="">
@@ -35,7 +35,7 @@
             <div class="py-7 px-6  rounded-lg bg-white">
               <div class="flex items-center gap-6">
                   <div class="imgdiv border border-solid border-gray-500">
-                    <img src="@/assets/images/dashboard/Image 10.png" alt="" class="w-full h-full">
+                    <img src="@/assets/images/dashboard/rev.png" alt="" class="w-full h-full">
                   </div>
                   <div class="">
                     <p class="">Mayfair Revenue</p>
@@ -50,7 +50,7 @@
             <div class="py-7 px-6  rounded-lg bg-white">
               <div class="flex items-center gap-6">
                   <div class="imgdiv border border-solid border-gray-500">
-                    <img src="@/assets/images/dashboard/Image 10.png" alt="" class="w-full h-full">
+                    <img src="@/assets/images/dashboard/rev.png" alt="" class="w-full h-full">
                   </div>
                   <div class="">
                     <p class="">Underwriter Revenue</p>
