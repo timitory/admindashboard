@@ -53,13 +53,15 @@
                     <input type="text" v-model="filterYear" class="border px-2 focus:outline-none">
                 </div>
             </div>
-            <div class="flex">
-                <button class="bg-green-500 py-2 px-6 mr-5 rounded text-white text-sm mt-4">Filter</button> <br>
-                <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4" @click="reset">Reset Filter</button>
-            </div>
+           <div class="flex">
+                <button class="bg-green-500 py-2 px-6 mr-5 rounded text-white text-sm mt-4" >Filter</button> <br>
+                
+        </div>
             
       </form>
+      <button class="bg-green-500 py-2 px-6 rounded text-white text-sm mt-4"  @click="reset">Reset Filter</button>
       
+       
       <div class="mt-8 lg:grid lg:gap-16 lg:items-center lg:grid-cols-2">
           <Stats :stats="stats" />
           <div class="mt-6" v-if="showChart">
@@ -135,28 +137,32 @@ export default {
     },
     methods: {
         reset(){
-            window.location.reload();
-            // this.$store.commit('startLoading')
-            // this.year = ''
-            // this.filterYear = null
-            // this.monthId = null
-            // this.underwriterId = ''  
-            // this.statusId = ''
-            // this.planId = ''
-            // this.filters = []
-            // this.getPolicies()
-            // this.getUnderwriters()
-            // this.$store.commit('endLoading')
+            this.$store.commit('startLoading')
+
+            this.planId = ''
+            this.underwriterId = ''
+            this.statusId = ''
+            this.getFilteredResults("")
+            this.piechartData = {}
+            this.filters = []
+            
+            
+            this.getPolicies()
+            this.getUnderwriters()
+           
+           this.$store.commit('endLoading')
+            
+            
         },
         getPolicies(){
             this.$store.commit('startLoading')
             axios.get(`${baseURL}/vehicle/report`)
             .then(res =>{
-            console.log(res.data.data)
+           // console.log(res.data.data)
             // this.totalRows = res.data.data.totalRecord
             this.policies = res.data.data.all_policies
             this.totalRecords = res.data.data.total_records
-            console.log(this.policies)
+            // console.log(this.policies)
             this.stats = {
                 active : res.data.data.active_policy_count,
                 incomplete: res.data.data.incomplete_policy_count,
