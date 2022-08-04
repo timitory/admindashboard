@@ -168,6 +168,7 @@ export default {
     closeSettle(){
       this.showSettle = false
       this.action = ""
+      this.getClaims()
     },
     approveClaim(){
       this.action = ""
@@ -202,6 +203,7 @@ export default {
       this.showSettle = false
       let obj = {claim_id: this.claim.id, amount: amount}
       console.log(obj)
+      
     },
     changePage(num){
       console.log(num)

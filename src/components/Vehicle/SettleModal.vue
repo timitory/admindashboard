@@ -55,7 +55,7 @@ export default {
             .then(()=>{
             this.$store.commit('endLoading')
             this.$store.commit('setSuccess', {status: true, msg: 'Marked as settled'})
-            this.$router.go()
+            
             })
             .catch(err=>{
             this.$store.commit('endLoading')
