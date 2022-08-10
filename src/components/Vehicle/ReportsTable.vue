@@ -119,7 +119,7 @@ export default {
 	},
   methods: {
     filter(val){
-      console.log(val)
+       console.log(val)
       this.showFilter = false
     },
     view(obj){
@@ -161,7 +161,7 @@ export default {
     },
   },
   mounted(){
-    console.log(this.policies)
+    
     this.perPage = 10
   }
 }

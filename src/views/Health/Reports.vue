@@ -159,7 +159,7 @@ export default {
             }
             this.showChart = true
             this.showTable = true
-            this.piechartData = res.data.data.policy_type
+            this.piechartData = res.data.data.plan_chart
             this.$store.commit('endLoading')
             })
             .catch(err=>{

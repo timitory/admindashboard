@@ -72,6 +72,7 @@
       <div class="mt-10 px-2 py-3 relative rounded" style="background-color: rgba(141,216,181, 0.18)">
            <div class="absolute right-10 top-4">
               <select class="w-full" v-model="year">
+                  <option value="">2022</option>
                   <option value="">2021</option>
                   <option value="">2020</option>
                   <option value="">2019</option>
@@ -79,7 +80,7 @@
               </select>
           </div>
           <div class="bg-white rounded">
-              <LineChart />
+              <LineChart :lineChartData="lineChartData"/>
           </div>
       </div>
       <Table v-if="showTable" :policies="policies" :totalRecords="totalRecords" v-on:changePage="changePage" />
@@ -104,6 +105,7 @@ export default {
             policies: [],
             stats: {},
             piechartData: {},
+            lineChartData: {},
             showChart: false,
             showTable: false,
             underwriters: [],
@@ -174,6 +176,9 @@ export default {
             this.showChart = true
             this.showTable = true
             this.piechartData = res.data.data.policy_type
+            this.lineChartData = res.data.data.monthly_policies.policies
+    
+    console.log(this.lineChartData)
             this.$store.commit('endLoading')
             })
             .catch(err=>{
@@ -245,7 +250,7 @@ export default {
             axios.get(`${baseURL}/vehicle/report${str}`)
             .then((res)=>{
                 this.$store.commit('endLoading')
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 if(!res.data.data.all_policies){
                     this.policies = []
                 }else{
@@ -275,7 +280,7 @@ export default {
             axios.get(`${baseURL}/vehicle/report${this.url}?page=${num}`)
             .then((res)=>{
                 this.$store.commit('endLoading')
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 if(!res.data.data.all_policies){
                     this.policies = []
                 }else{
