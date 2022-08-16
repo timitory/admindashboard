@@ -14,17 +14,17 @@
           </div>
       </div>
       <p class="mt-2 mb-4 font-bold text-lg">This is the breakdown of policies under home-content cover</p>
-      <PoliciesData />
+      <!-- <PoliciesData /> -->
         <PoliciesTable />
   </div>
 </template>
 
 <script>
 import PoliciesTable from '@/components/Home/PoliciesTable'
-import PoliciesData from '@/components/Home/PoliciesData'
+// import PoliciesData from '@/components/Home/PoliciesData'
 export default {
     components:{
-        PoliciesTable, PoliciesData
+        PoliciesTable
     }
 }
 </script>

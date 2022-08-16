@@ -10,7 +10,7 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.lineChartData)
+    //console.log(this.lineChartData.policies)
     this.renderChart(
       {
         labels: [
@@ -29,9 +29,15 @@ export default {
         ],
         datasets: [
           {
-            label: "Policy rate",
-            // data: [2, 10, 5, 9, 0, 6, 20, 21, 3, 15, 4, 9],
-            data: [this.lineChartData["january"], this.lineChartData["february"], this.lineChartData["march"], this.lineChartData["april"], this.lineChartData["may"], this.lineChartData["june"], this.lineChartData["july"], this.lineChartData["august"], this.lineChartData["september"], this.lineChartData["october"], this.lineChartData["november"], this.lineChartData["december"]],
+            label: "Policy type",
+            
+            // data: ["2", "10", "5", "9", "0", "6", "20", "21", "3", "15", "4", "9"],
+            data: [this.lineChartData.policies.january, this.lineChartData.policies.february, 
+            this.lineChartData.policies.march, this.lineChartData.policies.april, 
+            this.lineChartData.policies.may, this.lineChartData.policies.june,
+             this.lineChartData.policies.july, this.lineChartData.policies.august,
+             this.lineChartData.policies.september, this.lineChartData.policies.october, 
+             this.lineChartData.policies.november, this.lineChartData.policies.december],
             // backgroundColor: "transparent",
             backgroundColor: 'rgb(45,206,137, 0.1)',
             borderColor: "#2dce89",
@@ -49,7 +55,7 @@ export default {
             gridLines: {
                 color: "#fff",
                 suggestedMin: 0,
-                suggestedMax: 20
+                suggestedMax: 40
             }
           }],
           xAxes: [{

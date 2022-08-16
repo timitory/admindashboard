@@ -3,6 +3,12 @@ import { Line } from "vue-chartjs";
 
 export default {
   extends: Line,
+  props: {
+    linechartData: {
+      type: Object,
+      required: true
+    }
+  },
   mounted() {
     this.renderChart(
       {
@@ -23,7 +29,13 @@ export default {
         datasets: [
           {
             label: "Policy rate",
-            data: [2, 10, 5, 9, 0, 6, 20, 21, 3, 15, 4, 9],
+            //data: [2, 10, 5, 9, 0, 6, 20, 21, 3, 15, 4, 9],
+            data: [this.linechartData.policies.january, this.linechartData.policies.february, 
+            this.linechartData.policies.march, this.linechartData.policies.april, 
+            this.linechartData.policies.may, this.linechartData.policies.june,
+             this.linechartData.policies.july, this.linechartData.policies.august,
+             this.linechartData.policies.september, this.linechartData.policies.october, 
+             this.linechartData.policies.november, this.linechartData.policies.december],
             // backgroundColor: "transparent",
             backgroundColor: 'rgb(45,206,137, 0.1)',
             borderColor: "#2dce89",

@@ -80,7 +80,7 @@
               </select>
           </div>
           <div class="bg-white rounded">
-              <LineChart :lineChartData="lineChartData"/>
+              <LineChart :lineChartData="lineChartData" v-if="showChart"/>
           </div>
       </div>
       <Table v-if="showTable" :policies="policies" :totalRecords="totalRecords" v-on:changePage="changePage" />
@@ -176,9 +176,9 @@ export default {
             this.showChart = true
             this.showTable = true
             this.piechartData = res.data.data.policy_type
-            this.lineChartData = res.data.data.monthly_policies.policies
+            this.lineChartData = res.data.data.monthly_policies
     
-    console.log(this.lineChartData)
+    //console.log(this.lineChartData)
             this.$store.commit('endLoading')
             })
             .catch(err=>{

@@ -59,7 +59,7 @@
       <div class="mt-8 lg:flex lg:gap-24 lg:items-center">
           <Stats :stats="stats" />
           <div class="mt-6">
-              <DoughnutChart :piechartData="piechartData" />
+              <DoughnutChart :piechartData="piechartData" v-if="showChart"/>
           </div>
           
       </div>
@@ -73,7 +73,7 @@
               </select>
           </div>
           <div class="bg-white rounded">
-              <LineChart />
+              <LineChart :linechartData="linechartData" v-if="showChart"/>
           </div>
       </div>
       <Table v-if="showTable" :policies="policies" :totalRecords="totalRecords" v-on:changePage="changePage"/>
@@ -97,6 +97,7 @@ export default {
             policies: [],
             stats: {},
             piechartData: {},
+            linechartData: {},
             showChart: false,
             showTable: false,
             underwriters: [],
@@ -160,6 +161,7 @@ export default {
             this.showChart = true
             this.showTable = true
             this.piechartData = res.data.data.plan_chart
+            this.linechartData = res.data.data.monthly_policies
             this.$store.commit('endLoading')
             })
             .catch(err=>{

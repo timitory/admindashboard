@@ -4,12 +4,14 @@ import { Doughnut } from "vue-chartjs";
 export default {
   extends: Doughnut,
   props: {
-    piechartData: {
-      type: Object,
-      required: true
-    }
+    piechartData :Object 
+    // piechartData: {
+    //   type: Object,
+    //   required: true
+    // }
   },
   mounted() {
+   
     this.renderChart(
       {
         labels: [
