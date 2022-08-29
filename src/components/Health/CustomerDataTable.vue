@@ -78,6 +78,7 @@ import axios from "axios"
 import baseURL from "@/main"
 import TPagination from 'vue-tailwind/dist/t-pagination'
 import User from "./SingleUser"
+//import { reverse } from "dns"
 export default {
   components:{
     TPagination, User
@@ -144,6 +145,7 @@ export default {
       .then(res=>{
         console.log(res.data.data)
         this.totalRows = res.data.data.totalRecord
+        //var polic = res.data.data.records
         this.policies = res.data.data.records
         this.perPage = res.data.data.record_per_page
         this.$store.commit('endLoading')

@@ -12,7 +12,7 @@
       </div>
 
     
-      <Card />
+      <Card :totalRecords="totalRecords"/>
 
       
       <Table v-if="showTable" :policies="policies" :totalRecords="totalRecords" v-on:changePage="changePage" />
@@ -44,7 +44,7 @@ export default {
             months: [
                 {id: 1, name: "Jan"},{id: 2, name: "Feb"}, {id: 3, name: "Mar"}, {id: 4, name: "Apr"}, {id: 5, name: "May"}, {id: 6, name: "Jun"}, {id: 7, name: "Jul"}, {id: 8, name: "Aug"}, {id: 9, name: "Sep"}, {id: 10, name: "Oct"}, {id: 11, name: "Nov"}, {id: 12, name: "Dec"},
             ],
-            totalRecords: 0,
+            totalRecords: {},
             url: ''
         }
     },
@@ -58,7 +58,7 @@ export default {
             console.log(res.data.data)
             // this.totalRows = res.data.data.totalRecord
             this.policies = res.data.data.records
-            this.totalRecords = res.data.data.totalRecord
+            this.totalRecords = res.data.data
             
             
             

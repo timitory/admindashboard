@@ -24,7 +24,7 @@
                   
                   <div class="">
                     <p class="">Total PC Revenue</p>
-                    <p class="mt-2 font-bold text-lg">₦13000</p>
+                    <p class="mt-2 font-bold text-lg">{{totalRecords.total_pc_revenue}}</p>
                   </div>
               </div>
               <!-- <hr class="mt-4 border-solid border-gray-300"> -->
@@ -39,7 +39,7 @@
                   </div>
                   <div class="">
                     <p class="">Mayfair Revenue</p>
-                    <p class="mt-2 font-bold text-lg">₦13000</p>
+                    <p class="mt-2 font-bold text-lg">{{totalRecords.total_broker_revenue}}</p>
                   </div>
               </div>
               <!-- <hr class="mt-4 border-solid border-gray-300"> -->
@@ -65,7 +65,13 @@
 
 <script>
 export default {
-
+props:{
+    
+    totalRecords: {
+      type: Object,
+      required: true
+    }
+  },
 }
 </script>
 

@@ -17,8 +17,8 @@
           <tbody>
             <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
-              <td></td>
-              <td></td>
+              <td>{{policy.payment_date}}</td>
+              <td>{{policy.customer.name}}</td>
               <td>{{policy.policy_number}}</td>
               <td></td>
               <td>{{policy.paddycover_commission}}</td>
