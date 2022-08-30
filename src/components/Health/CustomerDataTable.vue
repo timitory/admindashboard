@@ -33,6 +33,7 @@
               <th class="font-bold">Email</th>
               <th class="font-bold">Phone Number</th>
               <th class="font-bold">Address</th>
+              <th class="font-bold">Date</th>
               <th class="font-bold">Customer Type</th>
               <th class="font-bold">Action</th>
             </tr>
@@ -44,6 +45,7 @@
               <td>{{policy.enrollee.email}}</td>
               <td>{{policy.enrollee.phone}}</td>
               <td>{{policy.enrollee.address}}</td>
+              <td>{{policy.timestamp}}</td>
               <td>{{policy.user.CustomerType}}</td>
               <td>
                <button @click="viewUser(policy)" class="text-green-500 underline outline-none focus:outline-none">View sponsor</button>
@@ -230,7 +232,7 @@ th, td {
       height: 30px
   }
   table{
-    /* table-layout: fixed; */
+    table-layout: unset;
   }
   /* th td{
     min-width: 180px
@@ -239,18 +241,21 @@ th, td {
     width: 5%; 
   }
   thead th:nth-child(2){
-    width: 20%; 
+    width: 5%; 
   }
   thead th:nth-child(3){
-    width: 20%; 
+    width: 10%; 
   }
   thead th:nth-child(4){
-    width: 20%; 
+    width: 10%; 
   }
   thead th:nth-child(5){
-    width: 25%; 
+    width: 15%; 
   }
   thead th:nth-child(6){
+    width: 10%; 
+  }
+  thead th:nth-child(7){
     width: 10%; 
   }
   div.tablecont table{

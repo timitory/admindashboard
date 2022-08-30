@@ -39,6 +39,7 @@
               <th class="font-bold">Phone Number</th>
               <th class="font-bold">Address</th>
               <th class="font-bold">User Category</th>
+              <th class="font-bold">Date</th>
               <th class="font-bold">Action</th>
             </tr>
           </thead>
@@ -50,6 +51,7 @@
               <td>{{policy.enrollee.phone}}</td>
               <td>{{policy.user.address}}</td>
               <td>{{policy.user.CustomerType}}</td>
+              <td>{{policy.timestamp}}</td>
               <td>
                <button @click="viewUser(policy)" class="text-green-500 underline outline-none focus:outline-none">View sponsor</button>
               </td>

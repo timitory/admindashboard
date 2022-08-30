@@ -62,6 +62,7 @@
               <th class="font-bold">Date of Birth</th>
               <th class="font-bold">Phone Number</th>
               <th class="font-bold">Category</th>
+              <th class="font-bold">Date</th>
               
               <!-- <th class="font-bold">Action</th> -->
             </tr>
@@ -75,6 +76,7 @@
               <td>{{policy.date_of_birth}}</td>
               <td>{{policy.phone}}</td>
               <td>{{policy.customer_type}}</td>
+              <td>{{policy.timestamp}}</td>
               
               <!-- <td>
                   <router-link to="/" class="text-green-500">View</router-link>
@@ -332,15 +334,15 @@ th, td {
     
   }
   thead th:nth-child(2){
-    width: 20%;
+    width: 5%;
     
   }
   thead th:nth-child(3){
-    width: 10%;
+    width: 3%;
     
   }
   thead th:nth-child(4){
-    width: 10%;
+    width: 5%;
     
   }
   thead th:nth-child(5){
@@ -352,6 +354,10 @@ th, td {
   thead th:nth-child(7){
     width: 10%; 
   }
+  thead th:nth-child(8){
+    width: 20%; 
+  }
+  
   
  
   div.tablecont{

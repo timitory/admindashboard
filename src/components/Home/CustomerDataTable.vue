@@ -37,7 +37,8 @@
               <th class="font-bold">Customer Name</th>
               <th class="font-bold">Email</th>
               <th class="font-bold">Phone Number</th>
-              <th class="font-bold">Address</th>
+              <!-- <th class="font-bold">Address</th> -->
+              <th class="font-bold">Date</th>
               <th class="font-bold">Action</th>
             </tr>
           </thead>
@@ -47,7 +48,8 @@
               <td>{{policy.firstname}} {{policy.lastname}}</td>
               <td>{{policy.email}}</td>
               <td>{{policy.phone}}</td>
-              <td>{{policy.address}}</td>
+              <!-- <td>{{policy.address}}</td> -->
+              <td>{{policy.timestamp}}</td>
               <td>
                <button @click="viewUser(policy)" class="text-green-500 underline outline-none focus:outline-none">View sponsor</button>
               </td>
@@ -240,18 +242,21 @@ th, td {
     width: 5%; 
   }
   thead th:nth-child(2){
-    width: 20%; 
+    width: 10%; 
   }
   thead th:nth-child(3){
-    width: 20%; 
+    width: 10%; 
   }
   thead th:nth-child(4){
-    width: 20%; 
+    width: 10%; 
   }
   thead th:nth-child(5){
-    width: 25%; 
+    width: 15%; 
   }
   thead th:nth-child(6){
+    width: 10%; 
+  }
+  thead th:nth-child(7){
     width: 10%; 
   }
   div.tablecont table{
