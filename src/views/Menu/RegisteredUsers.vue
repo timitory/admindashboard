@@ -324,38 +324,38 @@ th, td {
         height: 30px
     }
   table{
-    /* table-layout: fixed; */
+    table-layout: fixed;
   }
-  th, td {
-    min-width: unset
-  }
+  /* th, td {
+    min-width: 100%
+  } */
   thead th:nth-child(1){
-    width: 5%;
+    width: 4%;
     
   }
   thead th:nth-child(2){
-    width: 5%;
+    width: 10%;
     
   }
   thead th:nth-child(3){
-    width: 3%;
+    width: 25%;
     
   }
   thead th:nth-child(4){
-    width: 5%;
+    width: 8%;
     
   }
   thead th:nth-child(5){
-    width: 10%; 
+    width: 8%; 
   }
   thead th:nth-child(6){
-    width: 10%; 
+    width: 13%; 
   }
   thead th:nth-child(7){
     width: 10%; 
   }
   thead th:nth-child(8){
-    width: 20%; 
+    width: 10%; 
   }
   
   

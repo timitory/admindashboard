@@ -235,7 +235,7 @@ th, td {
       height: 30px
   }
   table{
-    /* table-layout: fixed; */
+    table-layout: fixed;
   }
   /* th td{
     min-width: 180px
@@ -244,16 +244,16 @@ th, td {
     width: 5%; 
   }
   thead th:nth-child(2){
-    width: 20%; 
+    width: 10%; 
   }
   thead th:nth-child(3){
-    width: 20%; 
+    width: 25%; 
   }
   thead th:nth-child(4){
-    width: 20%; 
+    width: 13%; 
   }
   thead th:nth-child(5){
-    width: 25%; 
+    width: 13%; 
   }
   thead th:nth-child(6){
     width: 10%; 
