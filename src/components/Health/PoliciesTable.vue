@@ -36,6 +36,7 @@
               <th class="font-bold">Customer</th>
               <th class="font-bold">Amount</th>
               <th class="font-bold">Plan</th>
+              <th class="font-bold">Type</th>
               <th class="font-bold">Start Date</th>
               <th class="font-bold">Purchase Date</th>
               <th class="font-bold">Status</th>
@@ -50,6 +51,7 @@
               <td>{{policy.policy.surname}} {{policy.policy.firstname}}</td>
               <td>{{policy.policy.amount}}</td>
               <td>{{policy.policy.plan}}</td>
+              <td style="text-transform:capitalize" >{{policy.policy.health_category}}</td>
               <td>{{policy.policy.start}}</td>
               <td>{{policy.policy.created_at}}</td>
               <td>
@@ -270,6 +272,9 @@ th, td {
     width: 13%;
   }
   thead th:nth-child(10){
+    width: 10%;
+  }
+  thead th:nth-child(11){
     width: 10%;
   }
   div.tablecont table{
