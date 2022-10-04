@@ -35,6 +35,7 @@
               <th class="font-bold">Phone Number</th>
               <th class="font-bold">Plan</th>
               <th class="font-bold">Underwriter</th>
+              <th class="font-bold">Frequency</th>
               <th class="font-bold">Policy Status</th>
               <th class="font-bold">View Repayments</th>
               <th class="font-bold">Action</th>
@@ -49,6 +50,7 @@
               <td>{{policy.policy.enrollee.phone}}</td>
               <td>{{policy.policy.vehicle_category}}</td>
               <td>{{policy.policy.underwriter.name}}</td>
+              <td>{{policy.policy.payment_frequency}}</td>
               <td>
                 <span v-if="policy.policy.status == 'Success'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
                 <span v-else-if="policy.policy.status == 'Active'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
@@ -287,6 +289,10 @@ th, td {
     
   }
   thead th:nth-child(10){
+    width: 5%;
+    
+  }
+  thead th:nth-child(11){
     width: 5%;
     
   }
