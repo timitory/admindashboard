@@ -1,6 +1,7 @@
 <template>
   <div class="mt-8 px-6 pt-6 lg:px-10 pb-20 relative bg-white grid gap-4 lg:grid-cols-5" style="box-shadow: 0px 20px 33px #00000029;">
       <router-link to="/" class="text-green-500 font-bold underline absolute absolute top-2 invoicelink">View all invoice</router-link>
+ 
       <div class="px-6 box mt-10 lg:mt-10 pb-4 border-b border-solid lg:border-b-0 lg:border-r">
           <svg class="mx-auto svg" xmlns="http://www.w3.org/2000/svg" width="54.392" height="53.986" viewBox="0 0 54.392 53.986">
             <path fill="#00a859" class="a" d="M23.044,8.714a1.807,1.807,0,0,0,1.43-1.767V2.318a1.818,1.818,0,0,0-.653-1.4A1.787,1.787,0,0,0,22.358.529a27.2,27.2,0,0,0,3.424,53.922q.717.036,1.429.036a26.92,26.92,0,0,0,15.556-4.9,1.784,1.784,0,0,0,.754-1.31A1.821,1.821,0,0,0,43,46.831l-3.279-3.277a1.805,1.805,0,0,0-2.268-.233,19.033,19.033,0,1,1-14.4-34.607ZM6.463,29.539A20.839,20.839,0,0,0,38.429,44.846l-.49-.763.5.752,3.292,3.271A25.384,25.384,0,1,1,22.661,2.318L22.65,6.944A20.867,20.867,0,0,0,6.463,29.539Zm0,0" transform="translate(0.002 -0.501)"/>

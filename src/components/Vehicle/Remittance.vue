@@ -25,44 +25,43 @@
             </div>
         </div>       -->
       <div class="overflow-x-auto tablecont">
-        <table v-if="paginatedPolicies.length > 0" class="w-full mt-8">
+        <table v-if="paginatedData.length > 0" class="w-full mt-8">
           <thead>
             <tr>
               <th class="font-bold">S/N</th>
-              <th class="font-bold">Start Date</th>
               <th class="font-bold">Customer</th>
-              <th class="font-bold">Email</th>
-              <th class="font-bold">Phone Number</th>
-              <th class="font-bold">Plan</th>
-              <th class="font-bold">Underwriter</th>
-              <th class="font-bold">Frequency</th>
-              <th class="font-bold">Policy Status</th>
-              <th class="font-bold">View Repayments</th>
+              <th class="font-bold">Plate Number</th>
+              <th class="font-bold">Premium</th>
+              <th class="font-bold">Commission</th>
+              <th class="font-bold">Description</th>
+              <th class="font-bold">ReceiptNo</th>
+              <th class="font-bold">Debit Note</th>
+              <th class="font-bold">Reg. Date</th>
+              <th class="font-bold">State</th>
+              <th class="font-bold">Chi State</th>
               <th class="font-bold">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
+            <tr v-for="(remittance, index) in paginatedData" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
-              <td>{{policy.policy.start}}</td>
-              <td>{{policy.policy.enrollee.firstname}} {{policy.policy.enrollee.lastname}}</td>
-              <td>{{policy.policy.enrollee.email}}</td>
-              <td>{{policy.policy.enrollee.phone}}</td>
-              <td>{{policy.policy.vehicle_category}}</td>
-              <td>{{policy.policy.underwriter.name}}</td>
-              <td>{{policy.policy.payment_frequency}}</td>
-              <td>
-                <span v-if="policy.policy.status == 'Success'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
-                <span v-else-if="policy.policy.status == 'Active'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
-                <span v-else-if="policy.policy.status == 'Incomplete'" class="rounded text-white text-center p-1 bg-red-500">{{policy.policy.status}}</span>
-                <span v-else-if="policy.policy.status == 'Pending'" class="rounded text-white text-center p-1 bg-yellow-500">{{policy.policy.status}}</span>
-                <span v-else class="rounded text-white text-center p-1 bg-red-500">{{policy.policy.status}}</span>
+              <td>{{remittance.customer.firstname}}</td>
+              <td>{{remittance.customer.firstname}} {{remittance.customer.firstname}}</td>
+              <td>{{remittance.customer.email}}</td>
+              <td>{{remittance.customer.email}}</td>
+              <td>{{remittance.customer.firstname}}</td>
+              <td>{{remittance.customer.firstname}}</td>
+              <td>{{remittance.customer.firstname}}</td>
+              <td>{{remittance.customer.firstname}}
               </td>
               <td>
-                <button @click="viewRepayment(policy)" class="text-green-500 underline outline-none focus:outline-none">View</button>
+                {{remittance.customer.firstname}}
               </td>
               <td>
-                  <button @click="view(policy)" class="p-2 bg-green-500 text-white rounded text-sm focus:outline-none">Details</button>
+                {{remittance.customer.firstname}}
+              </td>
+              <td>
+                  <button @click="view(remittance)" class="p-2 bg-green-500 text-white rounded text-sm focus:outline-none">Details</button>
               </td>
             </tr>
           </tbody>
@@ -83,8 +82,7 @@
         </div>
       </div>
     </div>
-    <SinglePolicy v-if="showPolicy" :policy="policy"  @close="showPolicy = false" />
-    <Repayments v-if="showRepayment" :policy="policy" @close="showRepayment = false"/>
+   
   </div>
 </template>
 
@@ -92,12 +90,9 @@
 // import {mapState} from "vuex"
 import axios from "axios"
 import baseURL from "@/main"
-import SinglePolicy from "@/components/Vehicle/SinglePolicy"
-import Repayments from "@/components/Vehicle/ViewRepayment"
-import TPagination from 'vue-tailwind/dist/t-pagination'
 export default {
   components:{
-    TPagination, SinglePolicy, Repayments
+   
   },
   data(){
     return {
@@ -108,7 +103,7 @@ export default {
       currentPage: 1,
       showPolicy: false,
       showRepayment: false,
-      policy: {},
+      remittance: {},
       val: '',
       sorter: '',
       endDate: '',
@@ -116,14 +111,14 @@ export default {
       showFilter: false,
       page: 1,
       pages: [],
-      policies: [],
+      remittances: [],
       unsortedPolicies : []
     }
   },
   computed:{
-    paginatedPolicies(){
+    paginatedData(){
       return this.paginate(
-        this.policies
+        this.remittance
       )
     },
   },
@@ -152,22 +147,22 @@ export default {
          this.pages.push(index);
       }
     },
-    paginate (policies) {
+    paginate (remittance) {
         let page = this.page;
         let perPage = this.perPage;
         let from = (page * perPage) - perPage;
         let to = (page * perPage);
-        return  policies.slice(from, to);
+        return  remittance.slice(from, to);
     },
     changePage(num){
       console.log(num)
       this.$store.commit('startLoading')
-      axios.get(`${baseURL}/admin/vehicle/policy`, {params :{page : num}})
+      axios.get(`${baseURL}/remittance/list`, {params :{page : num}})
       .then(res=>{
         console.log(res.data.data)
-        this.totalRows = res.data.data.totalRecord
-        this.policies = res.data.data.records
-        this.perPage = res.data.data.record_per_page
+        // this.totalRows = res.data.data.totalRecord
+        this.remittances = res.data.data
+        //this.perPage = res.data.data.record_per_page
         this.$store.commit('endLoading')
       })
       .catch(err=>{
@@ -177,13 +172,13 @@ export default {
   },
   mounted(){
     this.$store.commit('startLoading')
-    axios.get(`${baseURL}/admin/vehicle/policy`)
-    .then(res =>{
-      console.log(res.data.data)
-      this.totalRows = res.data.data.totalRecord
-      this.policies = res.data.data.records
-      this.perPage = res.data.data.record_per_page
-      this.$store.commit('endLoading')
+    axios.get(`${baseURL}/remittance/list`)
+      .then(res=>{
+        console.log(res.data.data)
+        // this.totalRows = res.data.data.totalRecord
+        this.remittances = res.data.data
+        //this.perPage = res.data.data.record_per_page
+        this.$store.commit('endLoading')
     })
     .catch(err=>{
       this.$store.dispatch('handleError', err)
