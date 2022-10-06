@@ -104,6 +104,10 @@ const routes = [
             component: ()=>import('@/views/Vehicle/Dashboard')
           },
           {
+            path: '/app/dashboard/vehicle/remittance',
+            component: ()=>import('@/views/Vehicle/Remittance')
+          },
+          {
             path: '/app/dashboard/vehicle/repayments',
             component: ()=>import('@/views/Vehicle/Repayments')
           },

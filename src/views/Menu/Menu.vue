@@ -6,6 +6,7 @@
         <div>
           <p class="font-bold text-lg lg:text-xl">Hello Admin,</p>
           <p class="mt-2">See below overall information on policies purchased by users.</p>
+          
         </div>
         <router-link to='/app' class="flex mt-4 items-center py-2 px-2 rounded text-white" style="background-color: #131B47; max-width: 180px">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

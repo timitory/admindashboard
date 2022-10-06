@@ -1,6 +1,8 @@
 <template>
   <div class="mt-8 py-4 cardbox">
+            
       <div class="px-4 py-8 card">
+
           <h4 class="font-bold text-2xl ">Revenue and Commission</h4>
           <!-- Wallet -->
           <div class="mt-4 flex justify-between items-end">

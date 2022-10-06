@@ -37,31 +37,34 @@
               <th class="font-bold">ReceiptNo</th>
               <th class="font-bold">Debit Note</th>
               <th class="font-bold">Reg. Date</th>
-              <th class="font-bold">State</th>
-              <th class="font-bold">Chi State</th>
+              <th class="font-bold">Status</th>
+              <th class="font-bold">Chi Status</th>
               <th class="font-bold">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(remittance, index) in paginatedData" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
-              <td>{{remittance.customer.firstname}}</td>
-              <td>{{remittance.customer.firstname}} {{remittance.customer.firstname}}</td>
-              <td>{{remittance.customer.email}}</td>
-              <td>{{remittance.customer.email}}</td>
-              <td>{{remittance.customer.firstname}}</td>
-              <td>{{remittance.customer.firstname}}</td>
-              <td>{{remittance.customer.firstname}}</td>
-              <td>{{remittance.customer.firstname}}
+              <td>{{remittance.customer.firstname}} {{remittance.customer.lastname}}</td>
+              <td>{{remittance.vehicle.plate_number}}</td>
+              <td>{{remittance.premium}}</td>
+              <td>{{remittance.commission}}</td>
+              <td>{{remittance.description}}</td>
+              <td>{{remittance.receipt_no}}</td>
+              <td>{{remittance.debit_note}}</td>
+              <td>{{remittance.vehicle.registered_date}}
               </td>
               <td>
-                {{remittance.customer.firstname}}
+                {{remittance.status}}
               </td>
               <td>
-                {{remittance.customer.firstname}}
+                {{remittance.chi_status}}
               </td>
               <td>
-                  <button @click="view(remittance)" class="p-2 bg-green-500 text-white rounded text-sm focus:outline-none">Details</button>
+                <select class="focus:outline-none border border-solid border-gray-300 rounded" v-model="action" @change="selectAction(remittance)">
+                  <option value="" selected disabled>Select action</option>
+                  <option value="remit">Remit Premium</option>
+                </select>
               </td>
             </tr>
           </tbody>
@@ -96,6 +99,7 @@ export default {
   },
   data(){
     return {
+      action:'',
       perPage: 10,
       totalRows: 0,
       disabled: false,
@@ -118,7 +122,7 @@ export default {
   computed:{
     paginatedData(){
       return this.paginate(
-        this.remittance
+        this.remittances
       )
     },
   },
@@ -128,6 +132,22 @@ export default {
 		},
 	},
   methods: {
+    selectAction(obj){
+      if (this.action == 'remit'){
+        this.$store.commit('startLoading')
+      axios.post(`${baseURL}/remittance/doreceipt`, {remittance_id : obj.remittance_id})
+      .then(res=>{
+        console.log(res.data.data)
+        this.remittances = res.data.data
+        this.$store.commit('endLoading')
+        this.getRemittance()
+      })
+      .catch(err=>{
+        this.$store.dispatch('handleError', err)
+        this.getRemittance()
+      })
+      }
+    },
     filter(val){
       console.log(val)
       this.showFilter = false
@@ -169,6 +189,21 @@ export default {
         this.$store.dispatch('handleError', err)
       })
     },
+    getRemittance()
+    {
+      this.$store.commit('startLoading')
+    axios.get(`${baseURL}/remittance/list`)
+      .then(res=>{
+        console.log(res.data.data)
+        // this.totalRows = res.data.data.totalRecord
+        this.remittances = res.data.data
+        //this.perPage = res.data.data.record_per_page
+        this.$store.commit('endLoading')
+    })
+    .catch(err=>{
+      this.$store.dispatch('handleError', err)
+    })
+    }
   },
   mounted(){
     this.$store.commit('startLoading')
