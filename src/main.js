@@ -58,7 +58,7 @@ if(process.env.NODE_ENV === "development"){
    baseURL = "https://stage.paddycover.com/v1"
    //imageURL = "https://stage.paddycover.com/"
 }else {
-  baseURL = "https://api.paddycover.com/v1"
+  baseURL = "https://stage.paddycover.com/v1"
   //imageURL = "https://api.paddycover.com/"
 }
 
