@@ -195,7 +195,7 @@ watch: {
     search(){
       var val = this.searchKeyword
       this.$store.commit('startLoading')
-    axios.get(`${baseURL}/admin/users?search=${val}`)
+    axios.get(`${baseURL}/admin/users/search?search=${val}`)
     .then(res=>{
       console.log(res.data.data.records)
       this.totalRows = res.data.data.totalRecord
