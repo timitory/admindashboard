@@ -63,12 +63,13 @@
               <td>
                 <select class="focus:outline-none border border-solid border-gray-300 rounded" v-model="action" @change="selectAction(remittance)">
                   <option value="" selected disabled>Select action</option>
-                  <option value="remit">Remit Premium</option>
+                  <option v-if="remittance.status != 'Paid'" value="remit">Remit Premium</option>
                 </select>
               </td>
             </tr>
           </tbody>
         </table>
+       
         <div v-else class="w-full text-center py-4">
           <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
           <p class="mt-4 text-center font-bold text-green-500 font-lg">No records</p>
@@ -83,6 +84,7 @@
           @change="changePage"
         />
         </div>
+        <RemittanceModal  v-if="showActive" :remittance=remittance @close="showActive = false"/>
       </div>
     </div>
    
@@ -92,10 +94,11 @@
 <script>
 // import {mapState} from "vuex"
 import axios from "axios"
+import RemittanceModal from "./RemittanceModal.vue"
 import baseURL from "@/main"
 export default {
   components:{
-   
+    RemittanceModal
   },
   data(){
     return {
@@ -108,6 +111,7 @@ export default {
       showPolicy: false,
       showRepayment: false,
       remittance: {},
+      showActive: false,
       val: '',
       sorter: '',
       endDate: '',
@@ -133,20 +137,26 @@ export default {
 	},
   methods: {
     selectAction(obj){
+
       if (this.action == 'remit'){
-        this.$store.commit('startLoading')
-      axios.post(`${baseURL}/remittance/doreceipt`, {remittance_id : obj.remittance_id})
-      .then(res=>{
-        console.log(res.data.data)
-        this.remittances = res.data.data
-        this.$store.commit('endLoading')
-        this.getRemittance()
-      })
-      .catch(err=>{
-        this.$store.dispatch('handleError', err)
-        this.getRemittance()
-      })
+        this.remittance = obj
+        this.showActive = true
+        this.action = ''
       }
+      // if (this.action == 'remit'){
+      //   this.$store.commit('startLoading')
+      // axios.post(`${baseURL}/remittance/doreceipt`, {remittance_id : obj.remittance_id})
+      // .then(res=>{
+      //   console.log(res.data.data)
+      //   this.remittances = res.data.data
+      //   this.$store.commit('endLoading')
+      //   this.getRemittance()
+      // })
+      // .catch(err=>{
+      //   this.$store.dispatch('handleError', err)
+      //   this.getRemittance()
+      // })
+      // }
     },
     filter(val){
       console.log(val)
@@ -182,6 +192,7 @@ export default {
         console.log(res.data.data)
         // this.totalRows = res.data.data.totalRecord
         this.remittances = res.data.data
+        this.action = ''
         //this.perPage = res.data.data.record_per_page
         this.$store.commit('endLoading')
       })
@@ -197,6 +208,7 @@ export default {
         console.log(res.data.data)
         // this.totalRows = res.data.data.totalRecord
         this.remittances = res.data.data
+        this.action = ''
         //this.perPage = res.data.data.record_per_page
         this.$store.commit('endLoading')
     })
@@ -212,6 +224,7 @@ export default {
         console.log(res.data.data)
         // this.totalRows = res.data.data.totalRecord
         this.remittances = res.data.data
+        this.action = ''
         //this.perPage = res.data.data.record_per_page
         this.$store.commit('endLoading')
     })
