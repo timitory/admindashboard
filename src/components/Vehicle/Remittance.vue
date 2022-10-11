@@ -54,9 +54,12 @@
               <td>{{remittance.debit_note}}</td>
               <td>{{remittance.vehicle.registered_date}}
               </td>
-              <td>
+              <td v-if="remittance.status == 'Paid'" class="text-green-500">{{remittance.status}}</td>
+              <td v-else class="text-yellow-500">{{remittance.status}}</td>
+              
+              <!-- <td>
                 {{remittance.status}}
-              </td>
+              </td> -->
               <td>
                 {{remittance.chi_status}}
               </td>
