@@ -66,7 +66,7 @@
               <td>
                 <select class="focus:outline-none border border-solid border-gray-300 rounded" v-model="action" @change="selectAction(remittance)">
                   <option value="" selected disabled>Select action</option>
-                  <option v-if="remittance.status != 'Paid'" value="remit">Remit Premium</option>
+                  <option v-if="remittance.status != 'Paid' || remittance.receipt_no == ''" value="remit">Remit Premium</option>
                 </select>
               </td>
             </tr>
@@ -87,7 +87,7 @@
           @change="changePage"
         />
         </div>
-        <RemittanceModal  v-if="showActive" :remittance=remittance @close="showActive = false"/>
+        <RemittanceModal  v-if="showActive"  :remittance=remittance @close="showActive = false"/>
       </div>
     </div>
    
@@ -114,6 +114,7 @@ export default {
       showPolicy: false,
       showRepayment: false,
       remittance: {},
+      
       showActive: false,
       val: '',
       sorter: '',
@@ -195,6 +196,7 @@ export default {
         console.log(res.data.data)
         // this.totalRows = res.data.data.totalRecord
         this.remittances = res.data.data
+       
         this.action = ''
         //this.perPage = res.data.data.record_per_page
         this.$store.commit('endLoading')
@@ -211,6 +213,7 @@ export default {
         console.log(res.data.data)
         // this.totalRows = res.data.data.totalRecord
         this.remittances = res.data.data
+       
         this.action = ''
         //this.perPage = res.data.data.record_per_page
         this.$store.commit('endLoading')
@@ -227,6 +230,7 @@ export default {
         console.log(res.data.data)
         // this.totalRows = res.data.data.totalRecord
         this.remittances = res.data.data
+       
         this.action = ''
         //this.perPage = res.data.data.record_per_page
         this.$store.commit('endLoading')
