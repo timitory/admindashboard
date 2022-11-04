@@ -106,7 +106,7 @@ export default {
   data(){
     return {
       action:'',
-      perPage: 10,
+      perPage: 15,
       totalRows: 0,
       disabled: false,
       limit: 5,
