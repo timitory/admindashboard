@@ -24,6 +24,7 @@
               <th class="font-bold">Settled Amount</th>
               <th class="font-bold">Status</th>
               <th class="font-bold">Action</th>
+              <th class="font-bold">View</th>
             </tr>
           </thead>
           <tbody>
@@ -54,6 +55,9 @@
                   <option v-if="policy.status != 'Decline' && policy.status == 'Settled'" value="settle">Edit Settled Amount</option>
                 </select>
               </td>
+              <td>
+               <button @click="viewClaim(policy)" class="text-green-500 text-sm underline outline-none focus:outline-none">View More</button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -75,6 +79,7 @@
     </div>
     <DeclineModal v-if="showDecline" v-on:close="closeDecline" v-on:submit="declineClaim" />
     <SettleModal :claim="claim" v-if="showSettle" v-on:close="closeSettle" v-on:submit="settleClaim" />
+    <SingleClaim :showPolicy="showPolicy" :policy="claim" @close="showPolicy = false" />
   </div>
 </template>
 
@@ -85,8 +90,9 @@ import baseURL from "@/main"
 import DeclineModal from "@/components/Vehicle/DeclineModal"
 import SettleModal from "@/components/Vehicle/SettleModal"
 import TPagination from 'vue-tailwind/dist/t-pagination'
+import SingleClaim from "./SingleClaim.vue"
 export default {
-  components: {DeclineModal, SettleModal, TPagination},
+  components: {DeclineModal, SettleModal, SingleClaim, TPagination},
   data(){
     return {
       perPage: 10,
@@ -102,6 +108,7 @@ export default {
       showSettle: false,
       claim: {},
       action: '',
+      showPolicy: false,
     }
   },
   computed:{
@@ -123,6 +130,10 @@ export default {
 		},
 	},
   methods: {
+    viewClaim(obj){
+      this.claim = obj
+      this.showPolicy = true
+    },
     search(){
       this.$store.commit('startLoading')
       axios.get(`${baseURL}/admin/claims?type=vehicle?search=${this.searchKeyword}`)
