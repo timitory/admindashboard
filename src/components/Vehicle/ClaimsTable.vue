@@ -79,7 +79,8 @@
     </div>
     <DeclineModal v-if="showDecline" v-on:close="closeDecline" v-on:submit="declineClaim" />
     <SettleModal :claim="claim" v-if="showSettle" v-on:close="closeSettle" v-on:submit="settleClaim" />
-    <SingleClaim :showPolicy="showPolicy" :policy="claim" @close="showPolicy = false" />
+    <SingleClaim :showPolicy="showPolicy" v-if="showPolicy" :policy="claim" @close="showPolicy = false" />
+    <!-- <AcceptClaim  v-if="showActive"  :policy="claim" @close="showActive = false"/> -->
   </div>
 </template>
 
@@ -89,6 +90,7 @@ import axios from "axios"
 import baseURL from "@/main"
 import DeclineModal from "@/components/Vehicle/DeclineModal"
 import SettleModal from "@/components/Vehicle/SettleModal"
+// import AcceptClaim from "@/components/Vehicle/ClaimModal"
 import TPagination from 'vue-tailwind/dist/t-pagination'
 import SingleClaim from "./SingleClaim.vue"
 export default {
@@ -106,6 +108,7 @@ export default {
       claims: [],
       showDecline: false,
       showSettle: false,
+      showActive: false,
       claim: {},
       action: '',
       showPolicy: false,
@@ -177,12 +180,14 @@ export default {
         this.showDecline = true
         this.action = ''
       }else if(this.action === 'approve'){
+        
         this.approveClaim()
         this.action = ''
       }else if(this.action == 'settle'){
         this.showSettle = true
         this.action = ""
       }
+      
     },
     closeDecline(){
       this.showDecline = false

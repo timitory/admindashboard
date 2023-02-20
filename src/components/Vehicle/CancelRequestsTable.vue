@@ -79,6 +79,7 @@
       </div>
     </div>
     <DeclineModal v-if="showDecline" v-on:close="closeDecline" v-on:submit="declineRequest" />
+    <!-- <ApproveModal  v-if="showActive"  :policy="policy" @close="showActive = false"/> -->
   </div>
 </template>
 
@@ -88,9 +89,10 @@ import axios from "axios"
 import baseURL from "@/main"
 import TPagination from 'vue-tailwind/dist/t-pagination'
 import DeclineModal from "@/components/Vehicle/DeclineModal"
+// import ApproveModal from "@/components/Vehicle/ApproveModal"
 export default {
   components:{
-    TPagination, DeclineModal
+    TPagination, DeclineModal,
   },
   data(){
     return {
@@ -99,6 +101,7 @@ export default {
       disabled: false,
       limit: 5,
       currentPage: 1,
+      showActive: false,
       policy: {},
       val: '',
       sorter: '',
@@ -126,6 +129,7 @@ export default {
 		},
 	},
   methods: {
+    
     setPages () {
       let numberOfPages = Math.ceil(this.policies.length / this.perPage);
       for (let index = 1; index <= numberOfPages; index++) {

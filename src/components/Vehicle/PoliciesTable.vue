@@ -62,7 +62,12 @@
                 <button @click="viewRepayment(policy)" class="text-green-500 underline outline-none focus:outline-none">View</button>
               </td>
               <td>
-                  <button @click="view(policy)" class="p-2 bg-green-500 text-white rounded text-sm focus:outline-none">Details</button>
+                <select class="focus:outline-none border border-solid border-gray-300 rounded" v-model="action" @change="selectAction(policy)">
+                  <option value="" selected disabled>Select action</option>
+                  <option value="details">View Details</option>
+                  <option v-if="policy.policy.status == 'Active' || policy.policy.status == 'Success'" value="cancel">Cancel Policy</option>
+                </select>
+                  <!-- <button @click="view(policy)" class="p-2 bg-green-500 text-white rounded text-sm focus:outline-none">Details</button> -->
               </td>
             </tr>
           </tbody>
@@ -85,6 +90,7 @@
     </div>
     <SinglePolicy v-if="showPolicy" :policy="policy"  @close="showPolicy = false" />
     <Repayments v-if="showRepayment" :policy="policy" @close="showRepayment = false"/>
+    <!-- <CancelPolicy v-if="showActive" :policy="policy" @close="showActive = false"/> -->
   </div>
 </template>
 
@@ -94,6 +100,7 @@ import axios from "axios"
 import baseURL from "@/main"
 import SinglePolicy from "@/components/Vehicle/SinglePolicy"
 import Repayments from "@/components/Vehicle/ViewRepayment"
+// import CancelPolicy from "@/components/Vehicle/CancelPolicyModal"
 import TPagination from 'vue-tailwind/dist/t-pagination'
 export default {
   components:{
@@ -101,6 +108,7 @@ export default {
   },
   data(){
     return {
+      action:'',
       perPage: 10,
       totalRows: 0,
       disabled: false,
@@ -108,6 +116,7 @@ export default {
       currentPage: 1,
       showPolicy: false,
       showRepayment: false,
+      showActive: false,
       policy: {},
       val: '',
       sorter: '',
@@ -133,6 +142,19 @@ export default {
 		},
 	},
   methods: {
+    selectAction(obj){
+
+      if (this.action === 'details'){
+        this.policy = obj
+        this.showPolicy = true
+        this.action = ''
+      }else{
+        this.policy = obj
+       this.cancelPolicy()
+        this.action = ''
+      }
+    },
+    
     filter(val){
       console.log(val)
       this.showFilter = false
@@ -145,7 +167,19 @@ export default {
       this.policy = obj
       this.showRepayment = true
     },
-
+    cancelPolicy(){
+      this.$store.commit('startLoading')
+      axios.post(`${baseURL}/admin/vehicle/cancel`, {user_vehicle_id : this.policy.policy.policy_id})
+      .then(res =>{
+        console.log(res.data.data)
+        this.$store.commit('setSuccess', {status: true, msg: res.data.message})
+        this.getPolicies()
+        this.$store.commit('endLoading')
+      })
+      .catch(err=>{
+        this.$store.dispatch('handleError', err)
+      })
+},
     search(){
       this.$store.commit('startLoading')
       axios.get(`${baseURL}/admin/vehicle/policy/search?search=${this.searchKeyword}`)
@@ -188,6 +222,20 @@ export default {
         this.$store.dispatch('handleError', err)
       })
     },
+    getPolicies(){
+    this.$store.commit('startLoading')
+    axios.get(`${baseURL}/admin/vehicle/policy`)
+    .then(res =>{
+      console.log(res.data.data)
+      this.totalRows = res.data.data.totalRecord
+      this.policies = res.data.data.records
+      this.perPage = res.data.data.record_per_page
+      this.$store.commit('endLoading')
+    })
+    .catch(err=>{
+      this.$store.dispatch('handleError', err)
+    })
+  }
   },
   mounted(){
     this.$store.commit('startLoading')
