@@ -1,8 +1,13 @@
 <template>
   <div class="mt-8">
+    <download-excel :data="policiess" :name="fileName" class="right">
+            <button type="button" class="flex mt-4 items-center py-2 px-2 rounded text-white" style="background-color: #131B47; max-width: 180px">Download CSV</button>
+            </download-excel>
     <div class="mt-8 px-6 pt-6 relative shadow-lg bg-white lg:relative lg:pb-8">
+      
         <div class="lg:flex lg:justify-between">
             <p class="font-bold">Manage cancel requests for vehicle cover</p>
+           
             <div class="lg:flex lg:gap-4"> 
                 <div class="relative">
                     <input type="text" v-model="searchKeyword" class="block mt-4 rounded bg-blue-100 px-4 lg:pl-10 py-2 w-full outline-none focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
@@ -112,8 +117,10 @@ export default {
       page: 1,
       pages: [],
       policies: [],
+      policiess: [],
       showDecline : false,
-      request : {}
+      request : {},
+      fileName: 'vehicle_cancel_Request'
     }
   },
   computed:{
@@ -165,11 +172,29 @@ export default {
       .then((res)=> {
         this.$store.commit('endLoading')
         this.policies = res.data.data
+
+        this.policies.forEach(this.myFunction)
+        
+
         this.totalRows = this.policies.length
       })
       .catch((err)=> {
         this.$store.dispatch('handleError', err)
       })
+    },
+    myFunction(item) {
+
+      var data = {
+        cancel_id:item.cancel_id,
+        customer : item.enrollee.name,
+        email:item.enrollee.email,
+        start:item.policy.start_date,
+        status:item.status.name,
+        reason:item.reason,
+      };
+
+      this.policiess.push(data)
+      
     },
     selectAction(obj){
       this.request = obj

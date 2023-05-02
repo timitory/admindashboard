@@ -1,9 +1,14 @@
 <template>
   <div class="mt-8">
+    
     <div class="mt-8 px-6 pt-6 relative shadow-lg bg-white lg:relative lg:pb-8">
         <div class="lg:flex lg:justify-between">
             <p></p>
+           
             <div class="lg:flex lg:gap-4"> 
+              <download-excel :data="policiess" :name="fileName" class="right">
+        <button type="button" class="flex mt-4 items-center py-2 px-2 rounded text-white" style="background-color: #131B47; max-width: 180px">Download CSV</button>
+    </download-excel>
                 <div class="relative">
                     <input type="text" v-model="searchKeyword"  @change="search()" class="block mt-4 rounded bg-blue-100 px-4 lg:pl-10 py-2 w-full outline-none focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
                     <svg class="absolute top-2 left-4 lg:top-6" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -126,6 +131,8 @@ export default {
       page: 1,
       pages: [],
       policies: [],
+      policiess: [],
+      fileName: 'vehicle_policy',
       unsortedPolicies : []
     }
   },
@@ -188,6 +195,9 @@ export default {
         this.totalRows = res.data.data.totalRecord
         this.policies = res.data.data.records
         this.perPage = res.data.data.record_per_page
+
+        this.policies.forEach(this.myFunction)
+
         this.$store.commit('endLoading')
       })
       .catch(err=>{
@@ -216,6 +226,9 @@ export default {
         this.totalRows = res.data.data.totalRecord
         this.policies = res.data.data.records
         this.perPage = res.data.data.record_per_page
+
+        this.policies.forEach(this.myFunction)
+        
         this.$store.commit('endLoading')
       })
       .catch(err=>{
@@ -227,29 +240,64 @@ export default {
     axios.get(`${baseURL}/admin/vehicle/policy`)
     .then(res =>{
       console.log(res.data.data)
+
+      this.$store.commit('endLoading')
+      
       this.totalRows = res.data.data.totalRecord
       this.policies = res.data.data.records
       this.perPage = res.data.data.record_per_page
-      this.$store.commit('endLoading')
+
+      this.policies.forEach(this.myFunction)
     })
     .catch(err=>{
       this.$store.dispatch('handleError', err)
     })
-  }
+  },
+  myFunction(item) {
+
+    var dat = {
+      policy_id:item.user_vehicle_id,
+      start : item.policy.start,
+      customer: item.policy.enrollee.lastname + " " + item.policy.enrollee.firstname,
+      email: item.policy.enrollee.email,
+      phone: item.policy.enrollee.phone,
+      plan: item.policy.vehicle_category,
+      underwriter: item.policy.underwriter.name,
+      vehicle_value:item.policy.vehicle_value,
+      vehicle_class:item.policy.vehicle_class,
+      vehicle_color:item.policy.vehicle_color,
+      vehicle_make:item.policy.vehicle_make,
+      vehicle_model:item.policy.vehicle_model,
+      vehicle_usage:item.policy.vehicle_usage,
+      year_of_make:item.policy.year_of_make,
+      premium: item.policy.total_amount,
+      policy_number:item.policy.policy_number,
+      payment_frequency: item.policy.payment_frequency,
+      status: item.policy.status,
+    };
+
+    this.policiess.push(dat)
+    
+}
   },
   mounted(){
-    this.$store.commit('startLoading')
-    axios.get(`${baseURL}/admin/vehicle/policy`)
-    .then(res =>{
-      console.log(res.data.data)
-      this.totalRows = res.data.data.totalRecord
-      this.policies = res.data.data.records
-      this.perPage = res.data.data.record_per_page
-      this.$store.commit('endLoading')
-    })
-    .catch(err=>{
-      this.$store.dispatch('handleError', err)
-    })
+
+    this.getPolicies()
+    // this.$store.commit('startLoading')
+    // axios.get(`${baseURL}/admin/vehicle/policy`)
+    // .then(res =>{
+    //   console.log(res.data.data)
+    //   this.totalRows = res.data.data.totalRecord
+    //   this.policies = res.data.data.records
+    //   this.perPage = res.data.data.record_per_page
+
+    //   // this.policies.forEach(this.myFunction)
+
+    //   this.$store.commit('endLoading')
+    // })
+    // .catch(err=>{
+    //   this.$store.dispatch('handleError', err)
+    // })
   }
 }
 </script>

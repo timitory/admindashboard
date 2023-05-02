@@ -18,12 +18,13 @@
                         <font-awesome-icon icon="angle-down" class="ml-2"/>
                     </button>
                     <div v-if="showFilter" class="filter shadow-lg absolute left-0 bg-white">
-                      <p class="mb-2 cursor-pointer text-sm" @click="filter('status')">All</p>
+                      <p class="mb-2 cursor-pointer text-sm" @click="filteredSearch('')">All</p>
                         <strong class="mb-2 cursor-pointer text-sm" >Status</strong>
-                        <p class="mb-2 cursor-pointer text-sm" @click="filter('status')">Pending</p>
-                        <p class="mb-2 cursor-pointer text-sm" @click="filter('status')">Paid</p>
+                        <p class="mb-2 cursor-pointer text-sm" @click="filteredSearch('pending')">Pending</p>
+                        <p class="mb-2 cursor-pointer text-sm" @click="filteredSearch('paid')">Paid</p>
                         <strong class="mb-2 cursor-pointer text-sm" >Date</strong>
-                        <input type="date" class="mb-2 cursor-pointer text-sm" @submit="filter('status')">
+                        
+                        <input type="date" v-model="searchDate" class="mb-2 cursor-pointer text-sm" @keyup.enter="filteredSearch('date')">
                     </div>
                 </div>
             </div>
@@ -38,8 +39,9 @@
               <th class="font-bold">Premium</th>
               <th class="font-bold">Commission</th>
               <th class="font-bold">Description</th>
-              <th class="font-bold">ReceiptNo</th>
-              <th class="font-bold">Debit Note</th>
+              <!-- <th class="font-bold">ReceiptNo</th>
+              <th class="font-bold">Debit Note</th> -->
+              <th class="font-bold">Remitter</th>
               <th class="font-bold">Remittance Date</th>
               <th class="font-bold">Paystack Reference</th>
               <th class="font-bold">Status</th>
@@ -54,9 +56,11 @@
               <td>{{remittance.premium}}</td>
               <td>{{remittance.commission}}</td>
               <td>{{remittance.description}}</td>
-              <td>{{remittance.receipt_no}}</td>
-              <td>{{remittance.debit_note}}</td>
-              <td>{{remittance.remittance_date}}</td>
+              <td>{{remittance.description}}</td>
+              <!-- <td>{{remittance.receipt_no}}</td>
+              <td>{{remittance.debit_note}}</td> -->
+              <td v-if="remittance.remittance_date == '0001-01-01'"></td>
+              <td v-else> {{ remittance.remittance_date }}</td>
               <td>{{remittance.paystack_reference}}</td>
               <td v-if="remittance.status == 'Paid'" class="text-green-500">{{remittance.status}}</td>
               <td v-else class="text-yellow-500">{{remittance.status}}</td>
@@ -67,7 +71,8 @@
               <td>
                 <select class="focus:outline-none border border-solid border-gray-300 rounded" v-model="action" @change="selectAction(remittance)">
                   <option value="" selected disabled>Select action</option>
-                  <option v-if="remittance.status != 'Paid' || remittance.receipt_no == ''" value="remit">Remit Premium</option>
+                  <option v-if="remittance.status != 'Paid'" value="remit">Remit Premium</option> 
+                  <!-- || remittance.receipt_no == '' -->
                 </select>
               </td>
             </tr>
@@ -78,7 +83,7 @@
           <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
           <p class="mt-4 text-center font-bold text-green-500 font-lg">No records</p>
         </div>
-        <div class="my-8">
+        <!-- <div class="my-8">
           <t-pagination
           :total-items="totalRows"
           :per-page="perPage"
@@ -87,7 +92,22 @@
           v-model="currentPage"
           @change="changePage"
         />
-        </div>
+        </div> -->
+        <nav  class="mt-8" v-if="paginatedData.length > 0" aria-label="Page navigation example">
+          <ul class="w-1/2 mx-auto  flex justify-between" style="max-width: 250px">
+            <li class="page-item">
+              <button type="button" class="inline text-green-500" v-if="page != 1" @click="page--"> Previous </button>
+              <button v-else class="inline text-green-500 opacity-20">Previous</button>
+            </li>
+            <!-- <li class="page-item">
+              <button type="button" class="inline" v-for="pageNumber in pages.slice(page-1, page+5)" :key="pageNumber.id" @click="page = pageNumber"> {{pageNumber}} </button>
+            </li> -->
+            <li class="page-item">
+              <button type="button" @click="page++" v-if="page < pages.length" class="inline text-green-500"> Next </button>
+              <button v-else class="inline text-green-500 opacity-20">Next</button>
+            </li>
+          </ul>
+        </nav>
         <RemittanceModal  v-if="showActive"  :remittance=remittance @close="showActive = false"/>
       </div>
     </div>
@@ -107,14 +127,15 @@ export default {
   data(){
     return {
       action:'',
-      perPage: 15,
+      perPage: 10,
+      searchDate: '',
       totalRows: 0,
       disabled: false,
       limit: 5,
       currentPage: 1,
       showPolicy: false,
       showRepayment: false,
-      remittance: {},
+      remittance: [],
       
       showActive: false,
       val: '',
@@ -125,7 +146,8 @@ export default {
       page: 1,
       pages: [],
       remittances: [],
-      unsortedPolicies : []
+      unsortedPolicies : [],
+      
     }
   },
   computed:{
@@ -136,7 +158,7 @@ export default {
     },
   },
   watch: {
-		policies() {
+		remittances() {
 			this.setPages();
 		},
 	},
@@ -148,20 +170,7 @@ export default {
         this.showActive = true
         this.action = ''
       }
-      // if (this.action == 'remit'){
-      //   this.$store.commit('startLoading')
-      // axios.post(`${baseURL}/remittance/doreceipt`, {remittance_id : obj.remittance_id})
-      // .then(res=>{
-      //   console.log(res.data.data)
-      //   this.remittances = res.data.data
-      //   this.$store.commit('endLoading')
-      //   this.getRemittance()
-      // })
-      // .catch(err=>{
-      //   this.$store.dispatch('handleError', err)
-      //   this.getRemittance()
-      // })
-      // }
+    
     },
     filter(val){
       console.log(val)
@@ -177,17 +186,17 @@ export default {
     },
 
     setPages () {
-      let numberOfPages = Math.ceil(this.policies.length / this.perPage);
+      let numberOfPages = Math.ceil(this.remittances.length / this.perPage);
       for (let index = 1; index <= numberOfPages; index++) {
          this.pages.push(index);
       }
     },
-    paginate (remittance) {
+    paginate (remittances) {
         let page = this.page;
         let perPage = this.perPage;
         let from = (page * perPage) - perPage;
         let to = (page * perPage);
-        return  remittance.slice(from, to);
+        return  remittances.slice(from, to);
     },
     changePage(num){
       console.log(num)
@@ -208,7 +217,7 @@ export default {
     },
     search(){
       this.$store.commit('startLoading')
-      axios.get(`${baseURL}/remittance/list?search=${this.searchKeyword}`)
+      axios.get(`${baseURL}/remittance/list/search?search=${this.searchKeyword}`)
       .then(res =>{
         console.log(res.data.data)
         this.remittances = res.data.data  
@@ -219,10 +228,27 @@ export default {
         this.$store.dispatch('handleError', err)
       })
     },
+    filteredSearch(search){
+      this.$store.commit('startLoading')
+
+      axios.get(`${baseURL}/remittance/list/search?search=${search}`)
+      .then(res =>{
+        console.log(res.data.data)
+        this.remittances = res.data.data  
+        this.action = ''
+        this.$store.commit('endLoading')
+      })
+      .catch(err=>{
+        this.$store.dispatch('handleError', err)
+      })
+
+      this.showFilter = false
+      this.searchDate = ''
+    },
     getRemittance()
     {
       this.$store.commit('startLoading')
-    axios.get(`${baseURL}/remittance/list`)
+      axios.get(`${baseURL}/remittance/list`)
       .then(res=>{
         console.log(res.data.data)
         // this.totalRows = res.data.data.totalRecord
@@ -241,12 +267,11 @@ export default {
     this.$store.commit('startLoading')
     axios.get(`${baseURL}/remittance/list`)
       .then(res=>{
-        console.log(res.data.data)
-        // this.totalRows = res.data.data.totalRecord
+       
         this.remittances = res.data.data
        
         this.action = ''
-        //this.perPage = res.data.data.record_per_page
+        
         this.$store.commit('endLoading')
     })
     .catch(err=>{

@@ -80,9 +80,16 @@
                         <p>License Number</p>
                         <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.policy.driver_license}}</p>
                     </li>
+                    <li>
+                        <p>Flood Cover</p>
+                        <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.policy.flood_cover}}</p>
+                    </li>
                 </ul>
                 <div class="mt-4">
-                    <p class="font-bold">Premium: <span class="text-green-500 text-lg">{{policy.policy.amount}}</span></p>
+                    <p class="font-bold">{{policy.policy.payment_frequency}} Premium: <span class="text-green-500 text-lg">{{policy.policy.amount}}</span></p>
+                </div>
+                <div class="mt-4">
+                    <p class="font-bold">Total Premium: <span class="text-green-500 text-lg">{{policy.policy.total_amount}}</span></p>
                 </div>
                 <hr class="mt-6"> 
                 <a :href="policy.policy.certificate" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Certificate</a>

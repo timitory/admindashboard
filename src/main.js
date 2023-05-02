@@ -10,6 +10,9 @@ import { faFacebook, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueTailwind from 'vue-tailwind'
 import TPagination from 'vue-tailwind/dist/t-pagination';
+import JsonExcel from "vue-json-excel";
+ 
+Vue.component("downloadExcel", JsonExcel);
 
 const settings = {
   't-pagination': {
@@ -53,10 +56,10 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 //set baseURL
 var baseURL;
 //var imageURL = "https://stage.paddycover.com/";
-
+baseURL = "https://stage.paddycover.com/v1"
 if(process.env.NODE_ENV === "development"){
    baseURL = "https://stage.paddycover.com/v1"
-   //imageURL = "https://api.paddycover.com/"
+   //imageURL = "https://stage.paddycover.com/"
 }else {
   baseURL = "https://stage.paddycover.com/v1"
   //imageURL = "https://api.paddycover.com/"
