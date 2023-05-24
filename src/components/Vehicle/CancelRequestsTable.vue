@@ -57,11 +57,13 @@
                     <option value="" selected disabled>Action</option>
                     <option value="approve">Approve</option>
                     <option value="decline">Decline</option>
+                    <option value="reason">View Reason</option>
                   </select>
               </td>
               <td v-else>
-                <select class="border border-solid rounded focus:outline-none">
+                <select class="border border-solid rounded focus:outline-none" v-model="action" @change="selectAction(policy)">
                   <option value="" selected disabled>Action</option>
+                  <option value="reason">View Reason</option>
                 </select>
               </td>
             </tr>
@@ -84,6 +86,7 @@
       </div>
     </div>
     <DeclineModal v-if="showDecline" v-on:close="closeDecline" v-on:submit="declineRequest" />
+    <ReasonModal v-if="showReason" :reason="request" v-on:close="closeReason"/>
     <!-- <ApproveModal  v-if="showActive"  :policy="policy" @close="showActive = false"/> -->
   </div>
 </template>
@@ -94,10 +97,11 @@ import axios from "axios"
 import baseURL from "@/main"
 import TPagination from 'vue-tailwind/dist/t-pagination'
 import DeclineModal from "@/components/Vehicle/DeclineModal"
+import ReasonModal from "@/components/Vehicle/ReasonModal"
 // import ApproveModal from "@/components/Vehicle/ApproveModal"
 export default {
   components:{
-    TPagination, DeclineModal,
+    TPagination, DeclineModal,ReasonModal
   },
   data(){
     return {
@@ -119,6 +123,7 @@ export default {
       policies: [],
       policiess: [],
       showDecline : false,
+      showReason: false,
       request : {},
       fileName: 'vehicle_cancel_Request'
     }
@@ -200,10 +205,19 @@ export default {
       this.request = obj
       if(this.action == 'approve') return this.approveRequest(obj)
       if(this.action == 'decline') return this.showDecline = true
+      if(this.action == 'reason') {
+        this.request = obj
+        this.showReason = true
+      }
     },
     closeDecline(){
       this.showDecline = false
       this.action = ""
+    },
+    closeReason(){
+      this.showReason = false
+      this.action = ""
+      this.getRequests()
     },
     approveRequest(obj){
       this.$store.commit('startLoading')
