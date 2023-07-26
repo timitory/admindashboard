@@ -33,10 +33,15 @@ const routes = [
         
       },
       {
+        path: '/app/review',
+        name: 'Reviews',
+        component: () => import('@/views/Review')
+      },  
+      {
         path: '/app/dashboard/totalpolicies',
         name: 'Total Policies',
         component: () => import('@/views/Menu/TotalPolicies')
-      },  
+      }, 
       {
         path: '/app/dashboard/activepolicies',
         name: 'Active Policies',
