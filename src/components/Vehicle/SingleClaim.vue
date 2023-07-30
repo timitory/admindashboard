@@ -5,6 +5,9 @@
              <div class="pt-6">
                <div class="flex justify-between">
                  <div>
+                    <download-excel :data="policiess" :name="fileName" class="right">
+        <button type="button" class="flex mt-4 items-center py-2 px-2 rounded text-white" style="background-color: #131B47; max-width: 180px">Download CSV</button>
+    </download-excel>
                    <p class="text-sm mt-4 cursor-pointer font-bold text-lg">
                      About Claim
                    </p>
@@ -243,6 +246,8 @@
                      <p class="font-bold">Plate Number: <span class="text-green-500 text-lg">{{policy.metadata.plate_number}}</span></p>
                  </div>
                  <hr class="mt-6"> 
+                 <a :href="policy.metadata.invoice_image" v-if="policy.metadata.invoice_image" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Invoice</a>
+                 <p v-else class="mt-6">Invoice's Image link not uploaded yet</p>
                  <a :href="policy.metadata.plate_number_image" v-if="policy.metadata.plate_number_image" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Vehicle's Image with Plate Number 1</a>
                  <p v-else class="mt-6">Vehicle's Image link not available</p>
                  <a :href="policy.metadata.plate_number_image2" v-if="policy.metadata.plate_number_image2" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Vehicle's Image with Plate Number</a>
@@ -260,14 +265,82 @@
      props:['policy'],
      data(){
          return {
-             existing: ''
+             existing: '',
+             policiess: [],
+             fileName: this.policy.user.firstname +'_'+ this.policy.user.lastname + '_claim',
          }
      },
      methods:{
          close(){
            this.$emit('close')
          // console.log('closeee')
-         }
+         },
+        
+     },
+     mounted(){
+        var dat = {
+           
+				PlateNumber:                   this.policy.metadata.plate_number,
+				PolicyNumber:                  this.policy.metadata.policy_number,
+				StartDate:                     this.policy.metadata.start,
+			
+				Source:                        this.policy.metadata.source,
+				
+				PurposeOfUseAtAccident:        this.policy.metadata.purpose_of_use,
+				PurposeOfUseAtAccidentExtra:   this.policy.metadata.purpose_of_useextra,
+				DriverName:                    this.policy.metadata.driver_name,
+				DriverAge:                     this.policy.metadata.driver_age,
+				DriverYearsExperience:         this.policy.metadata.driver_years_exp,
+				DriverAddress:                 this.policy.metadata.driver_address,
+				DriverLicenseNumber:           this.policy.metadata.driver_license,
+				DriverDateOfExpiry:            this.policy.metadata.driver_dateofexpiry,
+				DriverPreviousAccident:        this.policy.metadata.driver_previous_accident,
+				DriverPreviousAccidentDetails: this.policy.metadata.DriverPreviousAccidentDetails,
+				DriverProsecuted:              this.policy.metadata.DriverProsecuted,
+				DriverProsecutedDetails:       this.policy.metadata.DriverProsecutedDetails,
+				DriverEmployment:              this.policy.metadata.DriverEmployment,
+				DriverEmploymentCapacity:      this.policy.metadata.DriverEmploymentCapacity,
+				DriverEmploymentLength:        this.policy.metadata.DriverEmploymentLength,
+				AccidentDate:                  this.policy.metadata.AccidentDate,
+				AccidentTime:                  this.policy.metadata.AccidentTime,
+				AccidentPlace:                 this.policy.metadata.AccidentPlace,
+				AccidentWeatherCondition:      this.policy.metadata.AccidentWeatherCondition,
+				AccidentDetails:               this.policy.metadata.AccidentDetails,
+				Headlamps:                     this.policy.metadata.Headlamps,
+				RoadWidth:                     this.policy.metadata.RoadWidth,
+				VehicleSpeed:                  this.policy.metadata.VehicleSpeed,
+				DriverWarning:                 this.policy.metadata.DriverWarning,
+				OtherDriverWarning:            this.policy.metadata.OtherDriverWarning,
+				AccidentDescription:           this.policy.metadata.AccidentDescription,
+				WitnessName:                   this.policy.metadata.WitnessName,
+				WitnessAddress:                this.policy.metadata.WitnessAddress,
+				DamagedParts:                  this.policy.metadata.DamagedParts,
+				VehicleLocation:               this.policy.metadata.VehicleLocation,
+				CostOfRepairs:               this.policy.metadata.CostOfRepairs,
+				RepairerName:                  this.policy.metadata.RepairerName,
+				RepairerAddress:               this.policy.metadata.RepairerAddress,
+				RepairerPhone:                 this.policy.metadata.RepairerPhone,
+				EstimateAttachment:            this.policy.metadata.EstimateAttachment,
+				OtherVehicleInsurance:         this.policy.metadata.OtherVehicleInsurance,
+				ThirdPartyName:                this.policy.metadata.ThirdPartyName,
+				ThirdPartyAddress:             this.policy.metadata.ThirdPartyAddress,
+				ThirdPartyProperty:            this.policy.metadata.ThirdPartyProperty,
+				ThirdPartyInjury:              this.policy.metadata.ThirdPartyInjury,
+				ThirdPartyMake:                this.policy.metadata.ThirdPartyMake,
+				ThirdPartyRegNo:               this.policy.metadata.ThirdPartyRegNo,
+				ThirdPartyInspectionAddress:   this.policy.metadata.ThirdPartyInspectionAddress,
+				PoliceReport:                  this.policy.metadata.PoliceReport,
+				PoliceReportStation:           this.policy.metadata.PoliceReportStation,
+				PoliceReportOfficerName:       this.policy.metadata.PoliceReportOfficerName,
+				PoliceReportOfficerNumber:     this.policy.metadata.PoliceReportOfficerNumber,
+				PoliceAction:                  this.policy.metadata.PoliceAction, 
+				ClaimNotice:                   this.policy.metadata.ClaimNotice, 
+				VictimName:                    this.policy.metadata.VictimName,  
+				VictimHospital:                this.policy.metadata.VictimHospital,
+            };
+
+            this.policiess.push(dat)
+
      },
      directives: {
          onClickaway: onClickaway,

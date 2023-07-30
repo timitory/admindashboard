@@ -4,6 +4,7 @@
     <div class="mt-6">
         <p class="font-bold text-lg lg:text-xl">Hello Admin,</p>
         <p class="mt-2">See below overall information on policies purchased by users.</p>
+        <router-link to="/app/dashboard/health/plans" class="text-green-500 font-bold underline top-2">View Health Plans/Prices</router-link>
     </div>
     <router-view></router-view>
     <Policies />

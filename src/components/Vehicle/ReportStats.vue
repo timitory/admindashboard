@@ -25,6 +25,10 @@
                 <p class="font-bold text-2xl lg:text-3xl">{{stats.settled_claim}}</p>
                 <p class="text-green-500 mt-2">Settled Claims</p>
          </div>
+         <div class="item ">
+                <p class="font-bold text-2xl lg:text-3xl">{{stats.unsettled_claim_count}}</p>
+                <p class="text-green-500 mt-2">Unsettled Claims</p>
+         </div>
       </div>
   </div>
 </template>

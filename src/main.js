@@ -55,14 +55,13 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 //set baseURL
 var baseURL;
-//var imageURL = "https://stage.paddycover.com/";
+
 baseURL = "https://stage.paddycover.com/v1"
 if(process.env.NODE_ENV === "development"){
    baseURL = "https://stage.paddycover.com/v1"
-   //imageURL = "https://stage.paddycover.com/"
+  
 }else {
   baseURL = "https://stage.paddycover.com/v1"
-  //imageURL = "https://api.paddycover.com/"
 }
 
 

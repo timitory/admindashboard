@@ -122,6 +122,8 @@ export default {
                 {id: 12, name: 'Pending'},
                 {id: 19, name: 'Incomplete'},
                 {id: 22, name: 'Cancelled'},
+                {id: 20, name: 'Settled'},
+                {id: 0, name: 'Unsettled'},
             ],
             months: [
                 {id: 1, name: "Jan"},{id: 2, name: "Feb"}, {id: 3, name: "Mar"}, {id: 4, name: "Apr"}, {id: 5, name: "May"}, {id: 6, name: "Jun"}, {id: 7, name: "Jul"}, {id: 8, name: "Aug"}, {id: 9, name: "Sep"}, {id: 10, name: "Oct"}, {id: 11, name: "Nov"}, {id: 12, name: "Dec"},
@@ -172,7 +174,8 @@ export default {
                 pending: res.data.data.pending_policy_count,
                 success: res.data.data.success_policy_count,
                 total_claim: res.data.data.claim_count,
-                settled_claim: res.data.data.settled_claim_count
+                settled_claim: res.data.data.settled_claim_count,
+                unsettled_claim_count: res.data.data.unsettled_claim_count
             }
             this.showChart = true
             this.showTable = true

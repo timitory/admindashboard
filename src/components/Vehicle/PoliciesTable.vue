@@ -131,6 +131,7 @@ export default {
       page: 1,
       pages: [],
       policies: [],
+      downloadPolicies: [],
       policiess: [],
       fileName: 'vehicle_policy',
       unsortedPolicies : []
@@ -245,9 +246,10 @@ export default {
       
       this.totalRows = res.data.data.totalRecord
       this.policies = res.data.data.records
+      this.downloadPolicies = res.data.data.allrecords
       this.perPage = res.data.data.record_per_page
 
-      this.policies.forEach(this.myFunction)
+      this.downloadPolicies.forEach(this.myFunction)
     })
     .catch(err=>{
       this.$store.dispatch('handleError', err)
