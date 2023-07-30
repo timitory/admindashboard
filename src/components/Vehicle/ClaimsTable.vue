@@ -1,7 +1,7 @@
 <template>
   <div class="mt-8">
     <div class="mt-8 px-6 pt-6 relative shadow-lg bg-white lg:relative lg:pb-8">
-        <div class="lg:flex lg:justify-between">
+        <div class="lg:flex lg:justify-between toggle-claim-h">
             <p class="mt-2 mb-4 font-bold text-lg">Manage vehicle cover claims</p>
             <div class="lg:flex lg:gap-4"> 
               <download-excel :data="policiess" :name="fileName" class="right">
@@ -283,9 +283,9 @@ export default {
 input{
     background-color: #e2f5ec;
 }
-table{
+/* table{
   
-}
+} */
 
 th, td {
   text-align: left;
@@ -313,6 +313,10 @@ th, td {
   box-shadow: inset 0 0 6px rgba(0,0,0,.3);
   background-color:#14801B;
 }
+
+.importclaim > div > .toggle-claim-h > div > div {
+    display: none !important;
+}
 .filter{
   bottom: -80px;
   width: 100%
@@ -333,9 +337,7 @@ th, td {
         width: 30px;
         height: 30px
     }
-  table{
-    /* table-layout: fixed; */
-  }
+  
   th, td{
       min-width: unset
   }

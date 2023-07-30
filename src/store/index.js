@@ -23,7 +23,9 @@ export default new Vuex.Store({
     vehicleQuote: {},
     collapse: false,
     homeCollapse: false,
-    activeModal : 0
+    activeModal : 0,
+    tab : 'vehiclereport',
+    reviewinfo: {}
   },
   mutations: {
     startLoading(state){
@@ -58,6 +60,10 @@ export default new Vuex.Store({
       // console.log(state.successMsg)
     },
 
+    setTab(state, payload){
+      state.tab = payload
+    },
+
     setError(state, payload){
       state.showError = payload.status
       state.errorMsg = payload.msg
@@ -73,6 +79,9 @@ export default new Vuex.Store({
     },
     setRepayment(state, payload){
       state.repayment = payload
+    },
+    setReviewInfo(state, payload){
+      state.reviewinfo = payload
     },
     setPolicy(state, payload){
       state.policy = payload
