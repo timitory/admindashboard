@@ -35,7 +35,7 @@
                             <th class="font-bold">Rating</th>
                             <th class="font-bold">Customer Name</th>
                             <th class="font-bold">Email</th>
-                            <th class="font-bold">Date</th>
+                            <th class="font-bold">Description</th>
                             <th class="font-bold">Action</th>
                         </tr>
                     </thead>
@@ -44,12 +44,13 @@
                             class="border border-solid border-gray-300">
                             <td>{{ index + 1 }}</td>
                             <td>
-                                <StarRating value="4"></StarRating>
+                                <StarRating :value='policy.ratings'></StarRating>
                             </td>
-                            <td>{{ policy.policy.surname }} {{ policy.policy.firstname }}</td>
-                            <td>{{ policy.policy.amount }}</td>
-                            <td>{{ policy.policy.plan }}</td>
-                            <td  style="text-transform:capitalize" ><button @click="open(policy.policy.firstname, policy.policy.surname, policy.policy.amount, policy.policy.amount)">View</button></td>
+                            <td>{{ policy.name }}</td>
+                            <td>nill</td>
+                            <td>{{ policy.review }}</td>
+                            <td  style="text-transform:capitalize" ><button
+                                >View</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -57,10 +58,10 @@
                     <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
                     <p class="mt-4 text-center font-bold text-green-500 font-lg">No records</p>
                 </div>
-                <div class="my-8">
+                <!-- <div class="my-8">
                     <t-pagination :total-items="totalRows" :per-page="perPage" :limit="limit" :disabled="disabled"
                         v-model="currentPage" @change="changePage" />
-                </div>
+                </div> -->
             </div>
             <RatingModal v-if="showPolicy" v-on:close="close"  />
         </div>
@@ -72,13 +73,13 @@
 <script>
 import axios from "axios"
 import baseURL from "@/main"
-import TPagination from 'vue-tailwind/dist/t-pagination'
+// import TPagination from 'vue-tailwind/dist/t-pagination'
 import StarRating from '../components/Star-rating.vue'
 import RatingModal from "../components/RatingModal"
 
 
 export default {
-    components: { TPagination, StarRating, RatingModal },
+    components: {  StarRating, RatingModal },
     data() {
         return {
             perPage: 10,
@@ -130,14 +131,7 @@ export default {
             console.log('unchek');
             // this.$router.push(`/app/dashboard/managehealth`)
         },
-        viewRepayment(obj) {
-            this.policy = obj
-            this.showRepayment = true
-        },
-        viewPolicy(obj) {
-            this.policy = obj
-            this.showPolicy = true
-        },
+        
         setPages() {
             let numberOfPages = Math.ceil(this.policies.length / this.perPage);
             for (let index = 1; index <= numberOfPages; index++) {
@@ -151,45 +145,34 @@ export default {
             let to = (page * perPage);
             return policies.slice(from, to);
         },
-        search() {
-            this.$store.commit('startLoading')
-            axios.get(`${baseURL}/admin/health/search?search=${this.searchKeyword}`)
-                .then(res => {
-                    this.totalRows = res.data.data.totalRecord
-                    this.policies = res.data.data.records
-                    this.perPage = res.data.data.record_per_page
-                    this.$store.commit('endLoading')
-                })
-                .catch(err => {
-                    this.$store.dispatch('handleError', err)
-                })
-        },
+        
         getPolicies() {
             this.$store.commit('startLoading')
-            axios.get(`${baseURL}/admin/health`)
+            axios.get(`${baseURL}/admin/feedback `)
                 .then(res => {
-                    this.totalRows = res.data.data.totalRecord
-                    this.policies = res.data.data.records
-                    this.perPage = res.data.data.record_per_page
+                    console.log(res);
+                    // this.totalRows = res.data.data.totalRecord
+                    this.policies = res.data.data
+                    // this.perPage = res.data.data.record_per_page
                     this.$store.commit('endLoading')
                 })
                 .catch(err => {
                     this.$store.dispatch('handleError', err)
                 })
         },
-        changePage(num) {
-            this.$store.commit('startLoading')
-            axios.get(`${baseURL}/admin/health`, { params: { page: num } })
-                .then(res => {
-                    this.totalRows = res.data.data.totalRecord
-                    this.policies = res.data.data.records
-                    this.perPage = res.data.data.record_per_page
-                    this.$store.commit('endLoading')
-                })
-                .catch(err => {
-                    this.$store.dispatch('handleError', err)
-                })
-        },
+        // changePage(num) {
+        //     this.$store.commit('startLoading')
+        //     axios.get(`${baseURL}/admin/health`, { params: { page: num } })
+        //         .then(res => {
+        //             this.totalRows = res.data.data.totalRecord
+        //             this.policies = res.data.data.records
+        //             this.perPage = res.data.data.record_per_page
+        //             this.$store.commit('endLoading')
+        //         })
+        //         .catch(err => {
+        //             this.$store.dispatch('handleError', err)
+        //         })
+        // },
     },
     mounted() {
         this.getPolicies()
