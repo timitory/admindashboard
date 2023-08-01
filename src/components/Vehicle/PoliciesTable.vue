@@ -240,16 +240,16 @@ export default {
     this.$store.commit('startLoading')
     axios.get(`${baseURL}/admin/vehicle/policy`)
     .then(res =>{
-      console.log(res.data.data)
-
-      this.$store.commit('endLoading')
+      
+      
+      
       
       this.totalRows = res.data.data.totalRecord
-      this.policies = res.data.data.records
-      this.downloadPolicies = res.data.data.allrecords
+     this.policies = res.data.data.records
       this.perPage = res.data.data.record_per_page
-
+      this.$store.commit('endLoading')
       this.downloadPolicies.forEach(this.myFunction)
+      
     })
     .catch(err=>{
       this.$store.dispatch('handleError', err)
