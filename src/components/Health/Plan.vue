@@ -20,6 +20,7 @@
               <th class="font-bold">Annual Profit</th>
               <th class="font-bold">Quartely Profit</th>
               <th class="font-bold">Monthly Profit</th>
+              <th class="font-bold">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -33,6 +34,11 @@
               <td>{{price.pcAnnualProfit/100}}</td>
               <td>{{price.pcQuarterlyProfit/100}}</td>
               <td>{{price.pcMonthlyProfit/100}}</td>
+              <td>
+                <button class="block w-full lg:w-auto bg-green-500 text-white px-12 py-2 rounded focus:outline-none" @click="editprice(price.planName, price.chiAnnualCost, price.id)">
+                  Edit
+                </button>
+              </td>
               
             </tr>
           </tbody>
@@ -61,17 +67,20 @@
        
       </div>
     </div>
-   
+    <transition name="scale">
+        <Editprice v-if="editpriceForm"  :info="planinfo" :close="close" />
+      </transition>
   </div>
 </template>
 
 <script>
 // import {mapState} from "vuex"
 import axios from "axios"
-
+import Editprice from "./Editprice"
 import baseURL from "@/main"
 export default {
   components:{
+    Editprice
   },
   data(){
     return {
@@ -96,7 +105,8 @@ export default {
       pages: [],
       price: [],
       unsortedPolicies : [],
-      
+      editpriceForm: false,
+      planinfo: {}
     }
   },
   computed:{
@@ -112,6 +122,18 @@ export default {
 		},
 	},
   methods: {
+    close() {
+      this.editpriceForm = false
+    },
+    editprice(props, props2, props3) {
+      this.editpriceForm = true
+      this.planinfo = {
+        id: props3,
+        planName: props,
+        chiAnnualCost: props2
+      }
+      console.log(this.planinfo);
+    },
     selectAction(obj){
 
       if (this.action == 'remit'){

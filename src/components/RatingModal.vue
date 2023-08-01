@@ -6,7 +6,7 @@
                     <div class="">
                         <!-- <img src="../../assets/images/ratingimage.svg" alt="" class=" mx-auto w-3/5 img" > -->
                         <p class="pt-4 pb-8">{{ info.firstname  }} {{ info.surname }}</p>
-                        <StarRating value="4" ></StarRating>
+                        <StarRating :value="this.value" ></StarRating>
                         <div class="mt-4">
                             <!-- <label class="text-sm font-bold">Write a review</label> -->
                             <p>
