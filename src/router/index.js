@@ -82,6 +82,10 @@ const routes = [
             component: ()=>import('@/views/Health/Repayments')
           },
           {
+            path: '/app/dashboard/health/plans',
+            component: ()=>import('@/views/Health/Plan')
+          },
+          {
             path: '/app/dashboard/health/cancellations',
             component: ()=>import('@/views/Health/CancelRequests')
           },

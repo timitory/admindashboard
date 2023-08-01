@@ -4,29 +4,7 @@
        <div class="lg:flex lg:justify-between">
             <p></p>
             <div class="lg:flex lg:gap-4"> 
-                <div class="relative">
-                    <input type="text" v-model="searchKeyword" @change="search()" class="block mt-4 rounded bg-blue-100 px-4 lg:pl-10 py-2 w-full outline-none focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
-                    <svg class="absolute top-2 left-4 lg:top-6" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18.677 19.607L12.962 13.891C10.4196 15.6985 6.91642 15.2564 4.90285 12.8739C2.88929 10.4915 3.03714 6.96361 5.24298 4.75802C7.44824 2.55147 10.9765 2.40298 13.3594 4.41644C15.7422 6.42989 16.1846 9.93347 14.377 12.476L20.092 18.192L18.678 19.606L18.677 19.607ZM9.48498 5.00001C7.58868 4.99958 5.95267 6.3307 5.56745 8.18745C5.18224 10.0442 6.15369 11.9163 7.89366 12.6703C9.63362 13.4242 11.6639 12.8529 12.7552 11.3021C13.8466 9.75129 13.699 7.64734 12.402 6.26402L13.007 6.86402L12.325 6.18402L12.313 6.17202C11.5648 5.4192 10.5464 4.99715 9.48498 5.00001Z" fill="#2E3A59"></path>
-                    </svg>
-                </div>
-                <div class="items-center flex text-sm mt-4 relative border border-solid">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path  d="M20 3H4C3.447 3 3 3.447 3 4V6.59C3 7.113 3.213 7.627 3.583 7.997L9 13.414V21C9 21.347 9.18 21.668 9.475 21.851C9.635 21.95 9.817 22 10 22C10.153 22 10.306 21.965 10.447 21.895L14.447 19.895C14.786 19.725 15 19.379 15 19V13.414L20.417 7.997C20.787 7.627 21 7.113 21 6.59V4C21 3.447 20.553 3 20 3ZM13.293 12.293C13.105 12.48 13 12.734 13 13V18.382L11 19.382V13C11 12.734 10.895 12.48 10.707 12.293L5 6.59V5H19.001L19.003 6.583L13.293 12.293Z" fill="#2E3A59"></path>
-                    </svg>
-                    <button @click="showFilter = !showFilter" class="py-2 px-2">Filter by
-                        <font-awesome-icon icon="angle-down" class="ml-2"/>
-                    </button>
-                    <div v-if="showFilter" class="filter shadow-lg absolute left-0 bg-white">
-                      <p class="mb-2 cursor-pointer text-sm" @click="filteredSearch('')">All</p>
-                        <strong class="mb-2 cursor-pointer text-sm" >Status</strong>
-                        <p class="mb-2 cursor-pointer text-sm" @click="filteredSearch('pending')">Pending</p>
-                        <p class="mb-2 cursor-pointer text-sm" @click="filteredSearch('paid')">Paid</p>
-                        <strong class="mb-2 cursor-pointer text-sm" >Date</strong>
-                        
-                        <input type="date" v-model="searchDate" class="mb-2 cursor-pointer text-sm" @keyup.enter="filteredSearch('date')">
-                    </div>
-                </div>
+                
             </div>
         </div>      
       <div class="overflow-x-auto tablecont">
@@ -34,47 +12,28 @@
           <thead>
             <tr>
               <th class="font-bold">S/N</th>
-              <th class="font-bold">Customer</th>
-              <th class="font-bold">Plate Number</th>
-              <th class="font-bold">Premium</th>
-              <th class="font-bold">Commission</th>
-              <th class="font-bold">Description</th>
-              <!-- <th class="font-bold">ReceiptNo</th>
-              <th class="font-bold">Debit Note</th> -->
-              <th class="font-bold">Remitter</th>
-              <th class="font-bold">Remittance Date</th>
-              <th class="font-bold">Paystack Reference</th>
-              <th class="font-bold">Status</th>
-              <th class="font-bold">Action</th>
+              <th class="font-bold">Plan Name</th>
+              <th class="font-bold">Underwriter</th>
+              <th class="font-bold">Annual Cost</th>
+              <th class="font-bold">Quartely Cost</th>
+              <th class="font-bold">Monthly Cost</th>
+              <th class="font-bold">Annual Profit</th>
+              <th class="font-bold">Quartely Profit</th>
+              <th class="font-bold">Monthly Profit</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(remittance, index) in paginatedData" :key="index" class="border border-solid border-gray-300">
+            <tr v-for="(price, index) in paginatedData" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
-              <td>{{remittance.customer.firstname}} {{remittance.customer.lastname}}</td>
-              <td>{{remittance.vehicle.plate_number}}</td>
-              <td>{{remittance.premium}}</td>
-              <td>{{remittance.commission}}</td>
-              <td>{{remittance.description}}</td>
-              <td>{{remittance.description}}</td>
-              <!-- <td>{{remittance.receipt_no}}</td>
-              <td>{{remittance.debit_note}}</td> -->
-              <td v-if="remittance.remittance_date == '0001-01-01'"></td>
-              <td v-else> {{ remittance.remittance_date }}</td>
-              <td>{{remittance.paystack_reference}}</td>
-              <td v-if="remittance.status == 'Paid'" class="text-green-500">{{remittance.status}}</td>
-              <td v-else class="text-yellow-500">{{remittance.status}}</td>
+              <td>{{price.planName}}</td>
+              <td>{{price.underwriter}}</td>
+              <td>{{price.pcAnnualCost/100}}</td>
+              <td>{{price.pcQuarterlyCost/100}}</td>
+              <td>{{price.pcMonthlyCost/100}}</td>
+              <td>{{price.pcAnnualProfit/100}}</td>
+              <td>{{price.pcQuarterlyProfit/100}}</td>
+              <td>{{price.pcMonthlyProfit/100}}</td>
               
-              <!-- <td>
-                {{remittance.status}}
-              </td> -->
-              <td>
-                <select class="focus:outline-none border border-solid border-gray-300 rounded" v-model="action" @change="selectAction(remittance)">
-                  <option value="" selected disabled>Select action</option>
-                  <option v-if="remittance.status != 'Paid'" value="remit">Remit Premium</option> 
-                  <!-- || remittance.receipt_no == '' -->
-                </select>
-              </td>
             </tr>
           </tbody>
         </table>
@@ -83,16 +42,7 @@
           <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
           <p class="mt-4 text-center font-bold text-green-500 font-lg">No records</p>
         </div>
-        <!-- <div class="my-8">
-          <t-pagination
-          :total-items="totalRows"
-          :per-page="perPage"
-          :limit="limit"
-          :disabled="disabled"
-          v-model="currentPage"
-          @change="changePage"
-        />
-        </div> -->
+       
         <nav  class="mt-8" v-if="paginatedData.length > 0" aria-label="Page navigation example">
           <ul class="w-1/2 mx-auto  flex justify-between" style="max-width: 250px">
             <li class="page-item">
@@ -108,7 +58,7 @@
             </li>
           </ul>
         </nav>
-        <RemittanceModal  v-if="showActive"  :remittance=remittance @close="showActive = false"/>
+       
       </div>
     </div>
    
@@ -118,11 +68,10 @@
 <script>
 // import {mapState} from "vuex"
 import axios from "axios"
-import RemittanceModal from "./RemittanceModal.vue"
+
 import baseURL from "@/main"
 export default {
   components:{
-    RemittanceModal
   },
   data(){
     return {
@@ -135,7 +84,7 @@ export default {
       currentPage: 1,
       showPolicy: false,
       showRepayment: false,
-      remittance: [],
+      prices: [],
       
       showActive: false,
       val: '',
@@ -145,7 +94,7 @@ export default {
       showFilter: false,
       page: 1,
       pages: [],
-      remittances: [],
+      price: [],
       unsortedPolicies : [],
       
     }
@@ -153,12 +102,12 @@ export default {
   computed:{
     paginatedData(){
       return this.paginate(
-        this.remittances
+        this.prices
       )
     },
   },
   watch: {
-		remittances() {
+		price() {
 			this.setPages();
 		},
 	},
@@ -248,11 +197,11 @@ export default {
     getRemittance()
     {
       this.$store.commit('startLoading')
-      axios.get(`${baseURL}/remittance/list`)
+      axios.get(`${baseURL}/admin/hmo/prices`)
       .then(res=>{
         console.log(res.data.data)
         // this.totalRows = res.data.data.totalRecord
-        this.remittances = res.data.data
+        this.prices = res.data.data
        
         this.action = ''
         //this.perPage = res.data.data.record_per_page
@@ -265,10 +214,10 @@ export default {
   },
   mounted(){
     this.$store.commit('startLoading')
-    axios.get(`${baseURL}/remittance/list`)
+    axios.get(`${baseURL}/admin/hmo/prices`)
       .then(res=>{
        
-        this.remittances = res.data.data
+        this.prices = res.data.data
        
         this.action = ''
         

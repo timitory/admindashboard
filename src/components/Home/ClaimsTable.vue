@@ -4,6 +4,9 @@
         <div class="lg:flex lg:justify-between">
             <p class="mt-2 mb-4 font-bold text-lg">Manage home cover claims</p>
             <div class="lg:flex lg:gap-4"> 
+              <download-excel :data="policiess" :name="fileName" class="right">
+                <button type="button" class="flex mt-4 items-center py-2 px-2 rounded text-white" style="background-color: #131B47; max-width: 180px">Download CSV</button>
+              </download-excel>
               <div class="relative">
                 <input type="text" v-model="searchKeyword" class="block mt-4 rounded bg-blue-100 px-4 lg:pl-10 py-2 w-full outline-none focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
                 <svg class="absolute top-2 left-4 lg:top-6" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -99,6 +102,8 @@ export default {
       showSettle: false,
       claim: {},
       action: '',
+      fileName: 'home_claims',
+      policiess: [],
     }
   },
   computed:{

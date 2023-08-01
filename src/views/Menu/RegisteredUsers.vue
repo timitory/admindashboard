@@ -4,6 +4,10 @@
     <div class="mt-6">
         <p class="font-bold text-lg lg:text-xl">Hello Admin,</p>
         <p class="mt-2">See below overall information on registered users.</p>
+        <!-- <a class="mt-2" @click="download">Download Users</a> -->
+        <download-excel :data="policies" :name="fileName" class="right">
+            <button type="button" class="flex mt-4 items-center py-2 px-2 rounded text-white" style="background-color: #131B47; max-width: 180px">Download Excel</button>
+        </download-excel>
     </div>
     <div class="mt-8 px-6 pt-6 lg:px-20 pb-20 relative shadow-lg bg-white lg:relative" style="box-shadow: 0px 20px 33px #00000029; min-height: 1300px">
       <router-link to="/app/dashboard" class="absolute left-4 top-2">
@@ -144,7 +148,8 @@ export default {
       page: 1,
       perPage: 20,
       pages: [],
-      policies: []
+      policies: [],
+      fileName: 'paddycover_users'
     }
   },
   computed:{
@@ -208,6 +213,7 @@ watch: {
       this.$store.dispatch('handleError', err)
     })
     },
+    
     setPages () {
         let numberOfPages = Math.ceil(this.policies.length / this.perPage);
         for (let index = 1; index <= numberOfPages; index++) {

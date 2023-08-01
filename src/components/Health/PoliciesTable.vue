@@ -4,6 +4,9 @@
         <div class="lg:flex lg:justify-between">
             <p></p>
             <div class="lg:flex lg:gap-4"> 
+              <download-excel :data="policiess" :name="fileName" class="right">
+        <button type="button" class="flex mt-4 items-center py-2 px-2 rounded text-white" style="background-color: #131B47; max-width: 180px">Download CSV</button>
+    </download-excel>
                 <div class="relative">
                     <input type="text" v-model="searchKeyword" @change="search()" class="block mt-4 rounded bg-blue-100 px-4 lg:pl-10 py-2 w-full outline-none focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
                     <svg class="absolute top-2 left-4 lg:top-6" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -112,7 +115,10 @@ export default {
       pages: [],
       policies: [],
       showRepayment: false,
-      showPolicy: false
+      showPolicy: false,
+      fileName: 'health_policy',
+      policiess: [],
+      unsortedPolicies : []
     }
   },
   computed:{
@@ -168,15 +174,36 @@ export default {
       this.$store.commit('startLoading')
       axios.get(`${baseURL}/admin/health`)
       .then(res =>{
+        this.$store.commit('endLoading')
         this.totalRows = res.data.data.totalRecord
         this.policies = res.data.data.records
         this.perPage = res.data.data.record_per_page
-        this.$store.commit('endLoading')
+
+        this.policies.forEach(this.myFunction)
       })
       .catch(err=>{
         this.$store.dispatch('handleError', err)
       })
     },
+    myFunction(item) {
+
+        var dat = {
+          policy_id:item.user_health_id,
+          start : item.policy.start,
+          customer: item.policy.surname + " " + item.policy.firstname,
+          email: item.policy.email,
+          phone: item.policy.telephone_1,
+          plan: item.policy.plan,
+          amount:item.policy.amount,
+          type:item.policy.health_category,
+          purchase_date: item.policy.created_at,
+          hospital: item.policy.hospital,
+          status: item.policy.status,
+        };
+
+        this.policiess.push(dat)
+
+},
     changePage(num){
       this.$store.commit('startLoading')
       axios.get(`${baseURL}/admin/health`, {params :{page : num}})
