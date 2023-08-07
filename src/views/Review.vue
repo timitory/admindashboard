@@ -47,9 +47,9 @@
                                 <StarRating :value='policy.ratings'></StarRating>
                             </td>
                             <td>{{ policy.name }}</td>
-                            <td>nill</td>
+                            <td>{{ policy.email }}</td>
                             <td>{{ policy.review }}</td>
-                            <td  style="text-transform:capitalize" ><button
+                            <td   style="text-transform:capitalize" @click="open(policy.name, policy.email, policy.ratings, policy.review)" ><button class="viewaction"
                                 >View</button></td>
                         </tr>
                     </tbody>
@@ -114,11 +114,11 @@ export default {
 
     },
     methods: {
-        open(firstname,surname,rate, desc) {
+        open(name,email, rate, desc) {
             this.showReviewModal = true
             this.info = {
-                firstname : firstname,
-                surname : surname,
+                name : name,
+                email : email,
                 rate : rate,
                 description: desc
             }
@@ -224,6 +224,11 @@ td {
 
 .filter p {
     padding: 5px 10px;
+}
+
+.viewaction {
+    color: blue;
+    text-decoration: underline;
 }
 
 .svg {

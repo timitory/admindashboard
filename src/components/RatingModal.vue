@@ -5,15 +5,11 @@
                 <div class="pt-6 relative">
                     <div class="">
                         <!-- <img src="../../assets/images/ratingimage.svg" alt="" class=" mx-auto w-3/5 img" > -->
-                        <p class="pt-4 pb-8">{{ info.firstname  }} {{ info.surname }}</p>
-                        <StarRating :value="this.value" ></StarRating>
-                        <div class="mt-4">
-                            <!-- <label class="text-sm font-bold">Write a review</label> -->
-                            <p>
-                                lorems is a name i check for myself
-                            </p>
-                        </div>
-                        
+                        <p class="pt-4 font-bold">{{ info.name  }}</p>
+                        <p class="pt-4 font-bold">{{ info.email  }}</p>
+                        <StarRating class="pt-4" :value="info.rate" ></StarRating>
+                        <p class="pt-6 font-bold">Description</p>
+                        <p class="pt-4 pb-8">{{ info.description  }}</p>
                     </div>
                 </div>
             </div>
