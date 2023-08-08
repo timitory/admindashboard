@@ -15,43 +15,36 @@
                     <div class="mt-16">
                         <div class="flex justify-between items-center mb-6">
                             <p class="text-black text-sm">Customer</p>
-                            <p class="text-black text-sm font-semibold">{{policy.surname}} {{policy.firstname}} {{policy.othername}}</p>
+                            <p class="text-black text-sm font-semibold">{{policy.enrollee.name}} </p>
                         </div>
                         <div class="flex justify-between items-center mb-6">
                             <p class="text-black text-sm">Email</p>
-                            <p class="text-black text-sm font-semibold">{{policy.email}}</p>
+                            <p class="text-black text-sm font-semibold">{{policy.enrollee.email}}</p>
                         </div>
-                        <div class="flex justify-between items-center mb-6">
-                            <p class="text-black text-sm">Telephone 1</p>
-                            <p class="text-black text-sm font-semibold">{{policy.telephone_1}}</p>
-                        </div>
-                        <div class="flex justify-between items-center mb-6">
-                            <p class="text-black text-sm">Telephone 2</p>
-                            <p class="text-black text-sm font-semibold">{{policy.telephone_2}}</p>
-                        </div>
+                        
                         <div class="flex justify-between items-center mb-6">
                             <p class="text-black text-sm">Date of Birth</p>
-                            <p class="text-black text-sm font-semibold">{{policy.date_of_birth}}</p>
+                            <p class="text-black text-sm font-semibold">{{policy.metadata.dob}}</p>
                         </div>
                         <div class="flex justify-between items-center mb-6">
                             <p class="text-black text-sm">Gender</p>
-                            <p class="text-black text-sm font-semibold">{{policy.gender_}}</p>
+                            <p class="text-black text-sm font-semibold"></p>
                         </div>
                         <div class="flex justify-between items-center mb-6">
                             <p class="text-black text-sm">State of origin</p>
-                            <p class="text-black text-sm font-semibold">{{policy.state_of_origin}}</p>
+                            <p class="text-black text-sm font-semibold">{{policy.metadata.state_of_origin}}</p>
                         </div>
                         <div class="flex justify-between items-center mb-6">
-                            <p class="text-black text-sm">LGA</p>
-                            <p class="text-black text-sm font-semibold">{{policy.lga}}</p>
+                            <p class="text-black text-sm">LGA of Origin</p>
+                            <p class="text-black text-sm font-semibold">{{policy.metadata.lga_of_origin.LgaName}}</p>
                         </div>
                         <div class="flex justify-between items-center mb-6">
                             <p class="text-black text-sm">State of residence</p>
-                            <p class="text-black text-sm font-semibold">{{policy.state_of_residence}}</p>
+                            <p class="text-black text-sm font-semibold">{{policy.metadata.state_of_residence}}</p>
                         </div>
                         <div class="flex justify-between items-center mb-6">
                             <p class="text-black text-sm">Preferred Hospital</p>
-                            <p class="text-black text-sm font-semibold">{{policy.hospital}}</p>
+                            <p class="text-black text-sm font-semibold">{{policy.metadata.hospital}}</p>
                         </div>
                         <div class="flex justify-between items-center mb-6">
                             <p class="text-black text-sm">Purchase Date</p>
@@ -63,10 +56,14 @@
                         </div>
                         <div class="flex justify-between items-center mb-6">
                             <p class="text-black text-sm">Passport Photo</p>
-                            <a :href="policy.passport" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-blue-500">Passport link</a>
+                            <a :href="policy.metadata.passport" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-blue-500">Passport link</a>
+                        </div>
+                        <div class="flex justify-between items-center mb-6">
+                            <p class="text-black text-sm">ID Card</p>
+                            <a :href="policy.id_card" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-blue-500">ID Card</a>
                         </div>
                     </div> 
-                    <div class="mt-6" v-if="policy.health_category === 'family'">
+                    <!-- <div class="mt-6" v-if="policy.health_category === 'family'">
                         <p class="my-4 text-black font-bold">Spouse Details</p>    
                         <div class="flex justify-between items-center mb-6">
                             <p class="text-black text-sm">Spouse name</p>
@@ -81,7 +78,7 @@
                             <p class="text-black text-sm font-semibold">{{policy.spouse_date_of_birth}}</p>
                         </div>
                         
-                    </div>
+                    </div> 
                     <ul class="mt-6" v-if="policy.health_category === 'family' && policy.children_count > 0">
                         <p class="my-4 text-black font-bold">Children Details</p> 
                         <li v-for="(child, index) in policy.children" :key="index" class="pb-2 border-b">
@@ -98,7 +95,7 @@
                                 <p class="text-black text-sm font-semibold">{{child.date_of_birth}}</p>
                             </div>
                         </li>
-                    </ul>
+                    </ul>-->
                 </div>
             </div>
         </div>

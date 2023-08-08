@@ -31,9 +31,9 @@
               <td>{{price.pcAnnualCost/100}}</td>
               <td>{{price.pcQuarterlyCost/100}}</td>
               <td>{{price.pcMonthlyCost/100}}</td>
-              <td>{{price.pcAnnualProfit/100}}</td>
-              <td>{{price.pcQuarterlyProfit/100}}</td>
-              <td>{{price.pcMonthlyProfit/100}}</td>
+              <td>{{price.pcAnnualProfit}}</td>
+              <td>{{price.pcQuarterlyProfit}}</td>
+              <td>{{price.pcMonthlyProfit}}</td>
               <td>
                 <button class="block w-full lg:w-auto bg-green-500 text-white px-12 py-2 rounded focus:outline-none" @click="editprice(price.planName, price.chiAnnualCost, price.id)">
                   Edit
@@ -85,7 +85,7 @@ export default {
   data(){
     return {
       action:'',
-      perPage: 10,
+      perPage: 11,
       searchDate: '',
       totalRows: 0,
       disabled: false,
@@ -157,17 +157,17 @@ export default {
     },
 
     setPages () {
-      let numberOfPages = Math.ceil(this.remittances.length / this.perPage);
+      let numberOfPages = Math.ceil(this.prices.length / this.perPage);
       for (let index = 1; index <= numberOfPages; index++) {
          this.pages.push(index);
       }
     },
-    paginate (remittances) {
+    paginate (price) {
         let page = this.page;
         let perPage = this.perPage;
         let from = (page * perPage) - perPage;
         let to = (page * perPage);
-        return  remittances.slice(from, to);
+        return  price.slice(from, to);
     },
     changePage(num){
       console.log(num)

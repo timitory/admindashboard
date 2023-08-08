@@ -35,62 +35,65 @@
         <table v-if="paginatedPolicies.length > 0" class="w-full mt-8">
           <thead>
             <tr>
-              <th class="font-bold">S/N</th>
-              <th class="font-bold">Customer</th>
-              <th class="font-bold">Amount</th>
-              <th class="font-bold">Plan</th>
-              <th class="font-bold">Type</th>
-              <th class="font-bold">Start Date</th>
-              <th class="font-bold">Purchase Date</th>
-              <th class="font-bold">Status</th>
+              <td class="font-bold">S/N</td>
+              <td class="font-bold">Customer</td>
+              <td class="font-bold">Plan</td>
+              <td class="font-bold">Amount</td>
+              <td class="font-bold">Status</td>
+              <td class="font-bold">Start Date</td>
+              <td class="font-bold">Policy Number</td>
               <th class="font-bold">Underwriter</th>
               <th class="font-bold">Repayments</th>
-              <th class="font-bold">View</th>
+              <td class="font-bold">View</td>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
+          <tbody >
+            <tr v-for="(enrollee, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
-              <td>{{policy.policy.surname}} {{policy.policy.firstname}}</td>
-              <td>{{policy.policy.amount}}</td>
-              <td>{{policy.policy.plan}}</td>
-              <td style="text-transform:capitalize" >{{policy.policy.health_category}}</td>
-              <td>{{policy.policy.start}}</td>
-              <td>{{policy.policy.created_at}}</td>
+              <td class="p-3">{{enrollee.enrollee.name}}</td>
+              <td>{{enrollee.plan}}</td>
+              <td>{{enrollee.amount}}</td>
+              <td v-if="enrollee.status == 'Success'" class="text-green-500">{{enrollee.status}}</td>
+              <td v-else-if="enrollee.status == 'Pending'" class="text-yellow-500">{{enrollee.status}}</td>
+              <td v-else-if="enrollee.status == 'Active'" class="text-green-500">{{enrollee.status}}</td>
+              <td v-else class="text-red-500">{{enrollee.status}}</td>
+              <td>{{enrollee.start}}</td>
+              <td>{{enrollee.policy_number}}</td>
+              <td>{{enrollee.underwriter.name}}</td>
+             
               <td>
-                <span v-if="policy.policy.status == 'Success'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
-                <span v-else-if="policy.policy.status == 'Active'" class="rounded text-white text-center p-1 bg-green-500">{{policy.policy.status}}</span>
-                <span v-else-if="policy.policy.status == 'Incomplete'" class="rounded text-white text-center p-1 bg-red-500">{{policy.policy.status}}</span>
-                <span v-else-if="policy.policy.status == 'Pending'" class="rounded text-white text-center p-1 bg-yellow-500">{{policy.policy.status}}</span>
-                <span v-else class="rounded text-white text-center p-1 bg-red-500">{{policy.policy.status}}</span>
-              </td>
-              <td>{{policy.underwriter.name}}</td>
-              <td>
-                  <button @click="viewRepayment(policy)" class="text-green-500 text-sm underline outline-none focus:outline-none">View</button>
+                  <button @click="viewRepayment(enrollee)" class="text-green-500 text-sm underline outline-none focus:outline-none">View</button>
               </td>
               <td>
-               <button @click="viewPolicy(policy.policy)" class="text-green-500 text-sm underline outline-none focus:outline-none">More</button>
+               <button @click="viewPolicy(enrollee)" class="text-green-500 text-sm underline outline-none focus:outline-none">More</button>
               </td>
             </tr>
           </tbody>
+           
         </table>
         <div v-else class="w-full text-center py-4">
           <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
           <p class="mt-4 text-center font-bold text-green-500 font-lg">No records</p>
         </div>
-        <div class="my-8">
-          <t-pagination
-          :total-items="totalRows"
-          :per-page="perPage"
-          :limit="limit"
-          :disabled="disabled"
-          v-model="currentPage"
-          @change="changePage"
-        />
-        </div>
+      
+        <nav  class="mt-8" v-if="paginatedPolicies.length > 0" aria-label="Page navigation example">
+          <ul class="w-1/2 mx-auto  flex justify-between" style="max-width: 250px">
+            <li class="page-item">
+              <button type="button" class="inline text-green-500" v-if="page != 1" @click="page--"> Previous </button>
+              <button v-else class="inline text-green-500 opacity-20">Previous</button>
+            </li>
+            <!-- <li class="page-item">
+              <button type="button" class="inline" v-for="pageNumber in pages.slice(page-1, page+5)" :key="pageNumber.id" @click="page = pageNumber"> {{pageNumber}} </button>
+            </li> -->
+            <li class="page-item">
+              <button type="button" @click="page++" v-if="page < pages.length" class="inline text-green-500"> Next </button>
+              <button v-else class="inline text-green-500 opacity-20">Next</button>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
-    <Repayments v-if="showRepayment" :policy="policy" @close="showRepayment = false"/>
+    <!-- <Repayments v-if="showRepayment" :policy="policy" @close="showRepayment = false"/> -->
     <SinglePolicy :showPolicy="showPolicy" :policy="policy" @close="showPolicy = false" />
   </div>
 </template>
@@ -99,11 +102,11 @@
 // import {mapState} from "vuex"
 import axios from "axios"
 import baseURL from "@/main"
-import TPagination from 'vue-tailwind/dist/t-pagination'
-import Repayments from "./ViewRepayment.vue"
+//import TPagination from 'vue-tailwind/dist/t-pagination'
+//import Repayments from "./ViewRepayment.vue"
 import SinglePolicy from "./SinglePolicy.vue"
 export default {
-  components: {TPagination, Repayments, SinglePolicy},
+  components: {SinglePolicy},
   data(){
     return {
       perPage: 10,
@@ -161,9 +164,9 @@ export default {
       this.$store.commit('startLoading')
       axios.get(`${baseURL}/admin/health/search?search=${this.searchKeyword}`)
       .then(res =>{
-        this.totalRows = res.data.data.totalRecord
-        this.policies = res.data.data.records
-        this.perPage = res.data.data.record_per_page
+        //this.totalRows = res.data.data.totalRecord
+        this.policies = res.data.data
+       // this.perPage = res.data.data.record_per_page
         this.$store.commit('endLoading')
       })
       .catch(err=>{
@@ -172,14 +175,14 @@ export default {
     },
     getPolicies(){
       this.$store.commit('startLoading')
-      axios.get(`${baseURL}/admin/health`)
+      axios.get(`${baseURL}/admin/hmo/policy`)
       .then(res =>{
         this.$store.commit('endLoading')
-        this.totalRows = res.data.data.totalRecord
-        this.policies = res.data.data.records
-        this.perPage = res.data.data.record_per_page
-
-        this.policies.forEach(this.myFunction)
+       // this.totalRows = res.data.data.totalRecord
+         this.policies = res.data.data
+        //this.perPage = res.data.data.record_per_page
+        console.log(res.data.data)
+        //this.policies.forEach(this.myFunction)
       })
       .catch(err=>{
         this.$store.dispatch('handleError', err)
@@ -206,11 +209,11 @@ export default {
 },
     changePage(num){
       this.$store.commit('startLoading')
-      axios.get(`${baseURL}/admin/health`, {params :{page : num}})
+      axios.get(`${baseURL}/admin/hmo/policy`, {params :{page : num}})
       .then(res=>{
-        this.totalRows = res.data.data.totalRecord
-        this.policies = res.data.data.records
-        this.perPage = res.data.data.record_per_page
+       // this.totalRows = res.data.data.totalRecord
+        this.policies = res.data.data
+        //this.perPage = res.data.data.record_per_page
         this.$store.commit('endLoading')
       })
       .catch(err=>{
