@@ -182,6 +182,21 @@ export default {
         this.$store.dispatch('handleError', err)
       })
     },
+    getClaims2(){
+      this.$store.commit('startLoading')
+      axios.get(`${baseURL}/vehicle/claim/report`)
+      .then((res)=>{
+        console.log(res);
+        // this.$store.commit('endLoading')
+        // this.claims = res.data.data.claims
+        // this.totalRows = res.data.data.claims.length
+
+        // this.claims.forEach(this.myFunction)
+      })
+      .catch((err)=> {
+        this.$store.dispatch('handleError', err)
+      })
+    },
     myFunction(item) {
 
       var dat = {
@@ -275,6 +290,7 @@ export default {
   },
   mounted(){
       this.getClaims()
+      this.getClaims2()
   }
 }
 </script>
