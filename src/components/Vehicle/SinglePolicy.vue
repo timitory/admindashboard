@@ -8,6 +8,8 @@
                   <p class="text-sm mt-4 cursor-pointer font-bold text-lg">
                     About Vehicle Policy
                   </p>
+
+                  <button v-if="policy.policy.receipt_image" type="button" class="flex mt-4 items-center py-2 px-2 rounded text-white" style="background-color: #131B47; max-width: 180px"  @click="MarkPolicy(policy)">Mark Policy</button>
                 </div>
                 <font-awesome-icon icon="times-circle" class="cursor-pointer text-red-500 text-base lg:text-xl" @click="$emit('close')" />
               </div>
@@ -18,7 +20,7 @@
                 <ul class="mt-8">
                     <li>
                         <p>Enrollee</p>
-                        <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.policy.enrollee.firstname}} {{policy.policy.enrollee.lastname}}</p>
+                        <p class="mt-2 lg:mt-4 font-bold mb-6">{{policy.policy.customer.firstname}} {{policy.policy.customer.lastname}}</p>
                     </li>
                     <li>
                         <p>Vehicle make</p>
@@ -93,6 +95,8 @@
                 </div>
                 <hr class="mt-6"> 
                 <a :href="policy.policy.certificate" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Certificate</a>
+                <a :href="policy.policy.receipt_image" v-if="policy.policy.receipt_image" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Transfer Receipt</a>
+                <p v-else class="mt-6">Transfer Receipt not available</p>
                 <a :href="policy.policy.valid_id" v-if="policy.policy.valid_id" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View User's ID</a>
                 <p v-else class="mt-6">Means of Id link not available</p>
                 <a :href="policy.policy.plate_number_image" v-if="policy.policy.plate_number_image" target="_blank" rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Vehicle's Image with Plate Number</a>
@@ -105,7 +109,8 @@
 
 <script>
 import { directive as onClickaway } from 'vue-clickaway';
-
+import axios from "axios"
+import baseURL from "@/main"
 export default {
     props:['policy'],
     data(){
@@ -117,6 +122,19 @@ export default {
         close(){
           this.$emit('close')
         // console.log('closeee')
+        },
+        MarkPolicy(obj){
+            this.$store.commit('startLoading')
+            axios.post(`${baseURL}/admin/policy/mark`, {user_vehicle_id : obj.policy.policy_id})
+            .then(res =>{
+                
+                this.$store.commit('setSuccess', {status: true, msg: res.data.message})
+                this.getPolicies()
+                this.$store.commit('endLoading')
+            })
+            .catch(err=>{
+                this.$store.dispatch('handleError', err)
+            })
         }
     },
     directives: {

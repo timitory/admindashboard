@@ -93,7 +93,7 @@
         </nav>
       </div>
     </div>
-    <!-- <Repayments v-if="showRepayment" :policy="policy" @close="showRepayment = false"/> -->
+    <Repayments v-if="showRepayment" :policy="policy" @close="showRepayment = false"/>
     <SinglePolicy :showPolicy="showPolicy" :policy="policy" @close="showPolicy = false" />
   </div>
 </template>
@@ -103,10 +103,10 @@
 import axios from "axios"
 import baseURL from "@/main"
 //import TPagination from 'vue-tailwind/dist/t-pagination'
-//import Repayments from "./ViewRepayment.vue"
+import Repayments from "./ViewRepayment.vue"
 import SinglePolicy from "./SinglePolicy.vue"
 export default {
-  components: {SinglePolicy},
+  components: {SinglePolicy, Repayments},
   data(){
     return {
       perPage: 10,
@@ -117,6 +117,7 @@ export default {
       page: 1,
       pages: [],
       policies: [],
+      policy: {},
       showRepayment: false,
       showPolicy: false,
       fileName: 'health_policy',

@@ -56,12 +56,12 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 //set baseURL
 var baseURL;
 
-baseURL = "https://api.paddycover.com/v1"
+baseURL = "https://stage.paddycover.com/v1"
 if(process.env.NODE_ENV === "development"){
-   baseURL = "https://api.paddycover.com/v1"
+   baseURL = "https://stage.paddycover.com/v1"
   
 }else {
-  baseURL = "https://api.paddycover.com/v1"
+  baseURL = "https://stage.paddycover.com/v1"
 }
 
 
