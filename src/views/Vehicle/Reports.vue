@@ -29,7 +29,7 @@
                     <p>Underwriter : </p>
                     <select v-model="params.underwriter_id"  class="border" >
                         <option disabled selected value=undefined>Choose Underwriter</option>
-                        <option>yes1</option>
+                        <!-- <option>yes1</option> -->
                         <option v-for="(underwriter, index) in underwriters" :key="index" :value="underwriter.id">
                             {{ underwriter.name }}</option>
                     </select>
@@ -78,7 +78,7 @@
                     <p>Underwriter : </p>
                     <select v-model="claimsparams.underwriter_id"  class="border" >
                         <option disabled selected value=undefined>Choose Underwriter</option>
-                        <option>yes2</option>
+                        <!-- <option>yes2</option> -->
                         <option v-for="(underwriter, index) in underwriters" :key="index" :value="underwriter.id">
                             {{ underwriter.name }}</option>
                     </select>
