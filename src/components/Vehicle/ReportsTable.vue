@@ -21,9 +21,9 @@
             <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
               <td>{{policy.policy.start}}</td>
-              <td>{{policy.policy.enrollee.firstname}} {{policy.policy.enrollee.lastname}}</td>
-              <td>{{policy.policy.enrollee.email}}</td>
-              <td>{{policy.policy.enrollee.phone}}</td>
+              <td>{{policy.policy.customer.firstname}} {{policy.policy.customer.lastname}}</td>
+              <td>{{policy.policy.customer.email}}</td>
+              <td>{{policy.policy.customer.phone}}</td>
               <td>{{policy.policy.vehicle_category}}</td>
               <td>{{policy.policy.underwriter.name}}</td>
               <td>
