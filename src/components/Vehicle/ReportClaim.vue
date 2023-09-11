@@ -195,50 +195,42 @@ export default {
             let to = (page * perPage);
             return claims.slice(from, to);
         },
-        //   getClaims(){
-        //     this.$store.commit('startLoading')
-        //     axios.get(`${baseURL}/admin/claims?type=vehicle`)
-        //     .then((res)=>{
-        //       this.$store.commit('endLoading')
-        //       this.claims = res.data.data.claims
-        //       this.totalRows = res.data.data.claims.length
+        getClaims() {
+            this.$store.commit('startLoading')
+            axios.get(`${baseURL}/vehicle/claim/report`)
+                .then((res) => {
+                    console.log(res);
+                    this.$store.commit('endLoading')
+                    this.claims = res.data.data.all_claims
+                    this.claimstotalRecord = res.data.data.total_records
+                    this.claimstats = {
+                        accepted_claim : res.data.data.accepted_claim_count,
+                        approved_claim : res.data.data.approved_claim_count,
+                        total_claim : res.data.data.claim_count,
+                        pending_claim : res.data.data.pending_claim_count,
+                        settled_claim : res.data.data.settled_claim_count,
+                    }
+                    this.claims.forEach(this.myFunction)
+                })
+                .catch((err) => {
+                    this.$store.dispatch('handleError', err)
+                })
+        },
+        myFunction(item) {
 
-        //       this.claims.forEach(this.myFunction)
-        //     })
-        //     .catch((err)=> {
-        //       this.$store.dispatch('handleError', err)
-        //     })
-        //   },
-        // getClaims() {
-        //     this.$store.commit('startLoading')
-        //     axios.get(`${baseURL}/vehicle/claim/report`)
-        //         .then((res) => {
-        //             console.log(res);
-        //             this.$store.commit('endLoading')
-        //             this.claims = res.data.data.all_claims
-        //             this.totalRows = res.data.data.total_records
+            var dat = {
+                claim_id: item.id,
+                customer: item.user === null ? "" : item.user.lastname + " " + item.user.firstname,
+                email: item.user === null ? "" : item.user.email,
+                underwriter: item.underwriter === null ? "" : item.underwriter.name,
+                //   claim_date: item.metadata.start,
+                settled_amount: item.settled_amount,
+                status: item.status,
+            };
 
-        //             this.claims.forEach(this.myFunction)
-        //         })
-        //         .catch((err) => {
-        //             this.$store.dispatch('handleError', err)
-        //         })
-        // },
-        // myFunction(item) {
+            this.claimpolicies.push(dat)
 
-        //     var dat = {
-        //         claim_id: item.id,
-        //         customer: item.user.lastname + " " + item.user.firstname,
-        //         email: item.user.email,
-        //         underwriter: item.underwriter.name,
-        //         //   claim_date: item.metadata.start,
-        //         settled_amount: item.settled_amount,
-        //         status: item.status,
-        //     };
-
-        //     this.policiess.push(dat)
-
-        // },
+        },
         selectAction(obj) {
             this.claim = obj
             if (this.action === 'decline') {
@@ -277,15 +269,15 @@ export default {
                     this.$store.dispatch('handleError', err)
                 })
         },
-        declineClaim(note) {
+        declineClaim(data) {
             this.showDecline = false
-            let obj = { claim_id: this.claim.id, note: note }
+            let obj = { claim_id: this.claim.id, note: data.note, receipt: data.reciept }
             this.$store.commit('startLoading')
             axios({ url: `${baseURL}/admin/claim/decline`, data: obj, method: 'PATCH' })
                 .then((res) => {
                     this.$store.commit('endLoading')
                     this.$store.commit('setSuccess', { status: true, msg: res.data.message })
-                    this.getClaims()
+                    // this.getClaims()
                 })
                 .catch((err) => {
                     this.$store.dispatch('handleError', err)

@@ -466,7 +466,7 @@ export default {
                 })
         },
         claimchangePage(num) {
-            console.log(num)
+            // console.log(num)
             // this.page = num
             let getclaimparamlength =Object.keys(this.claimsparams).length;
             this.$store.commit('startLoading')
@@ -523,7 +523,7 @@ export default {
             this.$store.commit('startLoading')
             axios.get(`${baseURL}/vehicle/claim/report`)
                 .then((res) => {
-                    console.log(res);
+                    // console.log(res);
                     this.$store.commit('endLoading')
                     this.claims = res.data.data.all_claims
                     this.claimstotalRecord = res.data.data.total_records
