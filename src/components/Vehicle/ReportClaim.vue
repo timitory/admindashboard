@@ -284,10 +284,32 @@ export default {
                 })
 
         },
-        settleClaim(amount) {
+        settleClaim(data) {
             this.showSettle = false
-            let obj = { claim_id: this.claim.id, amount: amount }
+            let obj = { claim_id: this.claim.id, amount: data.amount, reciept: data.reciept }
             console.log(obj)
+
+            this.$store.commit('startLoading')
+            axios({url: `${baseURL}/admin/claim/mark`, data: {
+                amount : data.amount * 100,
+                claim_id: this.claim.id,
+                reciept: data.reciept
+            }, method: 'PATCH'})
+            .then(()=>{
+            this.$store.commit('endLoading')
+            this.$store.commit('setSuccess', {status: true, msg: 'Marked as settled'})
+            
+            })
+            .catch(err=>{
+            this.$store.commit('endLoading')
+            this.$store.commit('setError', {status: true, msg: err.response.data.message})
+            // if(err.response.data.message == "dependant already exist"){
+            //     this.error.email = true
+            // }else{
+            //     this.$store.commit('setError', {status: true, msg: err.response.data.message})
+            // }
+            // console.log(err)
+            })
 
         },
         // changePage(num) {

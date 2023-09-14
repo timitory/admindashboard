@@ -6,11 +6,11 @@
                 <input type="text" name="text" id="text" v-model="data.note"
                     class="focus:outline-none rounded border p-2 border-gray-300 border-solid" required>
             </div>
-            <div class="grid gap-4">
+            <!-- <div class="grid gap-4">
                 <label for="text" class="">Upload reciept: </label>
                 <input id="receipt" type="file" ref="receipt" v-on:change="idUpload"
                     class="focus:outline-none rounded border p-2 border-gray-300 border-solid" required>
-            </div>
+            </div> -->
             <button class="focus:outline-none bg-green-500 text-white rounded p-2 mt-4 block w-full">Decline Claim</button>
         </form>
     </div>
@@ -23,7 +23,7 @@ export default {
         return {
             data: {
                 note: '',
-                reciept: ''
+                // reciept: ''
             }
             
         }
