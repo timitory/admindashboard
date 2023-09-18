@@ -50,9 +50,9 @@
             <tr v-for="(policy, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
               <td>{{index + 1}}</td>
               <td>{{policy.policy.start}}</td>
-              <td>{{policy.policy.enrollee.firstname}} {{policy.policy.enrollee.lastname}}</td>
-              <td>{{policy.policy.enrollee.email}}</td>
-              <td>{{policy.policy.enrollee.phone}}</td>
+              <td>{{policy.policy.customer.firstname}} {{policy.policy.customer.lastname}}</td>
+              <td>{{policy.policy.customer.email}}</td>
+              <td>{{policy.policy.customer.phone}}</td>
               <td>{{policy.policy.vehicle_category}}</td>
               <td>{{policy.policy.underwriter.name}}</td>
               <td>{{policy.policy.payment_frequency}}</td>
@@ -70,7 +70,7 @@
                 <select class="focus:outline-none border border-solid border-gray-300 rounded" v-model="action" @change="selectAction(policy)">
                   <option value="" selected disabled>Select action</option>
                   <option value="details">View Details</option>
-                  <option v-if="policy.policy.status == 'Active' || policy.policy.status == 'Success'" value="cancel">Cancel Policy</option>
+                  <option v-if="policy.policy.status == 'Active' || policy.policy.status == 'Success'"  value="cancel">Cancel Policy</option>
                 </select>
                   <!-- <button @click="view(policy)" class="p-2 bg-green-500 text-white rounded text-sm focus:outline-none">Details</button> -->
               </td>

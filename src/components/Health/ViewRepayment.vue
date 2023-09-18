@@ -2,7 +2,7 @@
    <div class="l-modal">
       <div class="loading-modal w-full px-4 md:px-0">
           <div class="loader bg-white w-full md:w-4/5 mx-auto rounded px-4 lg:px-8 lg:pb-6 relative" v-on-clickaway="close">
-                <p class="font-bold text-xl py-4">All Repayments for {{policy.policy.surname}}'s health policy</p>
+                <p class="font-bold text-xl py-4">All Repayments for 's health policy</p>
                 <font-awesome-icon icon="times-circle" class="cursor-pointer absolute top-2 right-2 text-red-500 text-base lg:text-xl" @click="$emit('close')" />
                 <div class="overflow-x-auto xl:overflow-x-hidden tablecont">
                     <table v-if="policy.repayment" class="w-full mt-8">
