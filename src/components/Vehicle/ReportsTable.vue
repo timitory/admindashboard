@@ -58,8 +58,9 @@
         </div>
       </div>
     </div>
-    <SinglePolicy v-if="showPolicy" :policy="policy"  @close="showPolicy = false" />
+    <SinglePolicy v-if="showPolicy" :policy="policy" :showmarkpolicy="open" @close="showPolicy = false" />
     <Repayments v-if="showRepayment" :policy="policy" @close="showRepayment = false"/>
+    <MarkPolicy v-if="showMarkpolicy" :policy="policy" :close="close"  @close="showMarkpolicy = false" />
   </div>
 </template>
 
@@ -70,10 +71,12 @@
 import SinglePolicy from "@/components/Vehicle/SinglePolicy"
 import Repayments from "@/components/Vehicle/ViewRepayment"
 import TPagination from 'vue-tailwind/dist/t-pagination'
+import MarkPolicy from "./MarkPolicy.vue"
 export default {
   components:{
-    TPagination, SinglePolicy, Repayments
-  },
+    TPagination, SinglePolicy, Repayments,
+    MarkPolicy
+},
   data(){
     return {
       perPage: 10,
@@ -92,7 +95,8 @@ export default {
       page: 1,
       pages: [],
       // policies: [],
-      unsortedPolicies : []
+      unsortedPolicies : [],
+      showMarkpolicy: false
     }
   },
   props:{
@@ -118,6 +122,12 @@ export default {
 		},
 	},
   methods: {
+    open() {
+            this.showMarkpolicy = true
+        },
+        close() {
+            this.showMarkpolicy = false
+        },
     filter(val){
        console.log(val)
       this.showFilter = false
