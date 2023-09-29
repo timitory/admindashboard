@@ -1,6 +1,10 @@
 <template>
     <div class="l-modal">
         <form @submit.prevent="MarkPolicy(policy)" class="bg-white relative top-16 rounded mx-auto max-w-sm p-4">
+            <div class="text-right" >
+                <font-awesome-icon icon="times-circle" class="cursor-pointer text-red-500 text-base lg:text-xl"
+                            @click="$emit('close')" />
+            </div>
             <div class="grid gap-4">
                 <label class="">Numbers of Repayment </label>
                 <select v-model="repayment_made"

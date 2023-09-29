@@ -11,7 +11,7 @@
 
                             <button v-if="policy.policy.receipt_image" type="button"
                                 class="flex mt-4 items-center py-2 px-2 rounded text-white"
-                                style="background-color: #131B47; max-width: 180px" @click="this.showmarkpolicy">Mark
+                                style="background-color: #131B47; max-width: 180px" @click="openmodal">Mark
                                 Policy</button>
                         </div>
                         <font-awesome-icon icon="times-circle" class="cursor-pointer text-red-500 text-base lg:text-xl"
@@ -130,10 +130,12 @@ export default {
     data() {
         return {
             existing: '',
-            showMarkpolicy: false,
         };
     },
     methods: {
+        openmodal() {
+            this.showmarkpolicy()
+        },
         close() {
             this.$emit('close');
             // console.log('closeee')
