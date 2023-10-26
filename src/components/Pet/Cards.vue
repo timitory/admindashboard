@@ -61,7 +61,7 @@
           </div>
       </div>
       <div class="px-4 py-8 card">
-          <h4 class="font-bold text-2xl">All Policiesy</h4>
+          <h4 class="font-bold text-2xl">All Policies</h4>
           <div class="mt-4 flex justify-between items-end">
               <svg xmlns="http://www.w3.org/2000/svg" width="37.65" height="42.5" viewBox="0 0 37.65 42.5"><g transform="translate(-17.126)">
                   <path fill="#0c4a4d" class="a" d="M21.657,37.148a14.316,14.316,0,0,1,8.958-13.26l2.677-5.377a18.826,18.826,0,0,0-2.414,36.766l.515-4.581A14.319,14.319,0,0,1,21.657,37.148Z" transform="translate(0 -15.891)"/>
