@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-8 px-6 pt-6 lg:px-10 pb-20 relative bg-white grid gap-4 lg:grid-cols-5" style="box-shadow: 0px 20px 33px #00000029;">
+  <div class="mt-8 px-6 pt-6 lg:px-10 pb-6 relative bg-white grid gap-4 lg:grid-cols-5" style="box-shadow: 0px 20px 33px #00000029;">
       <router-link to="/" class="text-green-500 font-bold underline absolute absolute top-2 invoicelink">View all invoice</router-link>
  
       <div class="px-6 box mt-10 lg:mt-10 pb-4 border-b border-solid lg:border-b-0 lg:border-r">
@@ -7,7 +7,7 @@
             <path fill="#00a859" class="a" d="M23.044,8.714a1.807,1.807,0,0,0,1.43-1.767V2.318a1.818,1.818,0,0,0-.653-1.4A1.787,1.787,0,0,0,22.358.529a27.2,27.2,0,0,0,3.424,53.922q.717.036,1.429.036a26.92,26.92,0,0,0,15.556-4.9,1.784,1.784,0,0,0,.754-1.31A1.821,1.821,0,0,0,43,46.831l-3.279-3.277a1.805,1.805,0,0,0-2.268-.233,19.033,19.033,0,1,1-14.4-34.607ZM6.463,29.539A20.839,20.839,0,0,0,38.429,44.846l-.49-.763.5.752,3.292,3.271A25.384,25.384,0,1,1,22.661,2.318L22.65,6.944A20.867,20.867,0,0,0,6.463,29.539Zm0,0" transform="translate(0.002 -0.501)"/>
             <path fill="#00a859" class="a" d="M283.715.527a1.783,1.783,0,0,0-1.464.392,1.817,1.817,0,0,0-.654,1.4V6.945a1.808,1.808,0,0,0,1.431,1.767,19.152,19.152,0,0,1,14.886,18.577,18.912,18.912,0,0,1-2.937,10.135,1.809,1.809,0,0,0,.242,2.257l3.285,3.286a1.819,1.819,0,0,0,1.288.534c.055,0,.111,0,.167-.007a1.784,1.784,0,0,0,1.311-.763A27.2,27.2,0,0,0,283.715.527Zm16.072,41.158L296.5,38.4l.009-.007a20.721,20.721,0,0,0,3.218-11.1A20.97,20.97,0,0,0,283.411,6.945L283.4,2.312a25.386,25.386,0,0,1,16.391,39.373Zm0,0" transform="translate(-251.682 -0.499)"/>
           </svg>
-          <p class="text-center mt-4 text-lg font-bold">Total Policy Volume</p>
+          <p class="text-center mt-4 text-lg font-bold px-0.5">Total Policy Volume</p>
           <div class="deepblue py-3 px-2 mt-4 text-xl font-bold border-2 border-green-500 border-dashed text-center">{{data.total_policy_count}}</div>
           <!-- <router-link to="/app/dashboard/totalpolicies" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link> -->
       </div>
@@ -47,7 +47,7 @@
           <!-- <router-link to="/app/dashboard/totalpolicies" class="block text-center text-green-500 mt-4 font-bold">View Details</router-link> -->
       </div>
       <a href="/app/dashboard/registeredusers">
-      <div class="px-6 box pb-4 border-b border-solid lg:mt-10 lg:border-b-0 lg:border-r">
+      <div class="px-6 box pb-4 border-b border-solid lg:mt-10 lg:border-b-0 ">
           <svg class="mx-auto svg" xmlns="http://www.w3.org/2000/svg" width="48.198" height="40.038" viewBox="0 0 48.198 40.038"><g transform="translate(0 -2.942)">
             <path fill="#00a859" class="a" d="M34.371,34.827V30.718A8.218,8.218,0,0,0,26.153,22.5H9.718A8.218,8.218,0,0,0,1.5,30.718v4.109" transform="translate(0 6.653)"/>
             <path fill="#00a859" class="a" d="M23.936,12.718A8.218,8.218,0,1,1,15.718,4.5a8.218,8.218,0,0,1,8.218,8.218Z" transform="translate(2.218)"/>
