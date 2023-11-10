@@ -100,7 +100,7 @@
 // import {mapState} from "vuex"
 import axios from "axios"
 import baseURL from "@/main"
-import SinglePolicy from "@/components/Pet/SinglePolicy"
+import SinglePolicy from "@/components/Gadget/SinglePolicy"
 import TPagination from 'vue-tailwind/dist/t-pagination'
 // import MarkPolicy from "./MarkPolicy.vue"
 export default {
@@ -224,7 +224,7 @@ export default {
     changePage(num){
       console.log(num)
       this.$store.commit('startLoading')
-      axios.get(`${baseURL}/admin/pet`, {params :{page : num}})
+      axios.get(`${baseURL}/admin/gadget`, {params :{page : num}})
       .then(res=>{
         console.log(res.data.data)
         this.totalRows = res.data.data.totalRecord
@@ -241,12 +241,8 @@ export default {
     },
     getPolicies(){
     this.$store.commit('startLoading')
-    axios.get(`${baseURL}/admin/pet`)
+    axios.get(`${baseURL}/admin/gadget`)
     .then(res =>{
-      
-      
-      
-      
       this.totalRows = res.data.data.totalRecord
      this.policies = res.data.data.records
       this.perPage = res.data.data.record_per_page

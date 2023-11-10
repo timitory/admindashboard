@@ -6,7 +6,7 @@
                     <div class="flex justify-between">
                         <div>
                             <p class="text-sm mt-4 cursor-pointer font-bold text-lg">
-                                About Pet Policy
+                                About Gadget Policy
                             </p>
 
 <!--                            <button v-if="policy.policy.receipt_image" type="button"-->
@@ -22,6 +22,10 @@
 <!--                        <p class="mt-2 lg:mt-4 text-green-500 font-bold">{{ policy.policy_number }}</p>-->
 <!--                    </div>-->
                     <ul class="mt-8">
+                      <li>
+                        <p>Title</p>
+                        <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.Title}}</p>
+                      </li>
                         <li>
                             <p>Enrollee</p>
                             <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.enrollee.name}}</p>
@@ -31,66 +35,72 @@
                             <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.enrollee.email }}</p>
                         </li>
                         <li>
+                            <p>Date of birth</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.DateOfBirth }}</p>
+                        </li>
+                        <li>
+                            <p>Nationality</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.Nationality }}</p>
+                        </li>
+                        <li>
+                            <p>Occupation</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.Occupation }}</p>
+                        </li>
+                        <li>
+                            <p>Phone Number</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.Phone1 }}</p>
+                        </li>
+                        <li>
+                            <p>Address</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.Address }}</p>
+                        </li>
+                        <li>
+                            <p>Bvn</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.BVN }}</p>
+                        </li>
+                        <li>
+                            <p>Employer</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.Employer }}</p>
+                        </li>
+                        <li>
+                            <p>Employer Address</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.EmployerAddress }}</p>
+                        </li>
+                        <li>
+                            <p>Fund Source</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.FundSource }}</p>
+                        </li>
+                        <li>
+                            <p>Identification Type</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.IdType }}</p>
+                        </li>
+                        <li>
                             <p>Identification Number</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.id_no }}</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.IdNumber }}</p>
                         </li>
                         <li>
-                            <p>Breed Type</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.breed_type }}</p>
+                            <p>Tax Identification</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.TaxID }}</p>
                         </li>
                         <li>
-                            <p>Age</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.age }}</p>
+                            <p>Address Of Gadget Insured</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.AddressofGadgetInsured }}</p>
                         </li>
-                        <li>
-                            <p>Health Status</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.health_status }}</p>
-                        </li>
-                        <li>
-                            <p>Medication Recieved</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.medication_received }}</p>
-                        </li>
-                        <li>
-                            <p>Acquisition Cost</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.acquisition_cost }}</p>
-                        </li>
-                        <li>
-                            <p>Maintenance Cost</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.metadata.maintenance_cost }}</p>
-                        </li>
-<!--                        <li>-->
-<!--                            <p>Vehicle Color</p>-->
-<!--                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.vehicle_color }}</p>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <p>Year of Make</p>-->
-<!--                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.year_of_make }}</p>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <p>Occupation</p>-->
-<!--                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.enrollee.occupation }}</p>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <p>Date of birth</p>-->
-<!--                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.enrollee.date_of_birth }}</p>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <p>State of residence</p>-->
-<!--                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.enrollee.state }}</p>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <p>LGA</p>-->
-<!--                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.enrollee.lga }}</p>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <p>License Number</p>-->
-<!--                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.driver_license }}</p>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <p>Flood Cover</p>-->
-<!--                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.flood_cover }}</p>-->
-<!--                        </li>-->
+
                     </ul>
+                  <hr class="mt-6">
+                  <div class="w-6/12">
+                    <div v-for="(policy, index) in policy.metadata.Gadgets" :key="index" class="flex justify-between">
+                      <div class="mt-4">
+                        <p>Gadget Name</p>
+                        <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.name }}</p>
+                      </div>
+                      <div class="mt-4">
+                        <p>Gadget Value</p>
+                        <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.amount }}</p>
+                      </div>
+                    </div>
+                  </div>
                     <div class="mt-4">
                         <p class="font-bold">{{ policy.payment_frequency }} Premium: <span
                                 class="text-green-500 text-lg">{{ policy.amount }}</span></p>

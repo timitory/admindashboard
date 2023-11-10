@@ -24,9 +24,9 @@
           <img src="@/assets/images/dashboard/Image 9.png" alt="" class="">
           <p class="ml-4 font-bold">Pet Cover</p>
         </router-link>
-        <router-link class="link flex rounded py-4 justify-center items-center hidden" to="/app/dashboard/vehicle">
+        <router-link class="link flex rounded py-4 justify-center items-center " to="/app/dashboard/gadget">
           <img src="@/assets/images/dashboard/Group 65.png" alt="" class="">
-          <p class="ml-4 font-bold">Vehicle Cover</p>
+          <p class="ml-4 font-bold">Gadget Cover</p>
         </router-link>
         <router-link class="link flex rounded py-4 justify-center items-center hidden" to="/app/dashboard/homecontent">
           <img src="@/assets/images/dashboard/Image 10.png" alt="" class="">

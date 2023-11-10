@@ -246,7 +246,55 @@ const routes = [
             component: () => import('@/views/Pet/ChargeHistory'),
           },
         ]
-      }, 
+      },
+      {
+        path: '/app/dashboard/gadget',
+        redirect: '/app/dashboard/gadget/dashboard',
+        component: ()=>import('@/views/Gadget/Gadget.vue'),
+        children : [
+          {
+            path: '/app/dashboard/gadget/dashboard',
+            component: ()=>import('@/views/Gadget/Dashboard')
+          },
+          {
+            path: '/app/dashboard/gadget/remittance',
+            component: ()=>import('@/views/Gadget/Remittance')
+          },
+          {
+            path: '/app/dashboard/gadget/repayments',
+            component: ()=>import('@/views/Pet/Repayments')
+          },
+          {
+            path: '/app/dashboard/gadget/cancellations',
+            component: ()=>import('@/views/Gadget/CancelRequests')
+          },
+          {
+            path: '/app/dashboard/gadget/policies',
+            component: ()=>import('@/views/Gadget/AllPolicies')
+          },
+          {
+            path: '/app/dashboard/gadget/customers',
+            component: ()=>import('@/views/Gadget/Customers')
+          },
+          {
+            path: '/app/dashboard/gadget/reports',
+            component: ()=>import('@/views/Pet/Reports')
+          },
+          {
+            path: '/app/dashboard/gadget/revenue',
+            component: ()=>import('@/views/Gadget/Revenue')
+          },
+          {
+            path: '/app/dashboard/gadget/claims',
+            component: ()=>import('@/views/Gadget/Claims')
+          },
+          {
+            path: '/app/dashboard/pet/repayment/chargehistory',
+            name: 'VehicleChargeHistory',
+            component: () => import('@/views/Pet/ChargeHistory'),
+          },
+        ]
+      },
       {
         path: '/app/dashboard/homecontent',
         redirect: '/app/dashboard/homecontent/dashboard',

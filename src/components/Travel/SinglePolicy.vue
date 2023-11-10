@@ -6,13 +6,13 @@
                     <div class="flex justify-between">
                         <div>
                             <p class="text-sm mt-4 cursor-pointer font-bold text-lg">
-                                About Vehicle Policy
+                                About Travel Policy
                             </p>
 
-                            <button v-if="policy.policy.receipt_image" type="button"
-                                class="flex mt-4 items-center py-2 px-2 rounded text-white"
-                                style="background-color: #131B47; max-width: 180px" @click="openmodal">Mark
-                                Policy</button>
+<!--                            <button v-if="policy.policy.receipt_image" type="button"-->
+<!--                                class="flex mt-4 items-center py-2 px-2 rounded text-white"-->
+<!--                                style="background-color: #131B47; max-width: 180px" @click="openmodal">Mark-->
+<!--                                Policy</button>-->
                         </div>
                         <font-awesome-icon icon="times-circle" class="cursor-pointer text-red-500 text-base lg:text-xl"
                             @click="$emit('close')" />
@@ -24,95 +24,94 @@
                     <ul class="mt-8">
                         <li>
                             <p>Enrollee</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.customer.firstname }}
-                                {{ policy.policy.customer.lastname }}</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.lastname + " " +  policy.policy.metadata.firstname}}</p>
                         </li>
                         <li>
-                            <p>Vehicle make</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.vehicle_make }}</p>
+                            <p>Email</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.email }}</p>
                         </li>
                         <li>
-                            <p>Vehicle model</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.vehicle_model }}</p>
+                            <p>Phone</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.phone }}</p>
                         </li>
                         <li>
-                            <p>Vehicle value</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.vehicle_value }}</p>
+                            <p>Address</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.Address }}</p>
                         </li>
                         <li>
-                            <p>Plate Number</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.plate_number }}</p>
-                        </li>
-                        <li>
-                            <p>Engine Number</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.engine_no }}</p>
-                        </li>
-                        <li>
-                            <p>Chasis No</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.chasis_no }}</p>
-                        </li>
-                        <li>
-                            <p>Vehicle Class</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.vehicle_class }}</p>
-                        </li>
-                        <li>
-                            <p>Vehicle Usage</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.vehicle_usage }}</p>
-                        </li>
-                        <li>
-                            <p>Vehicle Color</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.vehicle_color }}</p>
-                        </li>
-                        <li>
-                            <p>Year of Make</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.year_of_make }}</p>
+                            <p>Nationality</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.Nationality }}</p>
                         </li>
                         <li>
                             <p>Occupation</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.enrollee.occupation }}</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.Occupation }}</p>
                         </li>
                         <li>
-                            <p>Date of birth</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.enrollee.date_of_birth }}</p>
+                            <p>Passport No</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.PassportNumber }}</p>
                         </li>
                         <li>
-                            <p>State of residence</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.enrollee.state }}</p>
+                            <p>ZipCode</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.ZipCode }}</p>
                         </li>
                         <li>
-                            <p>LGA</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.enrollee.lga }}</p>
+                            <p>Marital Status</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.MaritalStatusID }}</p>
                         </li>
                         <li>
-                            <p>License Number</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.driver_license }}</p>
+                            <p>Cover Begins</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.StartDate }}</p>
                         </li>
                         <li>
-                            <p>Flood Cover</p>
-                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.flood_cover }}</p>
+                            <p>Cover End</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.EndDate }}</p>
                         </li>
+                        <li>
+                            <p>Next of kin Name</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.NextOfKinName }}</p>
+                        </li>
+                        <li>
+                            <p>Next of kin Phone</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.NextOfKinPhone }}</p>
+                        </li>
+                        <li>
+                            <p>Next of kin Address</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.NextOfKinAddress }}</p>
+                        </li>
+                        <li>
+                            <p>Next of kin Relationship</p>
+                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.NextOfKinRelationship }}</p>
+                        </li>
+<!--                        <li>-->
+<!--                            <p>License Number</p>-->
+<!--                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.metadata.email }}</p>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <p>Flood Cover</p>-->
+<!--                            <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.flood_cover }}</p>-->
+<!--                        </li>-->
                     </ul>
-                    <div class="mt-4">
-                        <p class="font-bold">{{ policy.policy.payment_frequency }} Premium: <span
-                                class="text-green-500 text-lg">{{ policy.policy.amount }}</span></p>
-                    </div>
+<!--                    <div class="mt-4">-->
+<!--                        <p class="font-bold">{{ policy.policy.payment_frequency }} Premium: <span-->
+<!--                                class="text-green-500 text-lg">{{ policy.policy.premium }}</span></p>-->
+<!--                    </div>-->
                     <div class="mt-4">
                         <p class="font-bold">Total Premium: <span
-                                class="text-green-500 text-lg">{{ policy.policy.total_amount }}</span></p>
+                                class="text-green-500 text-lg">{{ policy.policy.premium }}</span></p>
                     </div>
-                    <hr class="mt-6">
-                    <a :href="policy.policy.certificate" target="_blank" rel="noopener noreferrer"
-                        class="mt-6 block text-green-500 underline">View Certificate</a>
-                    <a :href="policy.policy.receipt_image" v-if="policy.policy.receipt_image" target="_blank"
-                        rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Transfer Receipt</a>
-                    <p v-else class="mt-6">Transfer Receipt not available</p>
-                    <a :href="policy.policy.valid_id" v-if="policy.policy.valid_id" target="_blank"
-                        rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View User's ID</a>
-                    <p v-else class="mt-6">Means of Id link not available</p>
-                    <a :href="policy.policy.plate_number_image" v-if="policy.policy.plate_number_image" target="_blank"
-                        rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Vehicle's Image with
-                        Plate Number</a>
-                    <p v-else class="mt-6">Vehicle's Image link not available</p>
+<!--                    <hr class="mt-6">-->
+<!--                    <a :href="policy.policy.certificate" target="_blank" rel="noopener noreferrer"-->
+<!--                        class="mt-6 block text-green-500 underline">View Certificate</a>-->
+<!--                    <a :href="policy.policy.receipt_image" v-if="policy.policy.receipt_image" target="_blank"-->
+<!--                        rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Transfer Receipt</a>-->
+<!--                    <p v-else class="mt-6">Transfer Receipt not available</p>-->
+<!--                    <a :href="policy.policy.valid_id" v-if="policy.policy.valid_id" target="_blank"-->
+<!--                        rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View User's ID</a>-->
+<!--                    <p v-else class="mt-6">Means of Id link not available</p>-->
+<!--                    <a :href="policy.policy.plate_number_image" v-if="policy.policy.plate_number_image" target="_blank"-->
+<!--                        rel="noopener noreferrer" class="mt-6 block text-green-500 underline">View Vehicle's Image with-->
+<!--                        Plate Number</a>-->
+<!--                    <p v-else class="mt-6">Vehicle's Image link not available</p>-->
                 </div>
             </div>
         </div>

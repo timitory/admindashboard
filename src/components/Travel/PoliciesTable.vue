@@ -37,12 +37,13 @@
               <th class="font-bold">Start Date</th>
               <th class="font-bold">Customer</th>
               <th class="font-bold">Email</th>
-              <th class="font-bold">Phone Number</th>
+<!--              <th class="font-bold">Phone Number</th>-->
               <th class="font-bold">Plan</th>
               <th class="font-bold">End Date</th>
               <th class="font-bold">Underwriter</th>
-              <th class="font-bold">Premiuim</th>
+              <th class="font-bold">Premium</th>
               <th class="font-bold">Policy Status</th>
+              <th class="font-bold">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -51,7 +52,7 @@
               <td>{{policy.policy.start}}</td>
               <td>{{policy.policy.enrollee.firstname}} {{policy.policy.enrollee.lastname}}</td>
               <td>{{policy.policy.enrollee.email}}</td>
-              <td>{{policy.policy.enrollee.phone}}</td>
+<!--              <td>{{policy.policy.enrollee.phone}}</td>-->
               <td>{{policy.policy.policy_number}}</td>
               <td>{{policy.policy.end}}</td>
               <td>{{policy.underwriter.name}}</td>
@@ -62,6 +63,12 @@
                 <span v-else-if="policy.policy.status == 'Incomplete'" class="rounded text-white text-center p-1 bg-red-500">{{policy.policy.status}}</span>
                 <span v-else-if="policy.policy.status == 'Pending'" class="rounded text-white text-center p-1 bg-yellow-500">{{policy.policy.status}}</span>
                 <span v-else class="rounded text-white text-center p-1 bg-red-500">{{policy.policy.status}}</span>
+              </td>
+              <td>
+                <select class="focus:outline-none border border-solid border-gray-300 rounded" v-model="action" @change="selectAction(policy)">
+                  <option value="" selected disabled>Select action</option>
+                  <option value="details">View Details</option>
+                </select>
               </td>
             </tr>
           </tbody>
@@ -83,9 +90,9 @@
       </div>
     </div>
     <SinglePolicy v-if="showPolicy" :policy="policy" :showmarkpolicy="open"   @close="showPolicy = false" />
-    <Repayments v-if="showRepayment" :policy="policy" @close="showRepayment = false"/>
+<!--    <Repayments v-if="showRepayment" :policy="policy" @close="showRepayment = false"/>-->
     <!-- <CancelPolicy v-if="showActive" :policy="policy" @close="showActive = false"/> -->
-    <MarkPolicy v-if="showMarkpolicy" :policy="policy" :close="close"  @close="showMarkpolicy = false" />
+<!--    <MarkPolicy v-if="showMarkpolicy" :policy="policy" :close="close"  @close="showMarkpolicy = false" />-->
   </div>
 </template>
 
@@ -93,14 +100,14 @@
 // import {mapState} from "vuex"
 import axios from "axios"
 import baseURL from "@/main"
-import SinglePolicy from "@/components/Vehicle/SinglePolicy"
-import Repayments from "@/components/Vehicle/ViewRepayment"
+import SinglePolicy from "@/components/Travel/SinglePolicy"
+// import Repayments from "@/components/Vehicle/ViewRepayment"
 // import CancelPolicy from "@/components/Vehicle/CancelPolicyModal"
 import TPagination from 'vue-tailwind/dist/t-pagination'
-import MarkPolicy from "./MarkPolicy.vue"
+// import MarkPolicy from "./MarkPolicy.vue"
 export default {
   components:{
-    TPagination, SinglePolicy, Repayments, MarkPolicy
+    TPagination, SinglePolicy
   },
   data(){
     return {
