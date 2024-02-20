@@ -91,6 +91,10 @@
                             <p>Flood Cover</p>
                             <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.flood_cover }}</p>
                         </li>
+                      <li>
+                        <p>Payment Frequency</p>
+                        <p class="mt-2 lg:mt-4 font-bold mb-6">{{ policy.policy.payment_frequency }}</p>
+                      </li>
                     </ul>
                     <div class="mt-4">
                         <p class="font-bold">{{ policy.policy.payment_frequency }} Premium: <span
