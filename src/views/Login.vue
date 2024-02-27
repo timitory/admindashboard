@@ -81,7 +81,8 @@ export default {
         //   this.$store.commit('setError', {status: true, msg: err.data.message})
         // }
         this.$store.commit('endLoading')
-        this.$store.commit('setError', {status: true, msg: err.response.data.message})
+        console.log(err)
+        // this.$store.commit('setError', {status: true, msg: err.response.data.message})
       })
     },
     showPassword(){

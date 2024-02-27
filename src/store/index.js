@@ -104,12 +104,11 @@ export default new Vuex.Store({
     },
     loginUser({commit}, user){
       return new Promise((resolve, reject)=> {
-        axios({url: `${baseURL}/login`, data: user, method: 'POST'})
+        axios({url: `${baseURL}/admin/login`, data: user, method: 'POST'})
         .then((res)=>{
           console.log(res.data.data.email)
           const email = res.data.data.email
           console.log(email)
-          if(email === "admin@pc.ng"){
             commit('loginUser')
             commit('setUser', res.data.data)
             // Store the token in localstorage
@@ -118,16 +117,16 @@ export default new Vuex.Store({
             // Set the authorization header for future API calls
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
             resolve(res)
-          }
-          else{
-            reject({response:{
-              data:{
-                message: "Invalid credentials"
-              }
-            }})
-          }
+          // else{
+          //   reject({response:{
+          //     data:{
+          //       message: "Invalid credentials"
+          //     }
+          //   }})
+          // }
         })
         .catch((err)=>{
+          commit('setError', {status: true, msg: 'Permission denied'})
           commit('endLoading')
           reject(err.response)
         })
