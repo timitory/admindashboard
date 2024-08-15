@@ -49,7 +49,7 @@
           </thead>
           <tbody >
             <tr v-for="(enrollee, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
-              <td>{{index + 1}}</td>
+              <td>{{(page-1) * perPage + index + 1}}</td>
               <td class="p-3">{{enrollee.enrollee.name}}</td>
               <td>{{enrollee.plan}}</td>
               <td>{{enrollee.amount}}</td>
@@ -114,6 +114,7 @@ export default {
       disabled: false,
       limit: 5,
       currentPage: 1,
+      searchKeyword:'',
       page: 1,
       pages: [],
       policies: [],
@@ -128,16 +129,27 @@ export default {
   computed:{
     paginatedPolicies(){
       return this.paginate(
-        this.policies
+        this.filteredPolicies
       )
     },
-    
+    filteredPolicies() {
+    return this.policies.filter((policys) => {
+      return (
+        policys.enrollee.name.toLowerCase().includes(this.searchKeyword.toLowerCase()) ||
+        policys.underwriter.name.toLowerCase().includes(this.searchKeyword.toLowerCase())
+      );
+    })
+  }
   },
   watch: {
 		policies() {
 			this.setPages();
 		},
 
+  searchKeyword() {
+    this.page = 1;  // Reset the page
+    this.setPages();  // Recalculate pages
+  }
 	},
   methods: {
     viewRepayment(obj){
@@ -148,12 +160,11 @@ export default {
       this.policy = obj
       this.showPolicy = true
     },
-    setPages () {
-      let numberOfPages = Math.ceil(this.policies.length / this.perPage);
-      for (let index = 1; index <= numberOfPages; index++) {
-          this.pages.push(index);
-      }
-    },
+    setPages() {
+    // Logic to calculate pages based on filteredPolicies
+    const pagesCount = Math.ceil(this.filteredPolicies.length / this.perPage);
+    this.pages = Array.from({ length: pagesCount }, (v, k) => k + 1);
+  },
     paginate (policies) {
         let page = this.page;
         let perPage = this.perPage;
@@ -162,17 +173,17 @@ export default {
         return  policies.slice(from, to);
     },
     search(){
-      this.$store.commit('startLoading')
-      axios.get(`${baseURL}/admin/health/search?search=${this.searchKeyword}`)
-      .then(res =>{
-        //this.totalRows = res.data.data.totalRecord
-        this.policies = res.data.data
-       // this.perPage = res.data.data.record_per_page
-        this.$store.commit('endLoading')
-      })
-      .catch(err=>{
-        this.$store.dispatch('handleError', err)
-      })
+      // this.$store.commit('startLoading')
+      // axios.get(`${baseURL}/admin/health/search?search=${this.searchKeyword}`)
+      // .then(res =>{
+      //   //this.totalRows = res.data.data.totalRecord
+      //   this.policies = res.data.data
+      //  // this.perPage = res.data.data.record_per_page
+      //   this.$store.commit('endLoading')
+      // })
+      // .catch(err=>{
+      //   this.$store.dispatch('handleError', err)
+      // })
     },
     getPolicies(){
       this.$store.commit('startLoading')
@@ -226,6 +237,7 @@ export default {
     this.getPolicies()
   }
 }
+
 </script>
 
 <style scoped>
