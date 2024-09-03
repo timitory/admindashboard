@@ -3,7 +3,7 @@
     <div class="mt-8 px-6 pt-6 relative shadow-lg bg-white lg:relative lg:pb-8">
         <div class="lg:flex lg:justify-between">
             <p></p>
-            <div class="lg:flex lg:gap-4"> 
+            <div class="lg:flex lg:gap-4">
               <download-excel :data="policiess" :name="fileName" class="right">
         <button type="button" class="flex mt-4 items-center py-2 px-2 rounded text-white" style="background-color: #131B47; max-width: 180px">Download CSV</button>
     </download-excel>
@@ -30,7 +30,7 @@
                     </div>
                 </div>-->
             </div>
-        </div>       
+        </div>
       <div class="overflow-x-auto tablecont">
         <table v-if="paginatedPolicies.length > 0" class="w-full mt-8">
           <thead>
@@ -49,7 +49,7 @@
           </thead>
           <tbody >
             <tr v-for="(enrollee, index) in paginatedPolicies" :key="index" class="border border-solid border-gray-300">
-              <td>{{(page-1) * perPage + index + 1}}</td>
+              <td>{{index + 1}}</td>
               <td class="p-3">{{enrollee.enrollee.name}}</td>
               <td>{{enrollee.plan}}</td>
               <td>{{enrollee.amount}}</td>
@@ -60,7 +60,7 @@
               <td>{{enrollee.start}}</td>
               <td>{{enrollee.policy_number}}</td>
               <td>{{enrollee.underwriter.name}}</td>
-             
+
               <td>
                   <button @click="viewRepayment(enrollee)" class="text-green-500 text-sm underline outline-none focus:outline-none">View</button>
               </td>
@@ -69,13 +69,13 @@
               </td>
             </tr>
           </tbody>
-           
+
         </table>
         <div v-else class="w-full text-center py-4">
           <img class="block  mx-auto" src="@/assets/images/menu/Page-1.svg" alt="">
           <p class="mt-4 text-center font-bold text-green-500 font-lg">No records</p>
         </div>
-      
+
         <nav  class="mt-8" v-if="paginatedPolicies.length > 0" aria-label="Page navigation example">
           <ul class="w-1/2 mx-auto  flex justify-between" style="max-width: 250px">
             <li class="page-item">
@@ -123,7 +123,9 @@ export default {
       showPolicy: false,
       fileName: 'health_policy',
       policiess: [],
-      unsortedPolicies : []
+      policiesfilt: [],
+      unsortedPolicies : [],
+      searchKeyword: ''
     }
   },
   computed:{
@@ -245,7 +247,7 @@ input{
     background-color: #e2f5ec;
 }
 table{
-  
+
 }
 
 th, td {
@@ -301,7 +303,7 @@ th, td {
       min-width: unset
   }
   thead th:nth-child(1){
-    width: 5%; 
+    width: 5%;
   }
   thead th:nth-child(2){
     width: 15%;

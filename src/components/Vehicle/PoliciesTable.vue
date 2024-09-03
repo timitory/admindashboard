@@ -1,11 +1,11 @@
 <template>
   <div class="mt-8">
-    
+
     <div class="mt-8 px-6 pt-6 relative shadow-lg bg-white lg:relative lg:pb-8">
         <div class="lg:flex lg:justify-between">
             <p></p>
-           
-            <div class="lg:flex lg:gap-4"> 
+
+            <div class="lg:flex lg:gap-4">
               <download-excel :data="policiess" :name="fileName" class="right">
         <button type="button" class="flex mt-4 items-center py-2 px-2 rounded text-white" style="background-color: #131B47; max-width: 180px">Download CSV</button>
     </download-excel>
@@ -28,7 +28,7 @@
                     </div>
                 </div> -->
             </div>
-        </div>      
+        </div>
       <div class="overflow-x-auto tablecont">
         <table v-if="paginatedPolicies.length > 0" class="w-full mt-8">
           <thead>
@@ -53,10 +53,10 @@
               <td>{{index + 1}}</td>
               <td>{{policy.policy.start}}</td>
               <td>{{policy.policy.end}}</td>
-              <td>{{policy.policy.customer.firstname}} {{policy.policy.customer.lastname}}</td>
+              <td>{{policy.policy.enrollee.firstname}} {{policy.policy.enrollee.lastname}}</td>
               <td>{{policy.policy.plate_number}}</td>
-              <td>{{policy.policy.customer.email}}</td>
-              <td>{{policy.policy.customer.phone}}</td>
+              <td>{{policy.policy.enrollee.email}}</td>
+              <td>{{policy.policy.enrollee.phone}}</td>
               <td>{{policy.policy.vehicle_category}}</td>
               <td>{{policy.policy.underwriter.name}}</td>
 <!--              <td>{{policy.policy.payment_frequency}}</td>-->
@@ -178,7 +178,7 @@ export default {
         this.action = ''
       }
     },
-    
+
     filter(val){
       console.log(val)
       this.showFilter = false
@@ -245,7 +245,7 @@ export default {
         this.perPage = res.data.data.record_per_page
 
         this.policies.forEach(this.myFunction)
-        
+
         this.$store.commit('endLoading')
       })
       .catch(err=>{
@@ -256,16 +256,16 @@ export default {
     this.$store.commit('startLoading')
     axios.get(`${baseURL}/admin/vehicle/policy`)
     .then(res =>{
-      
-      
-      
-      
+
+
+
+
       this.totalRows = res.data.data.totalRecord
      this.policies = res.data.data.records
       this.perPage = res.data.data.record_per_page
       this.$store.commit('endLoading')
       this.downloadPolicies.forEach(this.myFunction)
-      
+
     })
     .catch(err=>{
       this.$store.dispatch('handleError', err)
@@ -295,7 +295,7 @@ export default {
     };
 
     this.policiess.push(dat)
-    
+
 }
   },
   mounted(){
@@ -325,7 +325,7 @@ input{
     background-color: #e2f5ec;
 }
 table{
-  
+
 }
 
 th, td {
@@ -382,48 +382,48 @@ th, td {
   }
   thead th:nth-child(1){
     width: 5%;
-    
+
   }
   thead th:nth-child(2){
     width: 15%;
-    
+
   }
   thead th:nth-child(3){
     width: 15%;
-    
+
   }
   thead th:nth-child(4){
     width: 15%;
-    
+
   }
   thead th:nth-child(5){
     width: 10%;
-    
+
   }
   thead th:nth-child(6){
     width: 10%;
-    
+
   }
   thead th:nth-child(7){
     width: 10%;
-    
+
   }
   thead th:nth-child(8){
     width: 10%;
-    
+
   }
   thead th:nth-child(9){
     width: 5%;
-    
+
   }
   thead th:nth-child(10){
     width: 5%;
-    
+
   }
   thead th:nth-child(11){
     width: 5%;
   }
-  
+
   div.tablecont table{
     width: 100%
   }

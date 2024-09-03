@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VueTailwind from 'vue-tailwind'
 import TPagination from 'vue-tailwind/dist/t-pagination';
 import JsonExcel from "vue-json-excel";
- 
+
 Vue.component("downloadExcel", JsonExcel);
 
 const settings = {
@@ -59,7 +59,7 @@ var baseURL;
 baseURL = "https://stage.paddycover.com/v1"
 if(process.env.NODE_ENV === "development"){
    baseURL = "https://stage.paddycover.com/v1"
-  
+
 }else {
   baseURL = "https://stage.paddycover.com/v1"
 }
