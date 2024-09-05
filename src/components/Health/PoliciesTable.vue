@@ -125,7 +125,6 @@ export default {
       policiess: [],
       policiesfilt: [],
       unsortedPolicies : [],
-      searchKeyword: ''
     }
   },
   computed:{
