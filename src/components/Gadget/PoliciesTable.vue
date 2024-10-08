@@ -68,6 +68,8 @@
                 <select class="focus:outline-none border border-solid border-gray-300 rounded" v-model="action" @change="selectAction(policy)">
                   <option value="" selected disabled>Select action</option>
                   <option value="details">View Details</option>
+                  <option v-if="policy.status !== 'Active'" value="activate">Activate Policy</option>
+                  <option v-else value="deactivate">Deactivate Policy</option>
                 </select>
               </td>
             </tr>
@@ -87,6 +89,13 @@
           @change="changePage"
         />
         </div>
+      </div>
+    </div>
+    <div v-if="showModal"  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+        <p class="text-lg mb-4">{{ modalMessage }}</p>
+        <button class="bg-green-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600" @click="performAction(policy)">Yes</button>
+        <button class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600" @click="closeModal">Cancel</button>
       </div>
     </div>
     <SinglePolicy v-if="showPolicy" :policy="policy" :showmarkpolicy="open"   @close="showPolicy = false" />
@@ -109,6 +118,11 @@ export default {
   },
   data(){
     return {
+     
+      showModal: false,
+      modalMessage: '',
+      selectedAction: '',
+      police:'',
       action:'',
       perPage: 10,
       totalRows: 0,
@@ -159,11 +173,77 @@ export default {
         this.policy = obj
         this.showPolicy = true
         this.action = ''
-      }else{
+      }
+      // } else if (this.action === 'activate') {
+      //   this.selectedPolicy = obj;
+      //   this.showConfirmationModal = true;
+      //   this.action = '';
+      // }
+      else if (this.action === 'activate' || this.action === 'deactivate') {
+        this.confirmAction(this.action, obj);
+        this.action = '';
+
+      }
+      else{
         this.policy = obj
        this.cancelPolicy()
         this.action = ''
       }
+    },
+    // confirmActivatePolicy() {
+    //   axios
+    //     .post(`${baseURL}/admin/policy/activate`, {
+    //       policy_id: this.selectedPolicy.policy_id,
+    //     })
+    //     .then((res) => {
+    //       this.$store.commit('setSuccess', { status: true, msg: res.data.message });
+    //       this.getPolicies();
+    //     })
+    //     .catch((err) => {
+    //       this.$store.dispatch('handleError', err);
+    //     })
+    //     .finally(() => {
+    //       this.showConfirmationModal = false;
+    //     });
+    // },
+    confirmAction(action, obj) {
+      this.selectedAction = action;
+      this.policy = obj
+      
+      this.modalMessage = action === 'activate'
+        ? 'Are you sure you want to activate this policy?'
+        : 'Are you sure you want to deactivate this policy?';
+      this.showModal = true;
+    },
+    
+    performAction(policy) {
+      // let url;
+      // if(this.selectedAction === 'activate'){
+      //    url=`${baseURL}/admin/vehicle/activate`
+      // }else{
+      //   url= `${baseURL}/admin/vehicle/deactivate`
+      // }
+      const url = this.selectedAction === 'activate'
+        ? `${baseURL}/admin/gadget/approve`
+        : `${baseURL}/admin/vehicle/deactivate`;
+      console.log('we are here',url)
+      
+      axios.post(url, { user_gadget_id: policy.user_gadget_id })
+        .then(res => {
+          console.log(res.data.data);
+          this.$store.commit('setSuccess', { status: true, msg: res.data.message });
+          this.getPolicies();
+        })
+        .catch(err => {
+          this.$store.dispatch('handleError', err);
+        })
+        .finally(() => {
+          this.showModal = false;
+        });
+    },
+
+    closeModal() {
+      this.showModal = false;
     },
     
     filter(val){
@@ -245,6 +325,9 @@ export default {
     .then(res =>{
       this.totalRows = res.data.data.totalRecord
      this.policies = res.data.data.records
+     this.police = res.data.data.records
+     console.log('police',this.police)
+     console.log(this.policies)
       this.perPage = res.data.data.record_per_page
       this.$store.commit('endLoading')
       this.downloadPolicies.forEach(this.myFunction)
@@ -275,6 +358,7 @@ export default {
   mounted(){
 
     this.getPolicies()
+    console.log(this.policies)
     // this.$store.commit('startLoading')
     // axios.get(`${baseURL}/admin/vehicle/policy`)
     // .then(res =>{
